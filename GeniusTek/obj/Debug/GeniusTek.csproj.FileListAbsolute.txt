@@ -1,0 +1,22 @@
+C:\Users\chenchen\AppData\Local\Temporary Projects\GeniusTek\bin\Debug\GeniusTek.dll
+C:\Users\chenchen\AppData\Local\Temporary Projects\GeniusTek\bin\Debug\GeniusTek.pdb
+C:\Users\chenchen\AppData\Local\Temporary Projects\GeniusTek\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\chenchen\AppData\Local\Temporary Projects\GeniusTek\obj\Debug\GeniusTek.dll
+C:\Users\chenchen\AppData\Local\Temporary Projects\GeniusTek\obj\Debug\GeniusTek.pdb
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\GeniusTek\bin\Debug\GeniusTek.dll
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\GeniusTek\bin\Debug\GeniusTek.pdb
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\GeniusTek\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\GeniusTek\obj\Debug\GeniusTek.dll
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\GeniusTek\obj\Debug\GeniusTek.pdb
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\GeniusTek\bin\Debug\GeniusTek.dll
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\GeniusTek\bin\Debug\GeniusTek.pdb
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\GeniusTek\obj\Debug\GeniusTek.dll
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\GeniusTek\obj\Debug\GeniusTek.pdb
+E:\pro\CCLibs\GeniusTek\bin\Debug\GeniusTek.dll
+E:\pro\CCLibs\GeniusTek\bin\Debug\GeniusTek.pdb
+E:\pro\CCLibs\GeniusTek\obj\Debug\GeniusTek.dll
+E:\pro\CCLibs\GeniusTek\obj\Debug\GeniusTek.pdb
+E:\git\CF\GeniusTek\bin\Debug\GeniusTek.dll
+E:\git\CF\GeniusTek\bin\Debug\GeniusTek.pdb
+E:\git\CF\GeniusTek\obj\Debug\GeniusTek.dll
+E:\git\CF\GeniusTek\obj\Debug\GeniusTek.pdb

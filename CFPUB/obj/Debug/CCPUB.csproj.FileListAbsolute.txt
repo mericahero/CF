@@ -1,0 +1,14 @@
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\CCPUB\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\CCPUB\bin\Debug\CCPUB.dll
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\CCPUB\bin\Debug\CCPUB.pdb
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\CCPUB\obj\Debug\CCPUB.dll
+C:\Users\chenchen\Desktop\个人\程序\CCLibs\CCPUB\obj\Debug\CCPUB.pdb
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\CCPUB\bin\Debug\CCPUB.dll
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\CCPUB\bin\Debug\CCPUB.pdb
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\CCPUB\obj\Debug\CCPUB.dll
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\CCPUB\obj\Debug\CCPUB.pdb
+C:\Users\chenchen\Desktop\个人\程序\ccroot\CCLibs\CCPUB\obj\Debug\CCPUB.csprojResolveAssemblyReference.cache
+E:\pro\CCLibs\CCPUB\bin\Debug\CCPUB.dll
+E:\pro\CCLibs\CCPUB\bin\Debug\CCPUB.pdb
+E:\pro\CCLibs\CCPUB\obj\Debug\CCPUB.dll
+E:\pro\CCLibs\CCPUB\obj\Debug\CCPUB.pdb

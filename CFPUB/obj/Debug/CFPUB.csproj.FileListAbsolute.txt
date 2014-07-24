@@ -1,0 +1,10 @@
+E:\pro\CCLibs\CFPUB\bin\Debug\CFPUB.dll
+E:\pro\CCLibs\CFPUB\bin\Debug\CFPUB.pdb
+E:\pro\CCLibs\CFPUB\obj\Debug\CFPUB.dll
+E:\pro\CCLibs\CFPUB\obj\Debug\CFPUB.pdb
+E:\pro\CCLibs\CFPUB\obj\Debug\CFPUB.csprojResolveAssemblyReference.cache
+E:\git\CF\CFPUB\bin\Debug\CFPUB.dll
+E:\git\CF\CFPUB\bin\Debug\CFPUB.pdb
+E:\git\CF\CFPUB\obj\Debug\CFPUB.csprojResolveAssemblyReference.cache
+E:\git\CF\CFPUB\obj\Debug\CFPUB.dll
+E:\git\CF\CFPUB\obj\Debug\CFPUB.pdb
