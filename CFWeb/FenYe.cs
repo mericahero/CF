@@ -73,6 +73,8 @@ namespace COM.CF.Web
         /// 可以查看请求的Sql语句
         /// </summary>
         public string _strSQL;
+
+        private string _originSql;
         /// <summary>
         /// 页面的记录条数
         /// </summary>
@@ -132,7 +134,7 @@ namespace COM.CF.Web
                 throw new CFException(enErrType.NormalError, "count必须大于0！");
             }
             _nextQueryString = nextQueryString;
-            _strSQL = strSQL;
+            _originSql = strSQL;
         }
         #endregion
 
@@ -170,6 +172,7 @@ namespace COM.CF.Web
 
         /// <summary>
         /// 获取当前查询条件下的顶端ID值
+        /// 增加 修正 首页有上一页问题
         /// </summary>
         public long TopIDValue
         {
@@ -177,9 +180,9 @@ namespace COM.CF.Web
             {
                 if (_topIDValue == 0)
                 {
-                    _strSQL += " order by " + _IDName + (IsDesc?" desc" : "");
-                    _strSQL = _strSQL.Insert(_strSQL.IndexOf("select ") + "select ".Length + 1, " top 1 ");
-                    var row = PubFunc.GetSQLSingleRow(_strSQL, NotOpenConnection);
+                    var tempsql=_originSql+ " order by " + _IDName + (IsDesc?" desc" : "");
+                    tempsql = tempsql.Insert(tempsql.IndexOf("select ") + "select ".Length, " top 1 ");
+                    var row = PubFunc.GetSQLSingleRow(tempsql, NotOpenConnection);
                     _topIDValue = PubFunc.GetBigInt(row[_keyName]);
                 }
                 return _topIDValue; 
@@ -226,7 +229,7 @@ namespace COM.CF.Web
                     {
                         _nextLink = FirstLink + "&next=" + (IsDesc ? (_nextID+1) : (_nextID-1));
                     }
-                    else if (Rows.Count <= Count)
+                    else if (Rows.Count < Count)
                     {
                         _nextLink = "";
                     }
@@ -253,6 +256,10 @@ namespace COM.CF.Web
                 }
                 return _notOpenConnection;
             }
+            set
+            { 
+                _notOpenConnection = value;
+            }
         }
 
         public string PreLink
@@ -271,6 +278,9 @@ namespace COM.CF.Web
                         {
                             _preLink = FirstLink + "&p=1&next=" + Rows[Rows.Count - 1][_keyName].ToString();
                         }
+                        //增加 修正 首页有上一页问题
+                        if (!(IsDesc ^ PubFunc.GetBigInt(Rows[Rows.Count - 1][_keyName]) >= TopIDValue)) {_preLink = "";return "";};
+                        
                     }
                     else if (IsFirst)
                     {
@@ -278,15 +288,18 @@ namespace COM.CF.Web
                     }
                     else
                     {
+                        if (!(IsDesc ^ _nextID >= TopIDValue)) { _preLink = ""; return ""; };
+                        //增加 修正 首页有上一页问题                        
                         _preLink = FirstLink + "&p=1&next=";
                         if (IsDesc)
                         {
-                            _preLink = _preLink + Convert.ToString((int)(_nextID - 1));
+                            _preLink = _preLink + (_nextID - 1);
                         }
                         else
                         {
-                            _preLink = _preLink + Convert.ToString((int)(_nextID + 1));
+                            _preLink = _preLink + (_nextID + 1);
                         }
+
                     }
                 }
                 return _preLink;
@@ -297,6 +310,7 @@ namespace COM.CF.Web
         {
             get
             {
+                _strSQL = _originSql;
                 if (_rows == null)
                 {
                     if (!IsFirst)
