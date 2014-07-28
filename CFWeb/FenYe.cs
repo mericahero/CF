@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -88,6 +88,7 @@ namespace COM.CF.Web
         /// </summary>
         public readonly bool IsFanXiang;
         public readonly bool IsFirst;
+
 
 
         #region 构造函数
