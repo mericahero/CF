@@ -10,32 +10,93 @@ using System.Data;
 
 namespace COM.CF.Web
 {
+    /// <summary>
+    /// 功能：前台分页程序
+    /// 时间：2013-10-2
+    /// 作者：Meric
+    /// 
+    /// 修正：2013-12-1 Meric 加上获取本页面的顶端值，以修正第一页仍有上一页的链接的问题
+    /// 
+    /// 使用：该分页程序不能输出页码，只能输出上一页，下一页的页面链接，在构造本类时，需要传递SQL查询参数，不带order by，程序会根据传入的IDName以及页面的p o参数来自动差别数据的正序还是倒序
+    /// </summary>
     public class FenYe
     {
-        // Fields
-        private bool _DefaultDescDirect;
-        private string _FirstLink;
+        /// <summary>
+        /// 是否默认倒序
+        /// </summary>
+        private bool _defaultDescDirect;
+        /// <summary>
+        /// 第一页的链接，不带参数
+        /// </summary>
+        private string _firstLink;
+        /// <summary>
+        /// 传递过来的页面参数
+        /// </summary>
         private NameValueCollection _form;
+        /// <summary>
+        /// 主键字段名 可以加前缀
+        /// </summary>
         private string _IDName;
+        /// <summary>
+        /// 去掉前缀的主键字段
+        /// </summary>
         private string _keyName;
+        /// <summary>
+        /// 当前搜索条件下的顶端值，多一次查询以修正第一页还有上一页的问题
+        /// </summary>
+        private long _topIDValue;
+        /// <summary>
+        /// 下一页的第一条记录ID值
+        /// </summary>
         private int _nextID;
+        /// <summary>
+        /// 下一页的页面链接 
+        /// </summary>
         private string _nextLink;
+        /// <summary>
+        /// 页面请求参数
+        /// </summary>
         private string _nextQueryString;
-        [CompilerGenerated, DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private SqlConnection _NotOpenConnection;
+        /// <summary>
+        /// 未打开的数据库查询连接
+        /// </summary>
+        private SqlConnection _notOpenConnection;
+        /// <summary>
+        /// 上一页链接
+        /// </summary>
         private string _preLink;
-        private DataRowCollection _Rows;
+        /// <summary>
+        /// 当前页面的DataRows
+        /// </summary>
+        private DataRowCollection _rows;
+        /// <summary>
+        /// 可以查看请求的Sql语句
+        /// </summary>
         public string _strSQL;
+        /// <summary>
+        /// 页面的记录条数
+        /// </summary>
         public readonly int Count;
+        /// <summary>
+        /// 是否倒序
+        /// </summary>
         private bool IsDesc;
+        /// <summary>
+        /// 是否反向显示在页面中
+        /// </summary>
         public readonly bool IsFanXiang;
         public readonly bool IsFirst;
 
-        // Methods
+
+        #region 构造函数
+        /// <summary>
+        /// 只传入sql语句
+        /// </summary>
+        /// <param name="strsql"></param>
         public FenYe(string strsql)
         {
-            _DefaultDescDirect = true;
-            _Rows = PubFunc.GetSQLRows(strsql, CFConfig.GetNotOpenConnection());
+            _defaultDescDirect = true;
+            _rows = PubFunc.GetSQLRows(strsql, CFConfig.GetNotOpenConnection());
             _nextLink = "";
             _preLink = "";
             IsFanXiang = false;
@@ -58,7 +119,7 @@ namespace COM.CF.Web
 
         public FenYe(NameValueCollection RequestForm, string idname, string strSQL, int defaultCount, string nextQueryString, string keyname)
         {
-            _DefaultDescDirect = true;
+            _defaultDescDirect = true;
             _form = RequestForm;
             IsDesc = RequestForm["o"] != "1";
             IsFanXiang = RequestForm["p"] == "1";
@@ -73,7 +134,14 @@ namespace COM.CF.Web
             _nextQueryString = nextQueryString;
             _strSQL = strSQL;
         }
+        #endregion
 
+
+        /// <summary>
+        /// 按索引取出记录
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public DataRow GetRow(int i)
         {
             if (IsFanXiang)
@@ -83,24 +151,38 @@ namespace COM.CF.Web
             return Rows[i];
         }
 
-        // Properties
+        /// <summary>
+        /// 是否默认反向
+        /// </summary>
         public bool DefaultDescDirect
         {
             get
             {
-                return _DefaultDescDirect;
+                return _defaultDescDirect;
             }
             set
             {
-                _DefaultDescDirect = value;
-                if (value)
+                //是否倒序
+                IsDesc = value ? _form["o"]!="1" : _form["o"]=="1";
+                _defaultDescDirect = value;                
+            }
+        }
+
+        /// <summary>
+        /// 获取当前查询条件下的顶端ID值
+        /// </summary>
+        public long TopIDValue
+        {
+            get 
+            {
+                if (_topIDValue == 0)
                 {
-                    IsDesc = _form["o"] != "1";
+                    _strSQL += " order by " + _IDName + (IsDesc?" desc" : "");
+                    _strSQL = _strSQL.Insert(_strSQL.IndexOf("select ") + "select ".Length + 1, " top 1 ");
+                    var row = PubFunc.GetSQLSingleRow(_strSQL, NotOpenConnection);
+                    _topIDValue = PubFunc.GetBigInt(row[_keyName]);
                 }
-                else
-                {
-                    IsDesc = _form["o"] == "1";
-                }
+                return _topIDValue; 
             }
         }
 
@@ -108,29 +190,29 @@ namespace COM.CF.Web
         {
             get
             {
-                if (_FirstLink == null)
+                if (_firstLink == null)
                 {
                     if ((_nextQueryString != null) && _nextQueryString.StartsWith("&"))
                     {
-                        _FirstLink = "?" + _nextQueryString.Substring(1);
+                        _firstLink = "?" + _nextQueryString.Substring(1);
                     }
                     else
                     {
-                        _FirstLink = "?" + _nextQueryString;
+                        _firstLink = "?" + _nextQueryString;
                     }
                     if (DefaultDescDirect)
                     {
                         if (!IsDesc)
                         {
-                            _FirstLink = _FirstLink + "&o=1";
+                            _firstLink = _firstLink + "&o=1";
                         }
                     }
                     else if (IsDesc)
                     {
-                        _FirstLink = _FirstLink + "&o=0";
+                        _firstLink = _firstLink + "&o=0";
                     }
                 }
-                return _FirstLink;
+                return _firstLink;
             }
         }
 
@@ -142,17 +224,9 @@ namespace COM.CF.Web
                 {
                     if (IsFanXiang)
                     {
-                        _nextLink = FirstLink + "&next=";
-                        if (IsDesc)
-                        {
-                            _nextLink = _nextLink + Convert.ToString((int)(_nextID + 1));
-                        }
-                        else
-                        {
-                            _nextLink = _nextLink + Convert.ToString((int)(_nextID - 1));
-                        }
+                        _nextLink = FirstLink + "&next=" + (IsDesc ? (_nextID+1) : (_nextID-1));
                     }
-                    else if (Rows.Count < Count)
+                    else if (Rows.Count <= Count)
                     {
                         _nextLink = "";
                     }
@@ -171,15 +245,13 @@ namespace COM.CF.Web
 
         public SqlConnection NotOpenConnection
         {
-            [DebuggerNonUserCode]
             get
             {
-                return _NotOpenConnection;
-            }
-            [DebuggerNonUserCode]
-            set
-            {
-                _NotOpenConnection = value;
+                if (_notOpenConnection == null)
+                {
+                    _notOpenConnection = CFConfig.GetNotOpenConnection();
+                }
+                return _notOpenConnection;
             }
         }
 
@@ -225,7 +297,7 @@ namespace COM.CF.Web
         {
             get
             {
-                if (_Rows == null)
+                if (_rows == null)
                 {
                     if (!IsFirst)
                     {
@@ -243,17 +315,13 @@ namespace COM.CF.Web
                     {
                         _strSQL = _strSQL + " desc";
                     }
-                    if (NotOpenConnection == null)
-                    {
-                        NotOpenConnection = CFConfig.GetNotOpenConnection();
-                    }
-                    _Rows = PubFunc.GetSQLRows(_strSQL, NotOpenConnection, Count);
+                    _rows = PubFunc.GetSQLRows(_strSQL, NotOpenConnection, Count);
                 }
-                return _Rows;
+                return _rows;
             }
             set
             {
-                _Rows = value;
+                _rows = value;
             }
         }
 

@@ -9,5 +9,6 @@ namespace COM.CF
     {
         inMem,
         inFile
+        
     }
 }

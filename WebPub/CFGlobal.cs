@@ -84,11 +84,10 @@ namespace CFTL
             }
             if (ee is HttpException)
             {
-                if ((LikeOperator.LikeString(ee.Message, "文件*不存在。", CompareMethod.Binary) || LikeOperator.LikeString(ee.Message, "The file*does not exist.", CompareMethod.Binary) ? true : false))
+                if (LikeOperator.LikeString(ee.Message, "文件*不存在。", CompareMethod.Binary) || LikeOperator.LikeString(ee.Message, "The file*does not exist.", CompareMethod.Binary))
                 {
                     this.Server.ClearError();
-                    //this.Response.WriteFile(CFConfig.MapPath("/inc/404.txt"));
-                    Response.Write("文件不存在或已被删除");
+                    Response.Redirect(Server.MapPath("/res/inc/404.html"),false);
                     return;
                 }
             }

@@ -13,6 +13,7 @@ namespace CWS
 {
     // Fields
     private static NameValueCollection _appset;
+    public static string WWWHost;
     public static string Img0Host;
     public static string Img80Host;
     public static string Img1Host;
@@ -38,6 +39,7 @@ namespace CWS
         SessionDB = new DB(s["SessionConnectionString"]);
         UserDB = new DB(s["UserConnectionString"]);
         XHDB = new DB(s["XHConnectionString"]);
+        WWWHost = PubFunc.GetDefaultStr(s["WWWHost"], "http://www.xianhuo365.com");
         JSHost = PubFunc.GetDefaultStr(s["JSHost"], "http://www.xianhuo365.com");
         Img0Host = PubFunc.GetDefaultStr(s["Img0Host"], "http://www.xianhuo365.com");
         Img80Host = PubFunc.GetDefaultStr(s["Img80Host"], "http://www.xianhuo365.com");

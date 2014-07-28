@@ -438,48 +438,39 @@ namespace COM.CF
             return n < 10 ? Convert.ToChar(n + Convert.ToInt32(48)) :  Convert.ToChar(n - 10 + Convert.ToInt32(97));
         }
 
-
+        /// <summary>
+        /// 获得默认整型
+        /// </summary>
+        /// <param name="inputStr"></param>
+        /// <param name="defaultInt">默认数</param>
+        /// <returns></returns>
         public static int GetDefaultInt(string inputStr, int defaultInt)
         {
-            int num;
-            if (inputStr !=null)
+            if (string.IsNullOrWhiteSpace(inputStr)) return defaultInt;
+            inputStr = inputStr.Trim();
+            try
             {
-                inputStr = inputStr.Trim();
-                if (inputStr !="")
+                if (!inputStr.StartsWith("0x"))
                 {
-                    try
+                    if (string.IsNullOrWhiteSpace(inputStr) || !(new Regex("^-?\\d{1,10}$", RegexOptions.Compiled | RegexOptions.ECMAScript).IsMatch(inputStr)))
                     {
-                        if (!inputStr.StartsWith("0x"))
-                        {
-                            if (string.IsNullOrWhiteSpace(inputStr) || !(new Regex("^-?\\d{1,10}$", RegexOptions.Compiled | RegexOptions.ECMAScript).IsMatch(inputStr)))
-                            {
-                                num = defaultInt;
-                            }
-                            else
-                            {
-                                num = int.Parse(inputStr);
-                            }
-                        }
-                        else
-                        {
-                            num = int.Parse(inputStr.Substring(2), NumberStyles.AllowHexSpecifier);
-                        }
+                        return defaultInt;
                     }
-                    catch                     
+                    else
                     {
-                        num = defaultInt;
+                        return int.Parse(inputStr);
                     }
                 }
                 else
                 {
-                    num = defaultInt;
+                    return int.Parse(inputStr.Substring(2), NumberStyles.AllowHexSpecifier);
                 }
             }
-            else
+            catch                     
             {
-                num = defaultInt;
+                return defaultInt;
             }
-            return num;
+
         }
 
         public static string GetDefaultStr(string inputStr)
@@ -659,24 +650,18 @@ namespace COM.CF
 
         public static decimal GetMoney(string s)
         {
-            decimal zero;
+            if (string.IsNullOrWhiteSpace(s)) return decimal.Zero;
 
-            if (s!=null && s!="")
+
+            try
             {
-                try
-                {
-                    zero = decimal.Parse(s);
-                }
-                catch
-                {
-                    zero = decimal.Zero;
-                }
+                return decimal.Parse(s);
             }
-            else
+            catch
             {
-                zero = decimal.Zero;
+                return decimal.Zero;
             }
-            return zero;
+
         }
 
         public static string GetNothing(string s, string defaultStr)
@@ -684,112 +669,104 @@ namespace COM.CF
             return (s != null) ? s : defaultStr;
         }
 
+        /// <summary>
+        /// 获得小数转化为百分比的字符串
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public static string GetPercent(double n)
         {
-            return Math.Round(n, 3).ToString("P");
+            return Math.Round(n,3).ToString("P");
         }
-
+        /// <summary>
+        /// 获得QueryString
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string GetQeuryString(string s)
         {
-            return (s!=null && s!="")? s.Replace("'", "").Trim() :"";
+            return !string.IsNullOrWhiteSpace(s)? s.Replace("'", "").Trim() :"";
         }
 
 
         public static char GetRandChar()
         {
-
             return PubFunc.GetCharByNumber((new Random()).Next(36));
         }
 
+        /// <summary>
+        /// 获得指定位数的随机字符串
+        /// </summary>
+        /// <param name="l"></param>
+        /// <returns></returns>
         public static string GetRandChar(int l)
         {
             string str="";
             Random random = new Random();
             int i = 0;
-            while (true)
+            while (++i <= l)
             {
-                if (i > l-1)
-                {
-                    break;
-                }
-                str = string.Concat(str, Convert.ToString(PubFunc.GetCharByNumber(random.Next(36))));
-                i++;
+                str += Convert.ToString(GetCharByNumber(random.Next(36)));
             }
+
             return str;
         }
+        /// <summary>
+        /// 判断输入字符串是否为非法数字，如果合法，输出数字
+        /// </summary>
+        /// <param name="inputstr"></param>
+        /// <param name="outInt"></param>
+        /// <returns></returns>
         public static bool isNaN(string inputstr, ref int outInt)
         {
-            bool flag;
+            if (string.IsNullOrWhiteSpace(inputstr)) return true;
+            try
+            {
+                if (!inputstr.StartsWith("0x"))
+                {
+                    outInt = int.Parse(inputstr);
+                    return false;
+                }
+                else
+                {
+                    outInt = int.Parse(inputstr.Substring(2), NumberStyles.AllowHexSpecifier);
+                    return false;
+                }
+            }
+            catch 
+            {
+                return true;
+            }
 
-            if (inputstr!=null && inputstr!="")
-            {
-                try
-                {
-                    if (!inputstr.StartsWith("0x"))
-                    {
-                        outInt = int.Parse(inputstr);
-                        flag = false;
-                    }
-                    else
-                    {
-                        outInt = int.Parse(inputstr.Substring(2), NumberStyles.AllowHexSpecifier);
-                        flag = false;
-                    }
-                }
-                catch 
-                {
-                    flag = true;
-                }
-            }
-            else
-            {
-                flag = true;
-            }
-            return flag;
         }
 
+        /// <summary>
+        /// 判断 字符串是否为非法数字
+        /// </summary>
+        /// <param name="inputstr"></param>
+        /// <returns></returns>
         public static bool isNaN(string inputstr)
         {
-            bool flag;         
-            if (inputstr!=null && inputstr!="")
+            if (string.IsNullOrWhiteSpace(inputstr)) return true;
+            try
             {
-                try
+                if (!inputstr.StartsWith("0x"))
                 {
-                    if (!inputstr.StartsWith("0x"))
-                    {
-                        if (PubTypes.IsNum(inputstr))
-                        {
-                            if (inputstr.Length <=10)
-                            {
-                                int.Parse(inputstr);
-                                flag = false;
-                            }
-                            else
-                            {
-                                flag = true;
-                            }
-                        }
-                        else
-                        {
-                            flag = true;
-                        }
-                    }
-                    else
-                    {
-                        int.Parse(inputstr.Substring(2), NumberStyles.AllowHexSpecifier);
-                        flag = false;
-                    }
+                    if (!PubTypes.IsNum(inputstr)) return true;
+                    if (inputstr.Length > 10) return true;
+                    int.Parse(inputstr);
+                    return false;
                 }
-                catch
+                else
                 {
-                    flag = true;
+                    int.Parse(inputstr.Substring(2), NumberStyles.AllowHexSpecifier);
+                    return false;
                 }
             }
-            else
+            catch
             {
-                flag = true;
+                return true;
             }
-            return flag;
         }
 
         public static string JSString(string s)
