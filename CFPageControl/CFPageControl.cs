@@ -109,13 +109,7 @@ namespace COM.CF.Web
                     {
                         if (delay!=1)
                         {
-                            str = new string[5];
-                            str[0] = "<script>window.setTimeout(\"location='";
-                            str[1] = url;
-                            str[2] = "'\",";
-                            str[3] = Convert.ToString(delay);
-                            str[4] = ");</script>";
-                            Response.Write(string.Concat(str));
+                            Response.Write(string.Format("<script>window.setTimeout(\"location='{0}'\",{1});</script>",url,delay));
                             Response.Write(string.Concat("<center><a href=", url, ">立刻继续</a></center>"));
                             Response.Write(string.Concat(Convert.ToString(delay / 0x3e8), " 秒后，自动继续"));
                             Response.Write("<center><input type=button value='返回' onclick='history.back()'></center>");

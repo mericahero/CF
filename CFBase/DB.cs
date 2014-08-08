@@ -7,15 +7,28 @@ using System.Web;
 
 namespace COM.CF
 {
+    /// <summary>
+    /// 功能：封闭Sql操作
+    /// 时间：2013-10-2
+    /// 作者：Meric
+    /// </summary>
     public class DB
     {
         private readonly string _constr;
 
+        /// <summary>
+        /// 构造方法
+        /// </summary>
+        /// <param name="constr"></param>
         public DB(string constr)
         {
             _constr = constr;
         }
 
+        /// <summary>
+        /// 获得打开的连接
+        /// </summary>
+        /// <returns></returns>
         public SqlConnection GetConnection()
         {
             SqlConnection sqlConnection = new SqlConnection(_constr);
@@ -23,37 +36,48 @@ namespace COM.CF
             return sqlConnection;
         }
 
-
+        /// <summary>
+        /// 执行sql语句，返回影响条数
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public int ExecuteNonQuery(string sql)
         {
-            int num;
             SqlCommand sqlComman = new SqlCommand(sql, GetConnection());
             try
             {
-                num = sqlComman.ExecuteNonQuery();
+                return sqlComman.ExecuteNonQuery();
             }
             finally
             {
                 sqlComman.Connection.Close();
             }
-            return num;
         }
 
+        /// <summary>
+        /// 执行sql语句，返回查询结果
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public object ExecuteScalar(string sql)
         {
-            object obj;
             SqlCommand sqlCommand = new SqlCommand(sql, GetConnection());
             try
             {
-                obj = sqlCommand.ExecuteScalar();
+                return sqlCommand.ExecuteScalar();
             }
             finally
             {
                 sqlCommand.Connection.Close();
             }
-            return obj;
         }
 
+        /// <summary>
+        /// 执行sql语句，返回查询结果，该方法需要传入连接
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="oConn"></param>
+        /// <returns></returns>
         public static object ExeCuteScalar(string sql, SqlConnection oConn)
         {
             SqlCommand sqlCommand = new SqlCommand(sql, oConn);
