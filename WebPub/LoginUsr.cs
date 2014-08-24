@@ -15,144 +15,166 @@ using CWS;
 namespace CFTL
 {
     public class LoginUsr : ILoginUsr, IUsr
-{
-    // Fields
-    private HttpContext Context;
-    private bool m_checked = false;
-    private bool m_logined = false;
-    private string m_account;
-    private string m_name;
-    private int m_uid;
-    private int m_bz;
-    private int m_idtype;
-
-    // Methods
-    public LoginUsr(HttpContext context)
     {
-        Context = context;
-    }
+        // Fields
+        private HttpContext Context;
+        private bool m_checked = false;
+        private bool m_logined = false;
+        private string m_account;
+        private string m_name;
+        private int m_uid;
+        private int m_bz;
+        private int m_idtype;
 
-    private bool CheckLogin()
-    {
-
-        m_checked = true;
-        Guid guid1 = CWPub.GetCookieGUID();
-        if (guid1 == Guid.Empty)
+        private Guid m_guid
         {
-            m_logined = false;
-            return false;
-        }
-        SqlCommand cm_login = new SqlCommand("p_session_cookies_login", CWConfig.SessionDB.GetConnection());
-        try
-        {
-            cm_login.CommandType = CommandType.StoredProcedure;
-            SqlParameterCollection cp = cm_login.Parameters;
-            cp.Add("@guid", SqlDbType.UniqueIdentifier).Value = guid1;
-            cp.Add("@account", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
-            cp.Add("@name", SqlDbType.NVarChar, 50).Direction = ParameterDirection.Output;
-            cp.Add("@uid", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cp.Add("@bz", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cp.Add("@idtype", SqlDbType.Int).Direction = ParameterDirection.Output;
-            cm_login.ExecuteNonQuery();
-            if (Information.IsDBNull(RuntimeHelpers.GetObjectValue(cm_login.Parameters["@account"].Value)))
+            get
             {
+                var temp = Context.Request["_GUID_SIGN_"];
+                var g = Guid.Empty;
+                if (string.IsNullOrWhiteSpace(temp))
+                {
+                    g = CWPub.GetCookieGUID();
+                }
+                else
+                {
+                    if (!Guid.TryParse(temp, out g))
+                    {
+                        g = Guid.Empty;
+                    }
+                }
+                return g;
+            }
+        }
+
+        // Methods
+        public LoginUsr(HttpContext context)
+        {
+            Context = context;
+        }
+
+        private bool CheckLogin()
+        {
+
+            m_checked = true;
+            //Guid guid1 = CWPub.GetCookieGUID();
+            if (m_guid == Guid.Empty)
+            {
+                m_logined = false;
                 return false;
             }
-
-            m_account = cp["@account"].Value.ToString();
-            m_name =  cp["@name"].Value.ToString();
-            m_uid =PubFunc.GetInt( cp["@uid"].Value.ToString());
-            m_bz = PubFunc.GetInt(cp["@bz"].Value.ToString());
-            m_idtype = PubFunc.GetInt(cp["@idtype"].Value.ToString());
-        }
-        finally
-        {
-            cm_login.Connection.Close();
-        }
-        m_logined = true;
-        return true;
-    }
-
-    public void MustLogin()
-    {
-        CFCache.HEADEnd();
-        if (!Logined)
-        {
-            NotLoginError();
-        }
-    }
-
-    private void NotLoginError()
-    {
-        if (!m_logined)
-        {
-            throw new CFException(enErrType.NotLogined, "没有登陆");
-        }
-    }
-
-    // Properties
-    public bool Logined
-    {
-        get
-        {
-            if (!m_checked)
+            SqlCommand cm_login = new SqlCommand("p_session_cookies_login", CWConfig.SessionDB.GetConnection());
+            try
             {
-                m_logined = CheckLogin();
+                cm_login.CommandType = CommandType.StoredProcedure;
+                SqlParameterCollection cp = cm_login.Parameters;
+                cp.Add("@guid", SqlDbType.UniqueIdentifier).Value = m_guid;
+                cp.Add("@account", SqlDbType.VarChar, 50).Direction = ParameterDirection.Output;
+                cp.Add("@name", SqlDbType.NVarChar, 50).Direction = ParameterDirection.Output;
+                cp.Add("@uid", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cp.Add("@bz", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cp.Add("@idtype", SqlDbType.Int).Direction = ParameterDirection.Output;
+                cm_login.ExecuteNonQuery();
+                if (Information.IsDBNull(RuntimeHelpers.GetObjectValue(cm_login.Parameters["@account"].Value)))
+                {
+                    return false;
+                }
+
+                m_account = cp["@account"].Value.ToString();
+                m_name = cp["@name"].Value.ToString();
+                m_uid = PubFunc.GetInt(cp["@uid"].Value.ToString());
+                m_bz = PubFunc.GetInt(cp["@bz"].Value.ToString());
+                m_idtype = PubFunc.GetInt(cp["@idtype"].Value.ToString());
             }
-            return m_logined;
+            finally
+            {
+                cm_login.Connection.Close();
+            }
+            m_logined = true;
+            return true;
         }
-    }
 
-    public string Account
-    {
-        get
+        public void MustLogin()
         {
-            NotLoginError();
-            return m_account;
+            CFCache.HEADEnd();
+            if (!Logined)
+            {
+                NotLoginError();
+            }
         }
-    }
 
-    public string Name
-    {
-        get
+
+        private void NotLoginError()
         {
-            NotLoginError();
-            return m_name;
+            if (!m_logined)
+            {
+                throw new CFException(enErrType.NotLogined, "没有登陆");
+            }
         }
-    }
 
-
-    public int UID
-    {
-        get
+        // Properties
+        public bool Logined
         {
-            NotLoginError();
-            return m_uid;
+            get
+            {
+                if (!m_checked)
+                {
+                    m_logined = CheckLogin();
+                }
+                return m_logined;
+            }
         }
-    }
 
-
-    public int BZ
-    {
-        get
+        public string Account
         {
-            NotLoginError();
-            return m_bz;
+            get
+            {
+                NotLoginError();
+                return m_account;
+            }
         }
-    }
 
-    public int IDType
-    {
-        get
+        public string Name
         {
-            NotLoginError();
-            return m_idtype;
+            get
+            {
+                NotLoginError();
+                return m_name;
+            }
+        }
+
+
+        public int UID
+        {
+            get
+            {
+                NotLoginError();
+                return m_uid;
+            }
+        }
+
+
+        public int BZ
+        {
+            get
+            {
+                NotLoginError();
+                return m_bz;
+            }
+        }
+
+        public int IDType
+        {
+            get
+            {
+                NotLoginError();
+                return m_idtype;
+            }
         }
     }
-}
 
 
- 
+
 
 
 }

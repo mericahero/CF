@@ -36,7 +36,9 @@ namespace CFTL
         private readonly HttpResponse Response;
 
 
-        // Properties
+        /// <summary>
+        /// 当前页面的页面类型
+        /// </summary>
         public enPageType CurPageType
         {
             get
@@ -45,6 +47,9 @@ namespace CFTL
             }
         }
 
+        /// <summary>
+        /// 页面控制，能控制页面的跳转，输出等
+        /// </summary>
         private CFPageControl WebForm
         {
             get
@@ -160,11 +165,11 @@ namespace CFTL
                     else
                     {
 
-                        Response.Write("<script>window.setTimeout(\"location='" + url + "'\"," + Convert.ToString(delay) + ");</script>"
-                            +"<center>"
-                            + Convert.ToString((int)(delay / 0x3e8)) + " 秒后，自动继续<br/>"                     
-                            +"<input type=button value='立即继续' onclick='location.href='" + url + "'>"
-                            +"<input type=button value='返回' onclick='history.back()'></center>");
+                        Response.Write(string.Format("<script>window.setTimeout('location=\"{0}\"','{1}');</script>",url,delay)
+                            + string.Format("<center><span id='gotime'>{0} </span>秒后，自动继续<br/>", delay / 0x3e8)
+                            + string.Format("<input type='button' value='立即继续' onclick='location.href=\"{0}\"' />",url)
+                            + "<input type='button' value='返回' onclick='history.back()'></center>"
+                            + string.Format("<script type='text/javascript'>setInterval('var ts=document.getElementById(\"gotime\");ts.innerText=parseInt(ts.innerText)-1;',1000)</script>",""));
                     }
                     return;
             }
@@ -207,7 +212,6 @@ namespace CFTL
 
         public void WriteHead(string title, string bodyClass, string otherHead)
         {
-            //Response.WriteFile(Context.Server.MapPath("/inc/head.txt"));
             Response.Write("<html><head><meta http-equiv='content-type' content='text/html; charset=utf-8 '>");
             Response.Write("<title>" + title + "</title>");
             Response.Write(otherHead);
@@ -229,18 +233,16 @@ namespace CFTL
 
         public void WriteOK(string s)
         {
-            Response.Write("<center><font color=blue size=+2>" + s + "</font></center>");
+            Response.Write("<center><font color='blue' size=+2>" + s + "</font></center>");
         }
 
         public void WritePageFoot()
         {
-            //Response.WriteFile(Context.Server.MapPath("/inc/foot.txt"));
             Response.Write("</body></html>");
         }
 
         public void WriteTail()
         {
-            //Response.WriteFile(Context.Server.MapPath("/inc/tail.txt"));
             Response.Write("</body></html>");
         }
 
@@ -248,7 +250,6 @@ namespace CFTL
         {
             WebForm.WirteXMLError(enXMLErrorCode.CFError, errmsg);
         }
-
 
     }
 

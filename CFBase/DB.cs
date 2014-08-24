@@ -41,11 +41,12 @@ namespace COM.CF
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public int ExecuteNonQuery(string sql)
+        public int ExecuteNonQuery(string sql,params SqlParameter [] pars)
         {
             SqlCommand sqlComman = new SqlCommand(sql, GetConnection());
             try
             {
+                sqlComman.Parameters.AddRange(pars);
                 return sqlComman.ExecuteNonQuery();
             }
             finally
@@ -53,6 +54,7 @@ namespace COM.CF
                 sqlComman.Connection.Close();
             }
         }
+
 
         /// <summary>
         /// 执行sql语句，返回查询结果
@@ -181,6 +183,24 @@ namespace COM.CF
             return dataSet;
         }
 
+        /// <summary>
+        /// 通过存储过程返回DataSet
+        /// </summary>
+        /// <param name="procedureName">存储过程名</param>
+        /// <param name="sqlparams">参数</param>
+        /// <returns></returns>
+        public DataSet GetSQLDataSet(string procedureName,params SqlParameter[] sqlparams)
+        {
+            var cm = new SqlCommand(procedureName,GetNotOpenConnection());
+            cm.CommandType = CommandType.StoredProcedure;
+            cm.Parameters.AddRange(sqlparams);
+            var adpter = new SqlDataAdapter(cm);
+            var ds = new DataSet();
+            adpter.Fill(ds);
+            return ds;
+
+        }
+
         public DataRowCollection GetSQLRows(string strsql)
         {
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strsql, GetNotOpenConnection());
@@ -261,11 +281,36 @@ namespace COM.CF
 
         public DataTable GetSQLTab(string strsql)
         {
-            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strsql, GetNotOpenConnection());
-            DataTable dataTable = new DataTable();
+            var sqlDataAdapter = new SqlDataAdapter(strsql, GetNotOpenConnection());
+            var dataTable = new DataTable();
             sqlDataAdapter.Fill(dataTable);
             return dataTable;
         }
+
+        /// <summary>
+        /// 通过存储过程获得DataTable
+        /// </summary>
+        /// <param name="procedureName">存储过程名</param>
+        /// <param name="param">存储过程参数</param>
+        /// <returns></returns>
+        public DataTable GetSQLTab(string procedureName, params SqlParameter[] param)
+        {
+            var cm = new SqlCommand(procedureName, GetConnection());
+            try
+            {
+                cm.CommandType = CommandType.StoredProcedure;
+                cm.Parameters.AddRange(param);
+                var adapter = new SqlDataAdapter(cm);
+                var dt = new DataTable();
+                adapter.Fill(dt);
+                return dt;
+            }
+            finally
+            {
+                cm.Connection.Close();
+            }
+        }
+
 
         public string GetSQLXML(string sql)
         {

@@ -14,7 +14,13 @@ namespace CFTL
 
         private void Page_Load(object sender, EventArgs e)
         {
-            UsrLogin.MustLogin();
+
+            if (!UsrLogin.Logined)
+            {
+                var autogo = Request.Url.ToString();
+                Response.Redirect(string.Format( "{0}/login.aspx?autogo={1}" ,CWS.CWConfig.LoginHost,System.Web.HttpUtility.UrlEncode(autogo)));
+            }
+            //UsrLogin.MustLogin();
         }
     }
 

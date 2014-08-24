@@ -11,9 +11,14 @@ using System.Reflection;
 
 namespace COM.CF
 {
+    /// <summary>
+    /// 功能：后台控制页面，该页面会处理前台的HTTP请求
+    /// 时间：2013-10-25
+    /// 作者：meric
+    /// </summary>
     public abstract class CtrlPage : PageBase
     {
-        // Fields
+        
         private NameValueCollection m_Form;
         private CFPageControl m_webForm;
 
@@ -87,14 +92,19 @@ namespace COM.CF
                     }
                     catch (CFException exception1)
                     {
-                        if (customAttribute.PageType == enPageType.XMLPage)
+                        switch (customAttribute.PageType)
                         {
-                            WebForm.WirteXMLError(enXMLErrorCode.CFError, exception1.Message, exception1.ErrType);
+                            case enPageType.SelfPage:
+                                WebForm.WriteJSONError((int)enXMLErrorCode.CFError, exception1.Message);
+                                break;
+                            case enPageType.XMLPage:
+                                WebForm.WirteXMLError(enXMLErrorCode.CFError, exception1.Message, exception1.ErrType);
+                                break;
+                            default:
+                                WriteErrorNoEnd(exception1.ErrType, exception1.Message);
+                                break;
                         }
-                        else
-                        {
-                            WriteErrorNoEnd(exception1.ErrType, exception1.Message);
-                        }
+
                     }
                     catch(Exception exception2)
                     {
@@ -133,6 +143,7 @@ namespace COM.CF
 
         protected abstract void HandleException(CFException e);
         protected abstract void WriteErrorNoEnd(enErrType errType, string msg);
+
         protected virtual void WriteHead()
         {
             WriteHead(enPageType.DefaultPage, "");

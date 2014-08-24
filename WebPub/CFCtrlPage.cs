@@ -39,6 +39,8 @@ namespace CFTL
             WebForm.WriteErrorNoEnd(errType, msg);
         }
 
+
+
         protected override void WriteHead(enPageType pageType, string title)
         {
             WebForm.WriteHead(title);

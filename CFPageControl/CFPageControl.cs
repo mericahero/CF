@@ -142,10 +142,7 @@ namespace COM.CF.Web
         }
 
 
-        //protected override void Dispose()
-        //{
-        //    Dispose();
-        //}
+
 
         public void Refresh(string win)
         {
@@ -183,20 +180,39 @@ namespace COM.CF.Web
             Response.Write(string.Concat("//error code=", Convert.ToString(errcode), " str=", errstr));
         }
 
-        private void WirteJSError(string errstr, string othertishi = "", string otherHTML = "", string otherCanShu = "")
+        public void WriteJSONError(string error, string otip = "")
         {
-            Response.Write(string.Concat("var errorObj={error:'", errstr, "',errtype:'sys'"));            
-            if (othertishi!="")
+            Response.Write(string.Concat("{r:'", error, "'"));
+            if (otip != "")
             {
-                Response.Write(string.Concat(",othertishi:'", othertishi, "'"));
+                Response.Write(string.Concat(",msg:'", otip, "'"));
             }
-            if (otherHTML!="")
+            Response.Write("}");
+        }
+
+        public void WriteJSONError(int errorcode, string otip = "")
+        {
+            if (errorcode > 0)
             {
-                Response.Write(string.Concat(",otherHTML:", PubFunc.HTML2JSStr(otherHTML)));
+                errorcode = -errorcode;
             }
-            if (otherCanShu!="")
+            WriteJSONError(errorcode.ToString(), otip);
+        }
+
+        private void WirteJSError(string errstr, string otip = "", string ohtml = "", string oparam = "")
+        {
+            Response.Write(string.Concat("var errorObj={error:'", errstr, "',errtype:'sys'"));
+            if (otip != "")
             {
-                Response.Write(otherCanShu);
+                Response.Write(string.Concat(",otip:'", otip, "'"));
+            }
+            if (ohtml != "")
+            {
+                Response.Write(string.Concat(",ohtml:", PubFunc.HTML2JSStr(ohtml)));
+            }
+            if (oparam != "")
+            {
+                Response.Write(oparam);
             }
             Response.Write("};");
         }
@@ -248,25 +264,48 @@ namespace COM.CF.Web
             WriteErrorPage("5ilogerror", msg, "", string.Concat(",errcode:'", errType.ToString(), "',gobacktishi:1"));
         }
 
-        public void WriteErrorPage(string errstr, string othertishi = "", string otherHTML = "", string otherCanShu = "")
+        public void WriteErrorPage(string errstr, string otip = "", string ohtml = "", string oparam = "")
         {
             Response.ClearContent();
-            int curPageType = CurPageType - enPageType.XMLPage;
-            switch (curPageType)
+
+            switch (CurPageType)
             {
-                case 0:
+                case enPageType.SelfPage:
+                    WriteJSONError(errstr, otip);
+                    break;
+                case enPageType.XMLPage:
                     WirteXMLError(errstr);
                     break;
-                case 1:
-                    WirteJSError(errstr, othertishi, otherHTML, otherCanShu);
+                case enPageType.JSPage:
+                    WirteJSError(errstr, otip, ohtml, oparam);
                     break;
                 default:
                     Response.Write("<script>");
-                    WirteJSError(errstr, othertishi, otherHTML, otherCanShu);
+                    WirteJSError(errstr, otip, ohtml, oparam);
                     Response.Write("</script>");
-                    Response.WriteFile(CFConfig.MapPath("/res/inc/errpage.html"));
+                    Context.Server.Transfer("/res/inc/errpage.aspx");
                     break;
             }
+
+            //int curPageType = CurPageType - enPageType.XMLPage;
+            //switch (curPageType)
+            //{
+            //    case 0:
+            //        WirteXMLError(errstr);
+            //        break;
+            //    case 1:
+            //        WirteJSError(errstr, otip, ohtml, oparam);
+            //        break;
+            //    default:
+            //        Response.Write("<script>");
+            //        WirteJSError(errstr, otip, ohtml, oparam);
+            //        Response.Write("</script>");
+            //        //Response.Redirect("/res/inc/errpage.aspx", false);
+            //        Context.Server.Transfer("/res/inc/errpage.aspx");
+                    
+            //        //Response.WriteFile(CFConfig.MapPath("/res/inc/errpage.aspx"));
+            //        break;
+            //}
         }
 
         public void WriteHead()
