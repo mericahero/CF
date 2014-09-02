@@ -7,14 +7,28 @@ using System.IO;
 
 namespace COM.CF.Web
 {
+    /// <summary>
+    /// 功能：页面的控制类，控制页面的跳转及错误输出等
+    /// 时间：2013-10-22
+    /// 作者：meric
+    /// </summary>
     public class CFPageControl
     {
+        /// <summary>
+        /// 当前的页面类型
+        /// </summary>
         private enPageType _curpagetype;
-
+        /// <summary>
+        /// 当前执行上下文
+        /// </summary>
         private readonly HttpContext Context;
-
+        /// <summary>
+        /// 当前请求Request
+        /// </summary>
         private readonly HttpRequest Request;
-
+        /// <summary>
+        /// 当前上下文的返回Response
+        /// </summary>
         private readonly HttpResponse Response;
 
         public enPageType CurPageType
@@ -24,41 +38,59 @@ namespace COM.CF.Web
                 return _curpagetype;
             }
         }
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="context1">请求上下文</param>
         public CFPageControl(HttpContext context1)
         {
-            _curpagetype = enPageType.SelfPage;
+            _curpagetype = enPageType.DefaultPage;
             Context = context1;
             Request = Context.Request;
             Response = Context.Response;
         }
 
+        #region 跳转页面
+        /// <summary>
+        /// 跳转页面
+        /// </summary>
         public void AutoGo()
         {
             AutoGo(null, -1);
         }
-
+        /// <summary>
+        /// 跳转页面
+        /// </summary>
+        /// <param name="url">跳转URL</param>
         public void AutoGo(string url)
         {
             AutoGo(url, -1);
         }
-
+        /// <summary>
+        /// 延时后跳转到指定URL
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="delay"></param>
         public void AutoGo(string url, int delay)
         {
             AutoGo(url, delay, null);
         }
-
+        /// <summary>
+        /// 延迟后跳转到指定URL，URL可自定义
+        /// </summary>
+        /// <param name="url">指定跳转URL</param>
+        /// <param name="delay">延时时间</param>
+        /// <param name="newidStr">自定义NEWID</param>
         public void AutoGo(string url, int delay, string newidStr)
         {
-            string[] str;
-            string item = Request["autogo"];
-            if (item!= null  && item!="")
+            string temp = Request["autogo"];
+            if (!string.IsNullOrWhiteSpace(temp))
             {
-                url = item;
+                url = temp;
             }
             else
             {
-                if (url==null)
+                if (string.IsNullOrWhiteSpace(url))
                 {
                     Response.Write("<center><input type=button value='返回' onclick='history.back()'></center>");
                     return;
@@ -69,81 +101,78 @@ namespace COM.CF.Web
                 url = url.Replace("NEWID", newidStr);
             }
             int defaultInt = PubFunc.GetDefaultInt(Request["delay"], -1);
-            if (defaultInt!=-1)
+            //默认的跳转延迟时间
+            delay = defaultInt <= -1 ? 3000 : defaultInt;
+
+            temp = Request["reloadwin"];
+
+            if (!string.IsNullOrWhiteSpace(temp))
             {
-                delay = defaultInt;
+                Response.Write(string.Format("<script type=\"text/javascript\">if({0}){0}.location.reload();</script>", temp));
             }
-            else
-            {
-                if ( delay == -1)
-                {
-                    delay = 0xbb8;
-                }
-            }
-            string item1 = Request["reloadwin"];
-            if (item1!=null)
-            {
-                Response.Write(string.Format("<script type=\"text/javascript\">if({0}){0}.location.reload();</script>",item1));
-            }
+
             string lower = url.ToLower();
-            if (lower != "autoclose")
+
+            if(lower=="autoclose")
             {
-                if (lower != "refreshopener")
+                Response.Write(string.Format("<script>window.setTimeout('window.close()',{0});</script>",delay));
+                Response.Write("<center><input type=button value='关闭' onclick='window.close()'></center>");
+                Response.Write(string.Concat(Convert.ToString(delay / 1000), "秒后，自动关闭"));
+                return;
+            }
+
+            if(lower=="refreshopener")
+            {
+                Response.Write(string.Format("<script>window.setTimeout('if (window.opener) window.opener.location.reload();window.close()',{0});</script>",delay));
+                Response.Write("<center><input type=button value='关闭' onclick='if (window.opener) window.opener.location.reload();window.close()'></center>");
+                Response.Write(string.Concat(Convert.ToString(delay /1000), "秒后，自动关闭"));
+            }
+
+
+            if (!url.ToLower().StartsWith("http://") && !url.StartsWith("/"))
+            {
+                if (Request.UrlReferrer != null)
                 {
-                    if (!url.ToLower().StartsWith("http://") && !url.StartsWith("/"))
+                    string directoryName = Path.GetDirectoryName(Request.UrlReferrer.AbsolutePath);
+                    if (directoryName != null)
                     {
-                        if (Request.UrlReferrer != null)
-                        {
-                            string directoryName = Path.GetDirectoryName(Request.UrlReferrer.AbsolutePath);
-                            if (directoryName != null)
-                            {
-                                url = string.Concat(directoryName.Replace("\\", "/"), "/", url);
-                            }
-                            else
-                            {
-                                url = string.Concat("/", url);
-                            }
-                        }
-                    }
-                    if (delay!=0)
-                    {
-                        if (delay!=1)
-                        {
-                            Response.Write(string.Format("<script>window.setTimeout(\"location='{0}'\",{1});</script>",url,delay));
-                            Response.Write(string.Concat("<center><a href=", url, ">立刻继续</a></center>"));
-                            Response.Write(string.Concat(Convert.ToString(delay / 0x3e8), " 秒后，自动继续"));
-                            Response.Write("<center><input type=button value='返回' onclick='history.back()'></center>");
-                        }
-                        else
-                        {
-                            Response.ClearContent();
-                            Response.Write(string.Concat("<script>location='", url, "'</script>"));
-                            Response.Write(string.Concat("<center><a href=", url, ">立刻继续</a></center>"));
-                        }
+                        url = string.Concat(directoryName.Replace("\\", "/"), "/", url);
                     }
                     else
                     {
-                        Response.Redirect(url, false);
+                        url = string.Concat("/", url);
                     }
                 }
-                else
-                {
-                    Response.Write(string.Concat("<script src=http://js.5ilog.com/qq/js/pub.js></script><script>window.setTimeout('if (window.opener) window.opener.location.reload();window.close()',", Convert.ToString(delay), ");</script>"));
-                    Response.Write("<center><input type=button value='关闭' onclick='if (window.opener) window.opener.location.reload();window.close()'></center>");
-                    Response.Write(string.Concat(Convert.ToString(delay / 0x3e8), "秒后，自动关闭"));
-                }
             }
-            else
+            if (delay == 0)
             {
-                Response.Write(string.Concat("<script>window.setTimeout('window.close()',", Convert.ToString(delay), ");</script>"));
-                Response.Write("<center><input type=button value='关闭' onclick='window.close()'></center>");
-                Response.Write(string.Concat(Convert.ToString(delay / 0x3e8), "秒后，自动关闭"));
+                Response.Redirect(url, false);
+                return;
             }
+
+            if (delay == 1)
+            {
+                Response.ClearContent();
+                Response.Write(string.Concat("<script>location='", url, "'</script>"));
+                Response.Write(string.Concat("<center><a href=", url, ">立刻继续</a></center>"));
+                return;
+            }
+
+
+            Response.Write(string.Format("<script>window.setTimeout(\"location='{0}'\",{1});</script>", url, delay));
+            Response.Write(string.Concat("<center><a href=", url, ">立刻继续</a></center>"));
+            Response.Write(string.Concat(Convert.ToString(delay / 1000), " 秒后，自动继续"));
+            Response.Write("<center><input type=button value='返回' onclick='history.back()'></center>");
+
         }
+        #endregion
 
 
 
 
+        #region 页面控制
+        
+        #endregion
         public void Refresh(string win)
         {
             Response.Write(string.Concat("<script>", win, ".document.location.reload()</script>"));
@@ -267,7 +296,6 @@ namespace COM.CF.Web
         public void WriteErrorPage(string errstr, string otip = "", string ohtml = "", string oparam = "")
         {
             Response.ClearContent();
-
             switch (CurPageType)
             {
                 case enPageType.SelfPage:
@@ -286,26 +314,6 @@ namespace COM.CF.Web
                     Context.Server.Transfer("/res/inc/errpage.aspx");
                     break;
             }
-
-            //int curPageType = CurPageType - enPageType.XMLPage;
-            //switch (curPageType)
-            //{
-            //    case 0:
-            //        WirteXMLError(errstr);
-            //        break;
-            //    case 1:
-            //        WirteJSError(errstr, otip, ohtml, oparam);
-            //        break;
-            //    default:
-            //        Response.Write("<script>");
-            //        WirteJSError(errstr, otip, ohtml, oparam);
-            //        Response.Write("</script>");
-            //        //Response.Redirect("/res/inc/errpage.aspx", false);
-            //        Context.Server.Transfer("/res/inc/errpage.aspx");
-                    
-            //        //Response.WriteFile(CFConfig.MapPath("/res/inc/errpage.aspx"));
-            //        break;
-            //}
         }
 
         public void WriteHead()
@@ -340,7 +348,7 @@ namespace COM.CF.Web
 
         public void WriteTail()
         {
-            Response.Write("</body></HTML>");
+            Response.Write("</body></html>");
         }
 
 

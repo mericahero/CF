@@ -1,11 +1,11 @@
 ﻿
-    using Microsoft.VisualBasic;
-    using Microsoft.VisualBasic.CompilerServices;
-    using System;
-    using System.Data;
-    using System.Data.SqlClient;
-    using System.Runtime.InteropServices;
-    using System.Web;
+using Microsoft.VisualBasic;
+using Microsoft.VisualBasic.CompilerServices;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Runtime.InteropServices;
+using System.Web;
 namespace COM.CF.Web
 {
     public class CFCookies
@@ -19,9 +19,9 @@ namespace COM.CF.Web
             HttpCookie cookie = new HttpCookie(name);
             HttpContext current = HttpContext.Current;
             cookie.Expires = new DateTime(0x8c1220247e44000L);
-            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.QQDomain))
+            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.WWWDomain))
             {
-                cookie.Domain = CFConfig.QQDomain;
+                cookie.Domain = CFConfig.WWWDomain;
             }
             if (path != null)
             {
@@ -31,7 +31,7 @@ namespace COM.CF.Web
             current = null;
         }
 
-        private static string GetCookie(string cookie)
+        public static string GetCookie(string cookie)
         {
             HttpCookie cookie2 = HttpContext.Current.Request.Cookies.Get(cookie);
             if (cookie2 == null)
@@ -132,9 +132,9 @@ namespace COM.CF.Web
         {
             string qQDomain=null;
             HttpContext current = HttpContext.Current;
-            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.QQDomain))
+            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.WWWDomain))
             {
-                qQDomain = CFConfig.QQDomain;
+                qQDomain = CFConfig.WWWDomain;
             }
             HttpCookie cookie = current.Response.Cookies["uuid"];
             cookie.Value = uuid.ToString();
@@ -156,9 +156,9 @@ namespace COM.CF.Web
         {
             string qQDomain=null;
             HttpContext current = HttpContext.Current;
-            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.QQDomain))
+            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.WWWDomain))
             {
-                qQDomain = CFConfig.QQDomain;
+                qQDomain = CFConfig.WWWDomain;
             }
             HttpCookie cookie = current.Response.Cookies[name];
             cookie.Value = value;
@@ -185,9 +185,9 @@ namespace COM.CF.Web
         {
             string qQDomain=null;
             HttpContext current = HttpContext.Current;
-            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.QQDomain))
+            if (current.Request.Url.Host.ToLower().EndsWith(CFConfig.WWWDomain))
             {
-                qQDomain = CFConfig.QQDomain;
+                qQDomain = CFConfig.WWWDomain;
             }
             HttpCookie cookie = current.Response.Cookies[name];
             cookie.Value = value;

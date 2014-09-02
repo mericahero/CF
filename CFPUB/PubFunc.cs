@@ -16,13 +16,13 @@ using System.Data.SqlClient;
 
 namespace COM.CF
 {
+    /// <summary>
+    /// 功能：CF框架的公共方法
+    /// 时间：2013-10-21
+    /// 作者：meric
+    /// </summary>
     public class PubFunc
     {
-        public static object BlankToNull(string s)
-        {
-            return s!="" ? (object)s : DBNull.Value;
-        }
-
         /// <summary>
         /// 删除QueryString中的指定键
         /// </summary>
@@ -32,26 +32,22 @@ namespace COM.CF
         public static String DelQueryName(string query, string delkey)
         {
             string str;
-            if (!string.IsNullOrWhiteSpace(query))
+            if (string.IsNullOrWhiteSpace(query)) return "";
+
+            if (!query.StartsWith("?"))
             {
-                if (!query.StartsWith("?"))
-                {
-                    query = "?" + query;
-                }
-                query = Regex.Replace(query, String.Concat("[\\?&]*", delkey, "=[^&]*"), "", RegexOptions.IgnoreCase);
-                if (!query.StartsWith("&"))
-                {
-                    str = query;
-                }
-                else
-                {
-                    str = query.Substring(1);
-                }
+                query = "?" + query;
+            }
+            query = Regex.Replace(query, String.Concat(@"[\?&]*", delkey, "=[^&]*"), "", RegexOptions.IgnoreCase);
+            if (!query.StartsWith("&"))
+            {
+                str = query;
             }
             else
             {
-                str = "";
+                str = query.Substring(1);
             }
+
             return str;
         }
         /// <summary>
@@ -82,7 +78,7 @@ namespace COM.CF
             return str;
         }
 
-
+        #region HTTP请求
         public static bool FowardHTTP(string newhost)
         {
             return FowardHTTP(newhost, null);
@@ -122,7 +118,7 @@ namespace COM.CF
                     {
                         @default = Encoding.UTF8;
                     }
-                    if (response.ContentEncoding!="gzip")
+                    if (response.ContentEncoding != "gzip")
                     {
                         responseStream = response.GetResponseStream();
                     }
@@ -179,11 +175,6 @@ namespace COM.CF
             return SendHTTP(url, "", true);
         }
 
- 
-
- 
-
-
 
 
 
@@ -202,7 +193,7 @@ namespace COM.CF
                 {
                     Encoding encoding;
                     Stream responseStream;
-                    if(rep.ContentType.ToLower().IndexOf("utf-8")>=0)
+                    if (rep.ContentType.ToLower().IndexOf("utf-8") >= 0)
                     {
                         encoding = Encoding.UTF8;
                     }
@@ -226,7 +217,7 @@ namespace COM.CF
                 }
                 return str2;
             }
-            catch 
+            catch
             {
                 return "";
             }
@@ -243,9 +234,9 @@ namespace COM.CF
             return SendHTTP(url, agent, true);
         }
 
- 
 
- 
+
+
 
 
 
@@ -271,7 +262,7 @@ namespace COM.CF
                 {
                     Encoding encoding;
                     Stream responseStream;
-                    if(response.ContentType.ToLower().IndexOf("utf-8")>=0)
+                    if (response.ContentType.ToLower().IndexOf("utf-8") >= 0)
                     {
                         encoding = Encoding.UTF8;
                     }
@@ -315,8 +306,8 @@ namespace COM.CF
         /// <returns></returns>
         public static string PostHTTP(string url,
             NameValueCollection form,
-             Encoding sendEncoding=null,
-             bool isgunzip=true)
+             Encoding sendEncoding = null,
+             bool isgunzip = true)
         {
 
             StringBuilder sb = new StringBuilder();
@@ -345,8 +336,8 @@ namespace COM.CF
         /// <returns></returns>
         public static string PostHTTP(string url,
             string postStr,
-            Encoding sendEncoding=null,
-            bool isgunzip=true)
+            Encoding sendEncoding = null,
+            bool isgunzip = true)
         {
             string returnStr;
             StringBuilder sb = new StringBuilder();
@@ -408,6 +399,8 @@ namespace COM.CF
         }
 
 
+        #endregion
+        
 
 
 

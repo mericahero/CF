@@ -47,17 +47,22 @@ namespace CFTL
             }
         }
 
-        // Methods
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="context"></param>
         public LoginUsr(HttpContext context)
         {
             Context = context;
         }
-
+        /// <summary>
+        /// 判断用户是否登录
+        /// </summary>
+        /// <returns></returns>
         private bool CheckLogin()
         {
 
             m_checked = true;
-            //Guid guid1 = CWPub.GetCookieGUID();
             if (m_guid == Guid.Empty)
             {
                 m_logined = false;

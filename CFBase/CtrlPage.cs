@@ -22,11 +22,13 @@ namespace COM.CF
         private NameValueCollection m_Form;
         private CFPageControl m_webForm;
 
-        // Methods
+
         protected CtrlPage()
         {
         }
-
+        /// <summary>
+        /// 处理方法
+        /// </summary>
         protected override void EventMain()
         {
             string name = RequestForm["act"];
@@ -36,109 +38,112 @@ namespace COM.CF
             {
                 WriteHead();
                 WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！");
+                return;
             }
-            else
+
+            PageAttribute customAttribute = (PageAttribute) Attribute.GetCustomAttribute(method, typeof(PageAttribute));
+            if (customAttribute == null)
             {
-                PageAttribute customAttribute = (PageAttribute) Attribute.GetCustomAttribute(method, typeof(PageAttribute));
-                if (customAttribute == null)
+                WriteHead();
+                WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！！");
+                return;
+            }
+
+            try
+            {
+                if (customAttribute.MustLogin)
                 {
-                    WriteHead();
-                    WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！！");
+                    UsrLogin.MustLogin();
+                }
+
+                switch (customAttribute.PageType)
+                {
+                    case enPageType.SelfPage:
+                        break;
+                    case enPageType.DefaultPage:
+                    case enPageType.DarkPage:
+                    case enPageType.FriendSetting:
+                        WriteHead(customAttribute.PageType, customAttribute.Title);
+                        break;
+                    case enPageType.XMLPage:
+                        WebForm.SetXMLPage();
+                        break;
+                    case enPageType.JSPage:
+                        WebForm.SetJSPage();
+                        break;
+                    default:
+                        WriteHead(customAttribute.PageType, customAttribute.Title);
+                        break;
+                }
+                method.Invoke(this, null);
+                switch (customAttribute.PageType)
+                {
+                    case enPageType.SelfPage:
+                    case enPageType.XMLPage:
+                    case enPageType.JSPage:
+                        break;
+                    case enPageType.DefaultPage:
+                    case enPageType.DarkPage:
+                    case enPageType.FriendSetting:
+                        WriteTail();
+                        break;
+                    default:
+                        WriteTail();
+                        break;
+                }
+            }
+            catch (CFException exception1)
+            {
+                switch (customAttribute.PageType)
+                {
+                    case enPageType.SelfPage:
+                        WebForm.WriteJSONError((int)enXMLErrorCode.CFError, exception1.Message);
+                        break;
+                    case enPageType.XMLPage:
+                        WebForm.WirteXMLError(enXMLErrorCode.CFError, exception1.Message, exception1.ErrType);
+                        break;
+                    default:
+                        WriteErrorNoEnd(exception1.ErrType, exception1.Message);
+                        break;
+                }
+
+            }
+            catch(Exception exception2)
+            {
+                if (exception2.InnerException == null)
+                {
+                    COM.CF.Web.ErrorLog.UnControlException(WebForm, exception2, customAttribute.PageType == enPageType.XMLPage);
                 }
                 else
                 {
-                    try
+                    CFException innerException = (exception2.InnerException) as CFException;
+                    if (innerException != null)
                     {
-                        if (customAttribute.MustLogin)
-                        {
-                            UsrLogin.MustLogin();
-                        }
-
                         switch (customAttribute.PageType)
                         {
                             case enPageType.SelfPage:
-                                break;
-                            case enPageType.DefaultPage:
-                            case enPageType.DarkPage:
-                            case enPageType.FriendSetting:
-                                WriteHead(customAttribute.PageType, customAttribute.Title);
+                                WebForm.WriteJSONError((int)enXMLErrorCode.CFError, innerException.Message);
                                 break;
                             case enPageType.XMLPage:
-                                WebForm.SetXMLPage();
+                                WebForm.WirteXMLError(enXMLErrorCode.CFError, innerException.Message, innerException.ErrType);
                                 break;
                             case enPageType.JSPage:
-                                WebForm.SetJSPage();
+                                WebForm.WirteJSError(innerException.ErrType, innerException.Message);
                                 break;
                             default:
-                                WriteHead(customAttribute.PageType, customAttribute.Title);
-                                break;
-                        }
-                        method.Invoke(this, null);
-                        switch (customAttribute.PageType)
-                        {
-                            case enPageType.SelfPage:
-                            case enPageType.XMLPage:
-                            case enPageType.JSPage:
-                                break;
-                            case enPageType.DefaultPage:
-                            case enPageType.DarkPage:
-                            case enPageType.FriendSetting:
-                                WriteTail();
-                                break;
-                            default:
-                                WriteTail();
+                                HandleException(innerException);
                                 break;
                         }
                     }
-                    catch (CFException exception1)
+                    else
                     {
-                        switch (customAttribute.PageType)
-                        {
-                            case enPageType.SelfPage:
-                                WebForm.WriteJSONError((int)enXMLErrorCode.CFError, exception1.Message);
-                                break;
-                            case enPageType.XMLPage:
-                                WebForm.WirteXMLError(enXMLErrorCode.CFError, exception1.Message, exception1.ErrType);
-                                break;
-                            default:
-                                WriteErrorNoEnd(exception1.ErrType, exception1.Message);
-                                break;
-                        }
-
+                        COM.CF.Web.ErrorLog.UnControlException(WebForm, exception2.InnerException, customAttribute.PageType == enPageType.XMLPage);
                     }
-                    catch(Exception exception2)
-                    {
-                        if (exception2.InnerException == null)
-                        {
-                            COM.CF.Web.ErrorLog.UnControlException(WebForm, exception2, customAttribute.PageType == enPageType.XMLPage);
-                        }
-                        else
-                        {
-                            CFException innerException = (exception2.InnerException) as CFException;
-                            if (innerException != null)
-                            {
-                                switch (customAttribute.PageType)
-                                {
-                                    case enPageType.XMLPage:
-                                        WebForm.WirteXMLError(enXMLErrorCode.CFError, innerException.Message, innerException.ErrType);
-                                        break;
-                                    case enPageType.JSPage:
-                                        WebForm.WirteJSError(innerException.ErrType, innerException.Message);
-                                        break;
-                                    default:
-                                        HandleException(innerException);
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                COM.CF.Web.ErrorLog.UnControlException(WebForm, exception2.InnerException, customAttribute.PageType == enPageType.XMLPage);
-                            }
-                        }
-                    }
-
                 }
             }
+
+
+
         }
 
         protected abstract void HandleException(CFException e);
@@ -152,7 +157,9 @@ namespace COM.CF
         protected abstract void WriteHead(enPageType pageType, string title);
         protected abstract void WriteTail();
 
-        // Properties
+        /// <summary>
+        /// 请求参数，包括POST和GET，但不能混合 
+        /// </summary>
         protected NameValueCollection RequestForm
         {
             get
@@ -178,10 +185,15 @@ namespace COM.CF
                 return m_Form;
             }
         }
-
+        /// <summary>
+        /// 当前页面的登录控制
+        /// </summary>
         protected abstract ILoginUsr UsrLogin { get; }
 
 
+        /// <summary>
+        /// 页面控制类
+        /// </summary>
         private CFPageControl WebForm
         {
             get

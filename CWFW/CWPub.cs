@@ -23,10 +23,6 @@ namespace CWS
 
         // Methods
 
-
-
-
-
         public static bool CheckGuiZe1(string s)
         {
             if (regex1.IsMatch(s))

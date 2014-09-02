@@ -7,57 +7,58 @@ using System.Web;
 
 namespace CFTL
 {
+    /// <summary>
+    /// 功能：CF框架内页面的基类
+    /// 时间：2013-10-22
+    /// 作者：meric
+    /// </summary>
     public class CFPage : UIPage
     {
+        /// <summary>
+        /// _usrInfo 同时实现了IUsr以及ILoginUsr接口
+        /// </summary>
         private LoginUsr _usrInfo;
-
-        private CFWebForm _webForm;
-
         protected IUsr UsrInfo
         {
             get
             {
-                if (_usrInfo == null)
-                {
-                    _usrInfo = new LoginUsr(Context);
-                }
-                return _usrInfo;
+                return _usrInfo = _usrInfo ?? new LoginUsr(Context);
             }
         }
-
+        
         protected new ILoginUsr UsrLogin
         {
             get
             {
-                if (_usrInfo == null)
-                {
-                    _usrInfo = new LoginUsr(Context);
-                }
-                return _usrInfo;
+                return _usrInfo = _usrInfo ?? new LoginUsr(Context);
             }
         }
 
+        private CFWebForm _webForm;
         protected CFWebForm WebForm
         {
             get
             {
-                if (_webForm == null)
-                {
-                    _webForm = new CFWebForm(Context);
-                }
-                return _webForm;
+                return _webForm=_webForm??new CFWebForm(Context);
             }
         }
+
+
 
 
         protected override void HandleException(CFException ee)
         {
             enErrType errType = ee.ErrType;
-            bool flag = errType == enErrType.NotLogined;
-            if (!flag)
+            if (ee.ErrType == enErrType.NotLogined)
             {
                 Response.Clear();
-                if (Response.Headers["Cache-Control"]=="public")
+                HttpContext.Current.ClearError();
+                WebForm.WriteLogin();
+            }
+            else
+            {
+                Response.Clear();
+                if (Response.Headers["Cache-Control"] == "public")
                 {
                     Response.Headers["Cache-Control"] = "private";
                 }
@@ -65,12 +66,7 @@ namespace CFTL
                 WebForm.WriteErrorNoEnd(ee.ErrType, ee.Message);
                 HttpContext.Current.ClearError();
             }
-            else
-            {
-                Response.Clear();
-                HttpContext.Current.ClearError();
-                WebForm.WriteLogin();
-            }
+
         }
     }
 

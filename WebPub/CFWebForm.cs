@@ -20,7 +20,7 @@ namespace CFTL
         /// <summary>
         /// 页面类型
         /// </summary>
-        private enPageType _curpagetype = enPageType.SelfPage;
+        private enPageType _curpagetype = enPageType.DefaultPage;
         private CFPageControl _qqpagectrl;
         /// <summary>
         /// 页面上下文

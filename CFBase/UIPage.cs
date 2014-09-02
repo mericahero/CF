@@ -10,6 +10,11 @@ using COM.CF.Web;
 
 namespace COM.CF
 {
+    /// <summary>
+    /// 功能：抽象类UIPage，定义页面的基本属性和方法，所有CF框架类的基类CFPage继承此抽象类
+    /// 时间：2013-10-22
+    /// 作者：meric
+    /// </summary>
     public abstract class UIPage : Page
     {
         private NameValueCollection m_Form;
@@ -40,6 +45,36 @@ namespace COM.CF
             this.Error += new EventHandler(JScriptPagePage_Error);
         }
 
+
+        private DynamicViewDataDictionary _dynamicViewData;
+        /// <summary>
+        /// ViewBag和ViewData为用户在使用页面时可自定义自增加的属性
+        /// </summary>
+        public dynamic ViewBag
+        {
+            get
+            {
+                return _dynamicViewData = _dynamicViewData ?? new DynamicViewDataDictionary();
+            }
+            set
+            {
+                _dynamicViewData = value;
+            }
+        }
+
+        private IDictionary<object, object> _viewData;
+        public IDictionary<object, object> ViewData
+        {
+            get
+            {
+                return _viewData = _viewData ?? new Dictionary<object, object>();
+            }
+            set
+            {
+                _viewData = value;
+            }
+        }
+
         public string DelQueryName(string delkey)
         {
             return PubFunc.DelQueryName(Request.Url.Query, delkey); ;
@@ -50,44 +85,10 @@ namespace COM.CF
             return PubFunc.DelQueryName(PubFunc.DelQueryName(Request.Url.Query, delkey), "next");
         }
 
-        /// <summary>
-        /// 获取左侧字符
-        /// </summary>
-        /// <param name="s">源字符串</param>
-        /// <param name="n">左侧字符数</param>
-        /// <returns></returns>
-        protected string GetLeftStr(string s, int n)
-        {
-            if (s == null) return null;
-            if (s.Length <= n) return s;
-            return String.Format("<span title=\"{0}\">{1}...</span>",s,s.Substring(0,n));
 
-        }
 
-        /// <summary>
-        /// 获取左侧字符
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="n"></param>
-        /// <param name="link"></param>
-        /// <returns></returns>
-        protected string GetLeftStr(string s, int n, string link)
-        {
-            return  GetLeftStr(s, n, link, "");
-        }
-        /// <summary>
-        /// 获取左侧字符
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="n"></param>
-        /// <param name="link"></param>
-        /// <param name="othercanshu"></param>
-        /// <returns></returns>
-        protected string GetLeftStr(string s, int n, string link, string othercanshu="")
-        {
-            if(s==null) return "";
-            return String.Format("<a href=\"{0}\" {1} {2}>{3}</a>",link,othercanshu,s.Length<=n ? "" : "title="+ s,s.Length<=n ? s : s.Substring(0,n) +"...");
-        }
+
+
 
         protected int GetPathID()
         {
@@ -119,14 +120,6 @@ namespace COM.CF
                 COM.CF.Web.ErrorLog.UnControlException(new CFPageControl(Context), error);
                 HttpContext.Current.ClearError();
             }
-        }
-
-        protected int RequestInt(string name)
-        {
-            int num = 0;
-            if (PubFunc.isNaN(RequestForm[name], ref num)) throw new CFException(enErrType.NormalError, string.Concat(name, " 必须提供！"));
-            return num;
-
         }
     }
 }

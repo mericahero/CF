@@ -126,10 +126,10 @@ namespace COM.CF
 
 
 
-        public static string QQDomain = "5ilog.com";
+        public static string WWWDomain = "5ilog.com";
 
-        public static string QQHomeHost = ("w0." + QQDomain);
-        public static string QQImgHost = ("i0." + QQDomain + "/u.aspx");
+        public static string WWWHomeHost = ("w0." + WWWDomain);
+        public static string WWWImgHost = ("i0." + WWWDomain + "/u.aspx");
 
 
 
@@ -228,19 +228,19 @@ namespace COM.CF
                 }
                 if ((str3.Length == 2) && (str3.StartsWith("d") || str3.StartsWith("t")))
                 {
-                    return (str3.Substring(0, 1) + Convert.ToString(homeid) + "." + QQDomain);
+                    return (str3.Substring(0, 1) + Convert.ToString(homeid) + "." + WWWDomain);
                 }
             }
-            return ("w" + Convert.ToString(homeid) + "." + QQDomain);
+            return ("w" + Convert.ToString(homeid) + "." + WWWDomain);
         }
 
         public static string GetImgHomeHost(byte homeid)
         {
             if (homeid == 0)
             {
-                return QQImgHost;
+                return WWWImgHost;
             }
-            return ("i" + Convert.ToString(homeid) + "." + QQDomain);
+            return ("i" + Convert.ToString(homeid) + "." + WWWDomain);
         }
 
         public static SqlConnection GetNotOpenConnection()

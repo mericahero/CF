@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicViewDataDictionary.cs" />
     <Compile Include="AutoAdapter.cs" />
     <Compile Include="CtrlPage.cs" />
     <Compile Include="DB.cs" />
