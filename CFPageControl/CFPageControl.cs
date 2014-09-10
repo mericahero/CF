@@ -14,6 +14,7 @@ namespace COM.CF.Web
     /// </summary>
     public class CFPageControl
     {
+        #region 定义
         /// <summary>
         /// 当前的页面类型
         /// </summary>
@@ -33,11 +34,13 @@ namespace COM.CF.Web
 
         public enPageType CurPageType
         {
-            get 
+            get
             {
                 return _curpagetype;
             }
         }
+        #endregion
+
         /// <summary>
         /// 构造函数
         /// </summary>
@@ -50,7 +53,7 @@ namespace COM.CF.Web
             Response = Context.Response;
         }
 
-        #region 跳转页面
+        #region 页面跳转
         /// <summary>
         /// 跳转页面
         /// </summary>
@@ -112,7 +115,7 @@ namespace COM.CF.Web
             }
 
             string lower = url.ToLower();
-
+            //自动关闭
             if(lower=="autoclose")
             {
                 Response.Write(string.Format("<script>window.setTimeout('window.close()',{0});</script>",delay));
@@ -120,14 +123,13 @@ namespace COM.CF.Web
                 Response.Write(string.Concat(Convert.ToString(delay / 1000), "秒后，自动关闭"));
                 return;
             }
-
+            //刷新打开页面
             if(lower=="refreshopener")
             {
                 Response.Write(string.Format("<script>window.setTimeout('if (window.opener) window.opener.location.reload();window.close()',{0});</script>",delay));
                 Response.Write("<center><input type=button value='关闭' onclick='if (window.opener) window.opener.location.reload();window.close()'></center>");
                 Response.Write(string.Concat(Convert.ToString(delay /1000), "秒后，自动关闭"));
             }
-
 
             if (!url.ToLower().StartsWith("http://") && !url.StartsWith("/"))
             {
@@ -311,7 +313,7 @@ namespace COM.CF.Web
                     Response.Write("<script>");
                     WirteJSError(errstr, otip, ohtml, oparam);
                     Response.Write("</script>");
-                    Context.Server.Transfer("/res/inc/errpage.aspx");
+                    Context.Server.Execute("~/res/inc/errpage.aspx");
                     break;
             }
         }
@@ -325,13 +327,18 @@ namespace COM.CF.Web
         {
             WriteHead(pageType, title, "");
         }
-
+        /// <summary>
+        /// 输出页面头部
+        /// </summary>
+        /// <param name="pageType"></param>
+        /// <param name="title"></param>
+        /// <param name="otherHead"></param>
         public void WriteHead(enPageType pageType, string title, string otherHead)
         {
             Response.Write("<html><head><meta http-equiv='content-type' content='text/html; charset=utf-8 '>");
             Response.Write(string.Concat("<title>", title, "</title>"));
             Response.Write(otherHead);
-            Response.Write(string.Concat("</head><body ", BodyParams.AryBodyParams[(int)pageType], ">"));
+            Response.Write("</head><body>");
         }
  
 

@@ -19,8 +19,6 @@ namespace COM.CF
 {
     public class CFConfig
     {
-
-        // Properties
         public static string AppPath
         {
             get
@@ -33,11 +31,11 @@ namespace COM.CF
         {
             get
             {
-                return fieldConnectionString;
+                return m_connectionString;
             }
             set
             {
-                fieldConnectionString = value;
+                m_connectionString = value;
             }
         }
 
@@ -76,19 +74,10 @@ namespace COM.CF
 
 
 
-
-        // Fields
-        public static int ActiveUsrHour = 0x18;
-
-
-
-        public static int BatHitNumber = 500;
-
-
         public static enCacheSave CacheDefaultType = enCacheSave.inFile;
         public static int CacheDependKeySlidMinutes = 60;
         public static bool CacheEnable = true;
-        public static string CacheFileDir = @"G:\QQCache";
+        public static string CacheFileDir = @"C:\CFCache";
         public static int CacheFileDirNumber = 0x100;
         public static CacheItemPriority CacheItemDefaultPriority = CacheItemPriority.Normal;
         public static CacheItemPriority CacheKeyDefaultPriority = CacheItemPriority.Normal;
@@ -96,59 +85,22 @@ namespace COM.CF
 
         public static bool Enable304 = true;
         public static enErrorLogJiBie ErrorLogJiBie = enErrorLogJiBie.Normal;
-        private static string fieldConnectionString;
-        
         
         public static byte HomeID;
-        public static int Img1cengMaxNumber = 0xbb8;
         public static bool IsBig5 = false;
-        public static bool IsBlogCache = true;
-
-        public static bool JiLuZhanWai = false;
-        public static DataRowCollection KongRows = new DataTable().Rows;
-        public static bool LogDenyNewBBS = true;
-        public static bool LogDenyText = true;
         public static string logFileDir = @"f:\log\";
 
+        private static string m_connectionString;
         private static string m_appPath;
         private static string m_defaultChengXuJiName;
         private static string m_defaultNameSpace;
         private static int m_jieXiType;
-        public static int MailUsrN = 10;
 
-        public static bool MustLogin = true;
-        public static int MyBBSblogDefaultCount = 5;
-        public static int MyBBSDefaultCount = 20;
-        public static int MyBBSDefaultTopn = 100;
-        public static bool NewUsrLIMIT = true;
-        public static string NL10 = "089861679895959";
-        public static int NotShiMingMyBBSMaxNumber = 50;
-
-
-
-        public static string WWWDomain = "5ilog.com";
-
-        public static string WWWHomeHost = ("w0." + WWWDomain);
-        public static string WWWImgHost = ("i0." + WWWDomain + "/u.aspx");
-
-
-
-        public static string QQTestHost = "127.0.0.1";
-
+        public static string WWWDomain;
+        public static string CFTestHost = "127.0.0.1";
         public static string RQFormatStr = "yyyy-MM-dd HH:mm";
-        public static string RQNoTimeFormatStr = "yyyy-MM-dd";
-        public static string ServerPort = "";
+        public static string RQNoTimeFormatStr = "yyyy-MM-dd";       
 
-
-
-
-        
-
-        // Methods
-        public static void Application_ON(HttpServerUtility server)
-        {
-            initconfig();
-        }
 
 
 
@@ -160,7 +112,7 @@ namespace COM.CF
             {
                 HttpContext current = HttpContext.Current;
                 string str2 = current.Request.Url.Host.ToLower();
-                if (str2 != QQTestHost)
+                if (str2 != CFTestHost)
                 {
                     string homeHost = GetHomeHost(homeid);
                     if (homeHost != str2)
@@ -186,10 +138,7 @@ namespace COM.CF
             ServerClass.Init(DefaultNameSpace, JieXiType, DefaultChengXuJiName);
         }
 
-        public static string GB2BIG5(string s)
-        {
-            return s;
-        }
+
 
         public static SqlConnection GetConnection()
         {
@@ -198,18 +147,7 @@ namespace COM.CF
             return connection2;
         }
 
-        public static byte GetCurrentHomeID()
-        {
 
-            //return HomeID;
-            Match match = Regex.Match(HttpContext.Current.Request.Url.Host.ToLower(), @"^www(\d+)\.hotqq\.com$");
-            if (match.Success)
-            {
-                return byte.Parse(match.Groups[1].Value);
-            }
-            return 0;
-
-        }
 
         public static string GetHomeHost(byte homeid)
         {
@@ -234,14 +172,7 @@ namespace COM.CF
             return ("w" + Convert.ToString(homeid) + "." + WWWDomain);
         }
 
-        public static string GetImgHomeHost(byte homeid)
-        {
-            if (homeid == 0)
-            {
-                return WWWImgHost;
-            }
-            return ("i" + Convert.ToString(homeid) + "." + WWWDomain);
-        }
+
 
         public static SqlConnection GetNotOpenConnection()
         {
@@ -289,22 +220,21 @@ namespace COM.CF
         }
 
 
-
-        public static void initconfig()
+        /// <summary>
+        /// 初始化配置
+        /// </summary>
+        public static void InitConfig()
         {
-            fieldConnectionString = WebConfigurationManager.AppSettings["ConnectionString"];
+            m_connectionString = WebConfigurationManager.AppSettings["ConnectionString"];
             m_defaultNameSpace = PubFunc.GetDefaultValue(WebConfigurationManager.AppSettings, "DefaultNameSpace", "");
             m_jieXiType = PubFunc.GetDefaultInt(WebConfigurationManager.AppSettings["JieXiType"], 3);
             m_defaultChengXuJiName = PubFunc.GetDefaultValue(WebConfigurationManager.AppSettings, "DefaultChengXuJiName", "");
             logFileDir = PubFunc.GetDefaultValue(WebConfigurationManager.AppSettings, "logFileDir", logFileDir);
             HomeID = PubFunc.GetByte(WebConfigurationManager.AppSettings["HomeID"]);
+            WWWDomain = WebConfigurationManager.AppSettings["WWWDomain"] ?? "cf.com";
             ConfigWeb();
         }
 
-        public static string MapPath(string url)
-        {
-            return HttpContext.Current.Server.MapPath(url);
-        }
 
 
         public static void SysLog(string s)

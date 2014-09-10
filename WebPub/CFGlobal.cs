@@ -13,22 +13,35 @@ using CWS;
 
 namespace CFTL
 {
+    /// <summary>
+    /// 功能：CF框架的站点配置，包括系统的运行及错误的处理
+    /// 时间：2013-10-22
+    /// 作者：陈辰
+    /// </summary>
     public class CFGlobal : HttpApplication
     {       
 
         //构造函数 
         public CFGlobal()
         {
-            base.Error += new EventHandler(this.Global_Error);
+            base.Error += new EventHandler(Global_Error);
         }
 
-
+        /// <summary>
+        /// 程序初始化 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Application_Start(object sender, EventArgs e)
         {
-            CFConfig.initconfig();
+            CFConfig.InitConfig();
             CWConfig.SetConfig(WebConfigurationManager.AppSettings);
         }
-
+        /// <summary>
+        /// 接管错误处理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Global_Error(object sender, EventArgs e)
         {
             Exception ee = HttpContext.Current.Error;

@@ -12,15 +12,61 @@ using System.Reflection;
 namespace COM.CF
 {
     /// <summary>
-    /// 功能：后台控制页面，该页面会处理前台的HTTP请求
+    /// 功能：后台控制页面，该页面会处理前台的HTTP请求，该类为一个抽象类，实现部分方法，另一部分方法到实例类里去实现 
     /// 时间：2013-10-25
     /// 作者：meric
     /// </summary>
     public abstract class CtrlPage : PageBase
     {
-        
+
+
+        #region 控制类页面的属性
         private NameValueCollection m_Form;
+        /// <summary>
+        /// 请求参数，包括POST和GET，但不能混合 
+        /// </summary>
+        protected NameValueCollection RequestForm
+        {
+            get
+            {
+                if (m_Form == null)
+                {
+                    if (Request.HttpMethod != "POST")
+                    {
+                        m_Form = Request.QueryString;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            m_Form = Request.Form;
+                        }
+                        catch
+                        {
+                            WriteErrorNoEnd(enErrType.NormalError, "上传文件过大！");
+                        }
+                    }
+                }
+                return m_Form;
+            }
+        }
+
         private CFPageControl m_webForm;
+        /// <summary>
+        /// 页面控制类
+        /// </summary>
+        private CFPageControl WebForm
+        {
+            get
+            {
+                if (m_webForm == null)
+                {
+                    m_webForm = new CFPageControl(Context);
+                }
+                return m_webForm;
+            }
+        }
+        #endregion
 
 
         protected CtrlPage()
@@ -32,6 +78,7 @@ namespace COM.CF
         protected override void EventMain()
         {
             string name = RequestForm["act"];
+            //不传act参数，则执行控制类里的EnterIn方法
             if (string.IsNullOrWhiteSpace(name)) name = "EnterIn";
             MethodInfo method = GetType().GetMethod(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase);
             if (method == null)
@@ -61,8 +108,6 @@ namespace COM.CF
                     case enPageType.SelfPage:
                         break;
                     case enPageType.DefaultPage:
-                    case enPageType.DarkPage:
-                    case enPageType.FriendSetting:
                         WriteHead(customAttribute.PageType, customAttribute.Title);
                         break;
                     case enPageType.XMLPage:
@@ -83,8 +128,6 @@ namespace COM.CF
                     case enPageType.JSPage:
                         break;
                     case enPageType.DefaultPage:
-                    case enPageType.DarkPage:
-                    case enPageType.FriendSetting:
                         WriteTail();
                         break;
                     default:
@@ -106,7 +149,6 @@ namespace COM.CF
                         WriteErrorNoEnd(exception1.ErrType, exception1.Message);
                         break;
                 }
-
             }
             catch(Exception exception2)
             {
@@ -141,70 +183,24 @@ namespace COM.CF
                     }
                 }
             }
+        }
 
-
-
+        protected virtual void WriteHead()
+        {
+            WriteHead(WebForm.CurPageType, "");
         }
 
         protected abstract void HandleException(CFException e);
         protected abstract void WriteErrorNoEnd(enErrType errType, string msg);
-
-        protected virtual void WriteHead()
-        {
-            WriteHead(enPageType.DefaultPage, "");
-        }
-
         protected abstract void WriteHead(enPageType pageType, string title);
-        protected abstract void WriteTail();
-
+        protected abstract void WriteTail();        
         /// <summary>
-        /// 请求参数，包括POST和GET，但不能混合 
-        /// </summary>
-        protected NameValueCollection RequestForm
-        {
-            get
-            {
-                if (m_Form == null)
-                {
-                    if (Request.HttpMethod != "POST")
-                    {
-                        m_Form = Request.QueryString;
-                    }
-                    else
-                    {
-                        try
-                        {
-                            m_Form = Request.Form;
-                        }
-                        catch
-                        {
-                            WriteErrorNoEnd(enErrType.NormalError, "上传文件过大！");
-                        }
-                    }
-                }
-                return m_Form;
-            }
-        }
-        /// <summary>
-        /// 当前页面的登录控制
+        /// 当前页面的登录控制，继承类里必须实现
         /// </summary>
         protected abstract ILoginUsr UsrLogin { get; }
 
 
-        /// <summary>
-        /// 页面控制类
-        /// </summary>
-        private CFPageControl WebForm
-        {
-            get
-            {
-                if (m_webForm == null)
-                {
-                    m_webForm = new CFPageControl(Context);
-                }
-                return m_webForm;
-            }
-        }
+
     }
 
 }

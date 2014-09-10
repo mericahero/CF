@@ -9,34 +9,17 @@ using Microsoft.VisualBasic.CompilerServices;
 
 namespace COM.CF
 {
+    /// <summary>
+    /// 功能:错误日志类
+    /// 时间:2013-10-22
+    /// 作者:meric
+    /// </summary>
     public class ErrorLog
-    {
-        // Methods
-        public static void PayExcept(int r,  bool throwOther=true)
-        {
-            if (r < 0)
-            {
-                switch (r)
-                {
-                    case -900:
-                        throw new CFException("没有在该服务器上注册！");
-
-                    case -901:
-                        throw new CFException("礼金不足！");
-
-                    case -1000:
-                        throw new CFException(enErrType.NormalError, "帐户余额不足！");
-
-                    case -11111:
-                        throw new CFException(enErrType.NormalError, "SQL操作失败！errorno=" + Convert.ToString(r));
-                }
-                if (throwOther)
-                {
-                    throw new CFException(enErrType.NormalError, "未知错误！errorno=" + Convert.ToString(r));
-                }
-            }
-        }
-
+    {      
+        /// <summary>
+        /// 输出错误日志
+        /// </summary>
+        /// <param name="e"></param>
         public static void WriteLog(Exception e)
         {
             if (e.GetType().ToString() != "System.Web.HttpRequestValidationException")

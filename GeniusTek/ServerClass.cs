@@ -26,10 +26,6 @@ namespace GeniusTek
         //处理程序
         public void ProcessRequest(HttpContext context)
         {
-            //HttpContext.Current.Response.Write(GetTypeName(context.Request));
-            //return;
-
-
             Type type = Type.GetType(GetTypeName(context.Request));
             if (type != null)
             {

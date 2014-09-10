@@ -18,11 +18,6 @@ namespace CFTL
     public class CFWebForm
     {
         /// <summary>
-        /// 页面类型
-        /// </summary>
-        private enPageType _curpagetype = enPageType.DefaultPage;
-        private CFPageControl _qqpagectrl;
-        /// <summary>
         /// 页面上下文
         /// </summary>
         private readonly HttpContext Context;
@@ -35,7 +30,11 @@ namespace CFTL
         /// </summary>
         private readonly HttpResponse Response;
 
-
+        /// <summary>
+        /// 页面类型
+        /// </summary>
+        private enPageType _curpagetype = enPageType.SelfPage;
+        
         /// <summary>
         /// 当前页面的页面类型
         /// </summary>
@@ -47,6 +46,7 @@ namespace CFTL
             }
         }
 
+        private CFPageControl m_pagecontrol;
         /// <summary>
         /// 页面控制，能控制页面的跳转，输出等
         /// </summary>
@@ -54,11 +54,11 @@ namespace CFTL
         {
             get
             {
-                if (_qqpagectrl == null)
+                if (m_pagecontrol == null)
                 {
-                    _qqpagectrl = new CFPageControl(Context);
+                    m_pagecontrol = new CFPageControl(Context);
                 }
-                return _qqpagectrl;
+                return m_pagecontrol;
             }
         }
 

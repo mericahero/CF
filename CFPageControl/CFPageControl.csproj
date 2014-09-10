@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BodyParams.cs" />
     <Compile Include="CFPageControl.cs" />
     <Compile Include="enPageType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

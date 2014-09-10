@@ -51,16 +51,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CFConfig.cs" />
+    <Compile Include="CFEnums.cs" />
     <Compile Include="CFException.cs" />
-    <Compile Include="enCacheLogJiBie.cs" />
-    <Compile Include="enCacheSave.cs" />
-    <Compile Include="enErrorLogJiBie.cs" />
-    <Compile Include="enErrType.cs" />
-    <Compile Include="enXMLErrorCode.cs" />
     <Compile Include="ErrorLog.cs" />
     <Compile Include="FWFunc.cs" />
-    <Compile Include="IPrivateSpace.cs" />
-    <Compile Include="ISpace.cs" />
     <Compile Include="IUsr.cs" />
   </ItemGroup>
   <ItemGroup>

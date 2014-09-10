@@ -18,7 +18,7 @@ namespace CFTL
             if (!UsrLogin.Logined)
             {
                 var autogo = Request.Url.ToString();
-                Response.Redirect(string.Format( "{0}/login.aspx?autogo={1}" ,CWS.CWConfig.LoginHost,System.Web.HttpUtility.UrlEncode(autogo)));
+                Response.Redirect(string.Format( "{0}/login.aspx?autogo={1}" ,CWS.CWConfig.LoginHost,System.Web.HttpUtility.UrlEncode(autogo)),false);
             }
             //UsrLogin.MustLogin();
         }
