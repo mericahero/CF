@@ -43,7 +43,45 @@ namespace CFTL
             }
         }
 
+        private double GetIisVersion()
+        {
+            double r = -1;
 
+            Version ver = System.Environment.OSVersion.Version;
+
+            if (ver.Major == 4 && ver.Minor == 0)
+            {
+                r = 4.0;
+            }
+            else if (ver.Major == 5)
+            {
+                if (ver.Minor == 0)
+                {
+                    r = 5.0;
+                }
+                else if (ver.Minor == 1)
+                {
+                    r=5.1;
+                }
+                else if (ver.Minor == 2)
+                {
+                    r=6.0;
+                }
+            }
+            else if (ver.Major == 6)
+            {
+                if (ver.Minor == 0)
+                {
+                    r=7.0;
+                }
+                else if (ver.Minor == 1)
+                {
+                    r=7.5;
+                }
+            }
+
+            return r;
+        }
 
 
         protected override void HandleException(CFException ee)
@@ -58,11 +96,19 @@ namespace CFTL
             else
             {
                 Response.Clear();
-                if (Response.Headers["Cache-Control"] == "public")
+                if (GetIisVersion() < 7)
                 {
-                    Response.Headers["Cache-Control"] = "private";
+                    Response.ClearHeaders();
+                    Response.AddHeader("Cache-Control", "private");
                 }
-                Response.Headers.Remove("Expires");
+                else
+                {
+                    if (Response.Headers["Cache-Control"] == "public")
+                    {
+                        Response.Headers["Cache-Control"] = "private";
+                    }
+                    Response.Headers.Remove("Expires");
+                }
                 WebForm.WriteErrorNoEnd(ee.ErrType, ee.Message);
                 HttpContext.Current.ClearError();
             }

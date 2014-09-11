@@ -310,10 +310,10 @@ namespace COM.CF.Web
                     WirteJSError(errstr, otip, ohtml, oparam);
                     break;
                 default:
-                    Response.Write("<script>");
-                    WirteJSError(errstr, otip, ohtml, oparam);
-                    Response.Write("</script>");
-                    Context.Server.Execute("~/res/inc/errpage.aspx");
+                    //Response.Write("<script>");
+                    //WirteJSError(errstr, otip, ohtml, oparam);
+                    //Response.Write("</script>");
+                    Context.Server.Execute(string.Format("~/res/inc/errpage.aspx?error={0}&errtype={1}&otip={2}&ohtml={3}&oparam={4}",errstr,"sys",otip,ohtml,oparam));
                     break;
             }
         }
