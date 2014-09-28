@@ -84,7 +84,8 @@ namespace COM.CF
             if (method == null)
             {
                 WriteHead();
-                WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！");
+                Response.Write(string.Format("{{\"r\":-9999,\"msg\":\"{0}\"}}", "方法 " + name + " 没有找到！"));
+                //WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！");
                 return;
             }
 
@@ -92,7 +93,8 @@ namespace COM.CF
             if (customAttribute == null)
             {
                 WriteHead();
-                WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！！");
+                Response.Write(string.Format("{{\"r\":-9999,\"msg\":\"{0}\"}}", "方法 " + name + " 没有找到！"));
+                //WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！！");
                 return;
             }
 

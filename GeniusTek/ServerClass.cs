@@ -33,7 +33,7 @@ namespace GeniusTek
             }
             else
             {
-                context.Response.Write(string.Concat(GetTypeName(context.Request), "不存在<hr>"));
+                context.Response.Write(string.Format("{{\"r\":\"-9999\",\"msg\":\"{0}\"}}",GetTypeName(context.Request)+" 不存在"));
             }
         }
 

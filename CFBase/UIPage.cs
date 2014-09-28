@@ -42,7 +42,7 @@ namespace COM.CF
 
         protected UIPage()
         {
-            this.Error += new EventHandler(JScriptPagePage_Error);
+            this.Error += new EventHandler(Page_Error);
         }
 
 
@@ -86,10 +86,6 @@ namespace COM.CF
         }
 
 
-
-
-
-
         protected int GetPathID()
         {
             string pathInfo = Request.PathInfo;
@@ -108,7 +104,7 @@ namespace COM.CF
 
         protected abstract void HandleException(CFException e);
 
-        private void JScriptPagePage_Error(object sender, EventArgs e)
+        private void Page_Error(object sender, EventArgs e)
         {
             Exception error = HttpContext.Current.Error;
             if (error is CFException)

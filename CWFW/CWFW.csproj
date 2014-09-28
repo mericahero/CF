@@ -52,7 +52,6 @@
   <ItemGroup>
     <Compile Include="AuthCode.cs" />
     <Compile Include="CWConfig.cs" />
-    <Compile Include="CWException.cs" />
     <Compile Include="CWPub.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

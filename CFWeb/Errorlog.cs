@@ -78,16 +78,12 @@ namespace COM.CF.Web
             if (e.GetType().ToString()!= "System.Web.HttpRequestValidationException")
             {
                 HttpRequest request = HttpContext.Current.Request;
-                string[] str = new string[] { CFConfig.logFileDir, CFConfig.HomeID.ToString(), "/dotNetErr", null, null };
-                DateTime now = DateTime.Now;
-                str[3] = now.ToString("yyyy-MM-dd");
-                str[4] = ".log";
+                string[] str = new string[] { CFConfig.logFileDir, CFConfig.HomeID.ToString(), "/dotNetErr", DateTime.Now.ToString("yyyy-MM-dd"), ".log" };
                 StreamWriter streamWriter = new StreamWriter(string.Concat(str), true, Encoding.UTF8);
                 try
                 {
                     streamWriter.WriteLine("——————————————————————————E");
-                    now = DateTime.Now;
-                    streamWriter.WriteLine(now.ToString(CFConfig.RQFormatStr));
+                    streamWriter.WriteLine(DateTime.Now.ToString(CFConfig.RQFormatStr));
                     streamWriter.WriteLine(string.Concat("URL=", request.RawUrl));
                     streamWriter.WriteLine();
                     if (e != null)
@@ -119,15 +115,11 @@ namespace COM.CF.Web
         public static void WrtieBusy(Exception e)
         {
             HttpRequest request = HttpContext.Current.Request;
-            string[] str = new string[] { CFConfig.logFileDir, CFConfig.HomeID.ToString(), "/busy", null, null };
-            DateTime now = DateTime.Now;
-            str[3] = now.ToString("yyyy-MM-dd");
-            str[4] = ".log";
+            string[] str = new string[] { CFConfig.logFileDir, CFConfig.HomeID.ToString(), "/busy", DateTime.Now.ToString("yyyy-MM-dd"), ".log"};
             StreamWriter streamWriter = new StreamWriter(string.Concat(str), true, Encoding.UTF8);
             try
             {
-                now = DateTime.Now;
-                streamWriter.Write(now.ToString(CFConfig.RQFormatStr));
+                streamWriter.Write(DateTime.Now.ToString(CFConfig.RQFormatStr));
                 streamWriter.WriteLine(string.Concat(" = ", request.RawUrl, " ", e.Message));
             }
             finally

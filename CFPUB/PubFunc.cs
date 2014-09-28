@@ -58,24 +58,22 @@ namespace COM.CF
         /// <returns></returns>
         public static String DupStr(string s, int n)
         {
-            string str;
-            if (s != "" && n != 0)
+
+            if (string.IsNullOrWhiteSpace(s) || n <= 0)
             {
-                StringBuilder sb = new StringBuilder(s.Length * n);
-                int i = 1;
-                while (true)
-                {
-                    if (n < i) break;
-                    sb.Append(s);
-                    i++;
-                }
-                str = sb.ToString();
+                return "";
             }
-            else
+
+            StringBuilder sb = new StringBuilder(s.Length * n);
+            int i = 1;
+            while (true)
             {
-                str = "";
+                if (n < i) break;
+                sb.Append(s);
+                i++;
             }
-            return str;
+            return sb.ToString();
+
         }
 
         #region HTTP请求
@@ -223,24 +221,10 @@ namespace COM.CF
             }
         }
 
-
-
-
-
-
-
         public static string SendHTTP(string url, string agent)
         {
             return SendHTTP(url, agent, true);
         }
-
-
-
-
-
-
-
-
 
         public static string SendHTTP(string url, string agent, bool gzip)
         {

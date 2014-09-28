@@ -57,65 +57,13 @@ namespace COM.CF
 
 
 
-        public static string encodeurl(string s)
+        public static string EncodeUrl(string s)
         {
             return HttpUtility.UrlEncode(s, Encoding.UTF8);
         }
 
 
    
-        public static MemoryStream GetHTTPFile(ref HttpWebResponse rep,string url, string @ref=null, int timeoutsec=0)
-        {
-            MemoryStream stream;
-            try
-            {
-                MemoryStream stream2;
-                Uri uri = new Uri(url);
-                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
-                HttpWebRequest request2 = request;
-                if (@ref == null)
-                {
-                    request2.Referer = uri.GetLeftPart(UriPartial.Authority);
-                }
-                else
-                {
-                    request2.Referer = @ref;
-                }
-                if (timeoutsec > 0)
-                {
-                    request2.Timeout = timeoutsec * 0x3e8;
-                }
-                rep = (HttpWebResponse) request2.GetResponse();
-                try
-                {
-                    if (rep.ContentLength > 0)
-                    {
-                        stream2 = new MemoryStream(Convert.ToInt32(rep.ContentLength));
-                    }
-                    else
-                    {
-                        stream2 = new MemoryStream(0x20000);
-                    }
-                    Stream responseStream = rep.GetResponseStream();
-                    byte[] buffer = new byte[0x20000];
-                    for (int i = responseStream.Read(buffer, 0, buffer.Length); i > 0; i = responseStream.Read(buffer, 0, buffer.Length))
-                    {
-                        stream2.Write(buffer, 0, i);
-                    }
-                }
-                finally
-                {
-                    rep.Close();
-                }
-                return stream2;
-            }
-            catch (Exception exception1)
-            {
-                ErrorLog.WriteLog(exception1);
-                stream = null;
-            }
-            return stream;
-        }
         /// <summary>
         /// 获得访问ip
         /// </summary>
@@ -143,6 +91,52 @@ namespace COM.CF
             }
             return request.UserHostAddress;
         }
+
+        /// <summary>
+        /// 获得IIS版本
+        /// </summary>
+        /// <returns></returns>
+        public static double GetIisVersion()
+        {
+            double r = -1;
+
+            Version ver = System.Environment.OSVersion.Version;
+
+            if (ver.Major == 4 && ver.Minor == 0)
+            {
+                r = 4.0;
+            }
+            else if (ver.Major == 5)
+            {
+                if (ver.Minor == 0)
+                {
+                    r = 5.0;
+                }
+                else if (ver.Minor == 1)
+                {
+                    r = 5.1;
+                }
+                else if (ver.Minor == 2)
+                {
+                    r = 6.0;
+                }
+            }
+            else if (ver.Major == 6)
+            {
+                if (ver.Minor == 0)
+                {
+                    r = 7.0;
+                }
+                else if (ver.Minor == 1)
+                {
+                    r = 7.5;
+                }
+            }
+
+            return r;
+        }
+
+
         /// <summary>
         /// 根据后缀名获得mime类型
         /// </summary>

@@ -27,11 +27,7 @@ namespace CFTL
         {
             get
             {
-                if (_login == null)
-                {
-                    _login = new LoginUsr(Context);
-                }
-                return _login;
+                return _login =_login ?? new LoginUsr(Context);
             }
         }
         /// <summary>
@@ -41,11 +37,7 @@ namespace CFTL
         {
             get
             {
-                if (_login == null)
-                {
-                    _login = new LoginUsr(Context);
-                }
-                return _login;
+                return _login =_login?? new LoginUsr(Context);
             }
         }
         /// <summary>
@@ -56,12 +48,59 @@ namespace CFTL
         {
             get
             {
-                if (_webForm == null)
-                {
-                    _webForm = new CFWebForm(Context);
-                }
-                return _webForm;
+                return _webForm=_webForm?? new CFWebForm(Context);
             }
+        }
+
+        private Int32 _curuid;
+        protected Int32 CurUID
+        {
+            get
+            {
+                return _curuid = _curuid != 0 ? _curuid : (UsrLogin.Logined ? UsrInfo.UID : 0);
+            }
+        }
+
+        private Boolean _isdealer;
+        protected Boolean ISDealer
+        {
+            get
+            {
+                return _isdealer = CheckIDType(8);
+            }
+        }
+
+        private Boolean _isAdmin;
+        protected Boolean ISAdmin
+        {
+            get
+            {
+                return _isAdmin = CheckIDType(2);
+            }
+        }
+
+        private Boolean _isMember;
+        protected Boolean ISMember
+        {
+            get
+            {
+                return _isMember = CheckIDType(1);
+            }
+        }
+
+        private Boolean _isVendor;
+        protected Boolean ISVendor
+        {
+            get
+            {
+                return _isVendor = CheckIDType(4);
+            }
+        }
+
+
+        protected Boolean CheckIDType(int type)
+        {
+            return _isAdmin = UsrLogin.Logined && (UsrInfo.IDType & type) != 0;
         }
 
         #endregion
@@ -154,8 +193,7 @@ namespace CFTL
             }
         }
 
-        #endregion
-       
+        #endregion       
 
     }
 }

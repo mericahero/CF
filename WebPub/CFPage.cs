@@ -25,7 +25,9 @@ namespace CFTL
                 return _usrInfo = _usrInfo ?? new LoginUsr(Context);
             }
         }
-        
+        /// <summary>
+        /// usrlogin，实现了ILoginUsr接口，实现了功能：判断用户是否登录，强制用户在该页面上必须登录
+        /// </summary>
         protected new ILoginUsr UsrLogin
         {
             get
@@ -43,47 +45,62 @@ namespace CFTL
             }
         }
 
-        private double GetIisVersion()
+
+        private Int32 _curuid;
+        protected Int32 CurUID
         {
-            double r = -1;
-
-            Version ver = System.Environment.OSVersion.Version;
-
-            if (ver.Major == 4 && ver.Minor == 0)
+            get
             {
-                r = 4.0;
+                return _curuid=_curuid!=0? _curuid:(UsrLogin.Logined ? UsrInfo.UID : 0);                
             }
-            else if (ver.Major == 5)
-            {
-                if (ver.Minor == 0)
-                {
-                    r = 5.0;
-                }
-                else if (ver.Minor == 1)
-                {
-                    r=5.1;
-                }
-                else if (ver.Minor == 2)
-                {
-                    r=6.0;
-                }
-            }
-            else if (ver.Major == 6)
-            {
-                if (ver.Minor == 0)
-                {
-                    r=7.0;
-                }
-                else if (ver.Minor == 1)
-                {
-                    r=7.5;
-                }
-            }
+        }
 
-            return r;
+        private Boolean _isdealer;
+        protected Boolean ISDealer
+        {
+            get
+            {
+                return _isdealer = CheckIDType(8);
+            }
+        }
+
+        private Boolean _isAdmin;
+        protected Boolean ISAdmin
+        {
+            get
+            {
+                return _isAdmin = CheckIDType(2);
+            }
+        }
+
+        private Boolean _isMember;
+        protected Boolean ISMember
+        {
+            get
+            {
+                return _isMember = CheckIDType(1);
+            }
+        }
+
+        private Boolean _isVendor;
+        protected Boolean ISVendor
+        {
+            get
+            {
+                return _isVendor = CheckIDType(4);
+            }
         }
 
 
+        protected Boolean CheckIDType(int type)
+        {
+            return _isAdmin = UsrLogin.Logined && (UsrInfo.IDType & type) != 0;
+        }
+
+        /// <summary>
+        /// 接管页面抛出的异常
+        /// </summary>
+        /// <param name="ee"></param>
         protected override void HandleException(CFException ee)
         {
             enErrType errType = ee.ErrType;
@@ -96,7 +113,7 @@ namespace CFTL
             else
             {
                 Response.Clear();
-                if (GetIisVersion() < 7)
+                if (FWFunc.GetIisVersion() < 7)
                 {
                     Response.ClearHeaders();
                     Response.AddHeader("Cache-Control", "private");
@@ -114,6 +131,11 @@ namespace CFTL
             }
 
         }
+
+
+
+
+
     }
 
 }

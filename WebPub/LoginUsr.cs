@@ -14,18 +14,83 @@ using CWS;
 
 namespace CFTL
 {
+    /// <summary>
+    /// 功能：判断用户是否登录、返回登录用户的信息
+    /// 时间：2013-10-22
+    /// 作者：meric
+    /// </summary>
     public class LoginUsr : ILoginUsr, IUsr
     {
-        // Fields
+        
         private HttpContext Context;
-        private bool m_checked = false;
-        private bool m_logined = false;
-        private string m_account;
-        private string m_name;
-        private int m_uid;
-        private int m_bz;
-        private int m_idtype;
 
+
+        private bool m_checked = false;
+        
+        private bool m_logined = false;
+        public bool Logined
+        {
+            get
+            {
+
+                return m_logined = m_logined ? m_logined : CheckLogin();
+            }
+        }
+
+        private string m_account;
+        public string Account
+        {
+            get
+            {
+                NotLoginError();
+                return m_account;
+            }
+        }
+
+        private string m_name;
+        public string Name
+        {
+            get
+            {
+                NotLoginError();
+                return m_name;
+            }
+        }
+
+        private int m_uid;
+        public int UID
+        {
+            get
+            {
+                NotLoginError();
+                return m_uid;
+            }
+        }
+
+        private int m_bz;
+        public int BZ
+        {
+            get
+            {
+                NotLoginError();
+                return m_bz;
+            }
+        }
+
+        private int m_idtype;
+        public int IDType
+        {
+            get
+            {
+                NotLoginError();
+                return m_idtype;
+            }
+        }
+
+
+        /// <summary>
+        /// 当前的guid，先从URL中获取，URL中没有则从cookie中获得
+        /// </summary>
         private Guid m_guid
         {
             get
@@ -61,7 +126,6 @@ namespace CFTL
         /// <returns></returns>
         private bool CheckLogin()
         {
-
             m_checked = true;
             if (m_guid == Guid.Empty)
             {
@@ -99,8 +163,12 @@ namespace CFTL
             return true;
         }
 
+        /// <summary>
+        /// 强制页面必须登录
+        /// </summary>
         public void MustLogin()
         {
+            //如果请求方法是“HEAD”（非POST,GET），则当前返回结束
             CFCache.HEADEnd();
             if (!Logined)
             {
@@ -108,7 +176,9 @@ namespace CFTL
             }
         }
 
-
+        /// <summary>
+        /// 如果没有登录，则返回未登录异常
+        /// </summary>
         private void NotLoginError()
         {
             if (!m_logined)
@@ -117,65 +187,6 @@ namespace CFTL
             }
         }
 
-        // Properties
-        public bool Logined
-        {
-            get
-            {
-                if (!m_checked)
-                {
-                    m_logined = CheckLogin();
-                }
-                return m_logined;
-            }
-        }
-
-        public string Account
-        {
-            get
-            {
-                NotLoginError();
-                return m_account;
-            }
-        }
-
-        public string Name
-        {
-            get
-            {
-                NotLoginError();
-                return m_name;
-            }
-        }
-
-
-        public int UID
-        {
-            get
-            {
-                NotLoginError();
-                return m_uid;
-            }
-        }
-
-
-        public int BZ
-        {
-            get
-            {
-                NotLoginError();
-                return m_bz;
-            }
-        }
-
-        public int IDType
-        {
-            get
-            {
-                NotLoginError();
-                return m_idtype;
-            }
-        }
     }
 
 
