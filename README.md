@@ -12,7 +12,8 @@ Common Framework 包含了CFBase.dll、CFFW.dll、CFPageControl.dll、CFPUB.dll�
 
 ### CFBase.dll
     
-    CFBase.dll是整个系统的根，封装了对SQL数据库的访问，实现了CF框架中的两类基本页面CtrlPage以及UIPage，其中CtrlPage用于请求控制，UIPage则用于前台展示
+    CFBase.dll是整个系统的根，封装了对SQL数据库的访问，实现了CF框架中的两类基本页面CtrlPage以及UIPage
+    其中CtrlPage用于请求控制，UIPage则用于前台展示
     
 ### CFFW.dll
 
