@@ -10,42 +10,42 @@ Common Framework，简称CF，是一套基础框架，可以用于创建基于�
 
 Common Framework 包含了CFBase.dll、CFFW.dll、CFPageControl.dll、CFPUB.dll、CFWeb.dll、CWFW.dll、GeniusTek.dll、WebPub.dll 这8个DLL文件。
 
-### CFBase.dll
+#### CFBase.dll
     
     CFBase.dll是整个系统的根，封装了对SQL数据库的访问，实现了CF框架中的两类基本页面CtrlPage以及UIPage
     其中CtrlPage用于请求控制，UIPage则用于前台展示
     
-### CFFW.dll
+#### CFFW.dll
 
   CFFW.dll包含了CF框架的一些公用底层类，包括
     CF框架的配置读取类CFConfig、CF框架的系统级枚举CFEnums、CF框架的异常类CFException、CF框架的错误记录类ErrorLog、CF框架的用户接口IUsr
     
-### CFPageControl.dll
+#### CFPageControl.dll
 
   CFPageControl封闭了CF框架中的页面控制方法如输出错误信息，输出提示信息、页面根据参数跳转等
   
-### CFPUB.dll
+#### CFPUB.dll
 
   CFPUB.dll包含了CF框架的公共方法
   
-### CFWeb.dll
+#### CFWeb.dll
 
   CFWeb.dll实现了CF框架在Web层的封装，包括Cache、Cookie、分页等
   
-### CWFW.dll
+#### CWFW.dll
 
   CWFW.dll是基于CF框架的一些公共方法，与CFFW.dll不同的是，该类库是根据实际项目定制的，是作为基类库的补充类库
   
-### GeniusTek.dll
+#### GeniusTek.dll
 
   GeniusTek.dll实现了CF框架对请求的转发，如构造形如*/handle/TEST.Main/TestClass.aspx?act=TestMethod*的请求时，CF框架会将该请求转发到TEST.Main.Web命名空间下，TestClass类中的TestMethod方法进行逻辑处理
   
-### WebPub.dll
+#### WebPub.dll
 
   WebPub.dll是对CFBase的具体实现，也是根据实际项目定制的，在里面对UIPage、CtrlPage进行项目自身的封装
   
 
-### 建站流程
+#### 建站流程
 
 > 1、新建web站点（或web应用程序）
 > 
