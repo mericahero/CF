@@ -38,7 +38,7 @@ Common Framework 包含了CFBase.dll、CFFW.dll、CFPageControl.dll、CFPUB.dll�
   
 ### GeniusTek.dll
 
-  GeniusTek.dll实现了CF框架对请求的转发，如构造形如[/handle/TEST.Main/TestClass.aspx?act=TestMethod]()的请求时，CF框架会将该请求转发到TEST.Main.Web命名空间下，TestClass类中的TestMethod方法进行逻辑处理
+  GeniusTek.dll实现了CF框架对请求的转发，如构造形如[/handle/TEST.Main/TestClass.aspx?act=TestMethod]:<javascript:void(0)>的请求时，CF框架会将该请求转发到TEST.Main.Web命名空间下，TestClass类中的TestMethod方法进行逻辑处理
   
 ### WebPub.dll
 
