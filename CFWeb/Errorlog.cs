@@ -23,53 +23,53 @@ namespace COM.CF.Web
 
         public static void UnControlException(CFPageControl webForm, Exception e, bool isXMLPage)
         {
-            if (e != null)
+            if (e == null)
+                return;
+            
+            if (e is SqlException)
             {
-                if (e is SqlException)
+                SqlException sqlException = (SqlException)e;
+                if (sqlException.Number == -2)
                 {
-                    SqlException sqlException = (SqlException)e;
-                    if (sqlException.Number == -2)
+                    if (CFConfig.ErrorLogJiBie == enErrorLogJiBie.Normal)
                     {
-                        if (CFConfig.ErrorLogJiBie == enErrorLogJiBie.Normal)
-                        {
-                            ErrorLog.WrtieBusy(sqlException);
-                        }
-                        if (!isXMLPage)
-                        {
-                            webForm.WriteErrorPage("busy", "", "", "");
-                        }
-                        else
-                        {
-                            webForm.WirteXMLError(enXMLErrorCode.SystemBusy, "系统繁忙，请稍后再试。谢谢合作");
-                        }
-                        return;
+                        ErrorLog.WrtieBusy(sqlException);
                     }
-                }
-                if (CFConfig.ErrorLogJiBie != enErrorLogJiBie.NoLog)
-                {
-                    ErrorLog.WriteLog(e);
-                }
-                if (CFConfig.ErrorLogJiBie == enErrorLogJiBie.Direct2Usr)
-                {
-                    HttpResponse response = HttpContext.Current.Response;
-                    response.Write(string.Concat("<pre>", e.ToString()));
-                    if (e.InnerException != null)
+                    if (!isXMLPage)
                     {
-                        response.Write("<HR>");
-                        response.Write(e.InnerException.ToString());
+                        webForm.WriteErrorPage(enErrType.DevelopError, "开发者错误，请联系开发人员");
                     }
-                    response.Write("</pre>");
-                    response.End();
-                    response = null;
+                    else
+                    {
+                        webForm.WirteXMLError( "系统繁忙，请稍后再试。谢谢合作");
+                    }
+                    return;
                 }
-                if (!isXMLPage)
+            }
+            if (CFConfig.ErrorLogJiBie != enErrorLogJiBie.NoLog)
+            {
+                ErrorLog.WriteLog(e);
+            }
+            if (CFConfig.ErrorLogJiBie == enErrorLogJiBie.Direct2Usr)
+            {
+                HttpResponse response = HttpContext.Current.Response;
+                response.Write(string.Concat("<pre>", e.ToString()));
+                if (e.InnerException != null)
                 {
-                    webForm.WriteErrorPage("syserror", "", "", "");
+                    response.Write("<HR>");
+                    response.Write(e.InnerException.ToString());
                 }
-                else
-                {
-                    webForm.WirteXMLError(enXMLErrorCode.SystemBusy, "系统错误！我们会尽快解决该问题的");
-                }
+                response.Write("</pre>");
+                response.End();
+                response = null;
+            }
+            if (!isXMLPage)
+            {
+                webForm.WriteErrorPage(enErrType.DevelopError, "开发者错误，请联系开发人员");
+            }
+            else
+            {
+                webForm.WirteXMLError(enErrType.SystemBusy, "系统错误！我们会尽快解决该问题的");
             }
         }
 

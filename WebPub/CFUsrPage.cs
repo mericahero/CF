@@ -23,12 +23,16 @@ namespace CFTL
             {
                 var autogo = Request.Url.ToString();
                 var filePath = Request.FilePath;
-                var type = 1;
-                if(filePath.StartsWith("/admin/"))
+
+                if (filePath.StartsWith("/admin/"))
                 {
-                    type=2;
+                    Response.Redirect(string.Format("{0}/admin/login.aspx?autogo={1}",CWS.CWConfig.AdminHost,Server.UrlEncode(autogo)),false);
                 }
-                Response.Redirect(string.Format( "{0}/login.aspx?typeid={1}&autogo={2}" ,CWS.CWConfig.LoginHost,type,System.Web.HttpUtility.UrlEncode(autogo)),false);
+                else
+                {
+
+                    Response.Redirect(string.Format("{0}/login.aspx?typeid=1&autogo={1}", CWS.CWConfig.LoginHost, Server.UrlEncode(autogo)), false);
+                }
             }
         }
     }

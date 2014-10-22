@@ -84,8 +84,8 @@ namespace COM.CF
             if (method == null)
             {
                 WriteHead();
-                Response.Write(string.Format("{{\"r\":-9999,\"msg\":\"{0}\"}}", "方法 " + name + " 没有找到！"));
-                //WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！");
+                
+                WriteErrorNoEnd(enErrType.NormalError, "方法 " + name + " 没有找到！");
                 return;
             }
 
@@ -93,8 +93,7 @@ namespace COM.CF
             if (customAttribute == null)
             {
                 WriteHead();
-                Response.Write(string.Format("{{\"r\":-9999,\"msg\":\"{0}\"}}", "方法 " + name + " 没有找到！"));
-                //WriteErrorNoEnd(enErrType.DevelopError, "方法 " + name + " 没有找到！！");
+                WriteErrorNoEnd(enErrType.NormalError, "方法 " + name + " 没有找到！");
                 return;
             }
 
@@ -142,10 +141,10 @@ namespace COM.CF
                 switch (customAttribute.PageType)
                 {
                     case enPageType.SelfPage:
-                        WebForm.WriteJSONError((int)enXMLErrorCode.CFError, exception1.Message);
+                        WebForm.WriteJSONError(exception1.ErrType, exception1.Message);
                         break;
                     case enPageType.XMLPage:
-                        WebForm.WirteXMLError(enXMLErrorCode.CFError, exception1.Message, exception1.ErrType);
+                        WebForm.WirteXMLError(exception1.ErrType, exception1.Message);
                         break;
                     default:
                         WriteErrorNoEnd(exception1.ErrType, exception1.Message);
@@ -166,10 +165,10 @@ namespace COM.CF
                         switch (customAttribute.PageType)
                         {
                             case enPageType.SelfPage:
-                                WebForm.WriteJSONError((int)enXMLErrorCode.CFError, innerException.Message);
+                                WebForm.WriteJSONError(innerException.Message);
                                 break;
                             case enPageType.XMLPage:
-                                WebForm.WirteXMLError(enXMLErrorCode.CFError, innerException.Message, innerException.ErrType);
+                                WebForm.WirteXMLError(innerException.Message);
                                 break;
                             case enPageType.JSPage:
                                 WebForm.WirteJSError(innerException.ErrType, innerException.Message);

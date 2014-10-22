@@ -48,10 +48,13 @@ namespace COM.CF
     /// </summary>
     public enum enErrType
     {
-        NotLogined = -102,
+        DevelopError = -99,
+        NotLogined = -100,
         UidNotFind = -101,
-        NormalError = -100,
-        DevelopError = -99
+        SystemBusy = -102,
+        UnKonwError = -103,
+        NormalError = -9999
+        
     }
 
     /// <summary>
@@ -59,7 +62,7 @@ namespace COM.CF
     /// </summary>
     public enum enXMLErrorCode
     {
-        CFError = -100,
+        CFError = -9999,
         SystemError = -110,
         SystemBusy = -120,
         UnKonwError = -150

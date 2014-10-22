@@ -55,6 +55,7 @@ E:\pro\CCLibs\WebPub\bin\Debug\CFWeb.dll
 E:\pro\CCLibs\WebPub\bin\Debug\CFWeb.pdb
 E:\pro\CCLibs\WebPub\bin\Debug\CFFW.dll
 E:\pro\CCLibs\WebPub\bin\Debug\CFFW.pdb
+E:\git\CF\WebPub\obj\Debug\WebPub.csprojResolveAssemblyReference.cache
 E:\git\CF\WebPub\bin\Debug\WebPub.dll
 E:\git\CF\WebPub\bin\Debug\WebPub.pdb
 E:\git\CF\WebPub\bin\Debug\CFBase.dll
@@ -71,6 +72,5 @@ E:\git\CF\WebPub\bin\Debug\CFPUB.pdb
 E:\git\CF\WebPub\bin\Debug\CFWeb.pdb
 E:\git\CF\WebPub\bin\Debug\CWFW.pdb
 E:\git\CF\WebPub\bin\Debug\GeniusTek.pdb
-E:\git\CF\WebPub\obj\Debug\WebPub.csprojResolveAssemblyReference.cache
 E:\git\CF\WebPub\obj\Debug\WebPub.dll
 E:\git\CF\WebPub\obj\Debug\WebPub.pdb

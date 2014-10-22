@@ -18,19 +18,19 @@ namespace COM.CF.Web
         /// <summary>
         /// 当前的页面类型
         /// </summary>
-        private enPageType _curpagetype;
+        protected enPageType _curpagetype;
         /// <summary>
         /// 当前执行上下文
         /// </summary>
-        private readonly HttpContext Context;
+        protected readonly HttpContext Context;
         /// <summary>
         /// 当前请求Request
         /// </summary>
-        private readonly HttpRequest Request;
+        protected readonly HttpRequest Request;
         /// <summary>
         /// 当前上下文的返回Response
         /// </summary>
-        private readonly HttpResponse Response;
+        protected readonly HttpResponse Response;
 
         public enPageType CurPageType
         {
@@ -41,36 +41,44 @@ namespace COM.CF.Web
         }
         #endregion
 
+        #region 构造函数
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="context1">请求上下文</param>
-        public CFPageControl(HttpContext context1)
+        public CFPageControl(HttpContext con)
         {
-            _curpagetype = enPageType.DefaultPage;
-            Context = context1;
+            _curpagetype = enPageType.SelfPage;
+            Context = con;
             Request = Context.Request;
             Response = Context.Response;
         }
 
+        public CFPageControl(HttpContext cont, enPageType pt)
+            : this(cont)
+        {
+            _curpagetype = pt;
+        }
+        #endregion
+
         #region 页面跳转
         /// <summary>
-        /// 跳转页面
+        /// 跳转
         /// </summary>
         public void AutoGo()
         {
             AutoGo(null, -1);
         }
         /// <summary>
-        /// 跳转页面
+        /// 跳转到指定 URL
         /// </summary>
-        /// <param name="url">跳转URL</param>
+        /// <param name="url"></param>
         public void AutoGo(string url)
         {
             AutoGo(url, -1);
         }
         /// <summary>
-        /// 延时后跳转到指定URL
+        /// 延时一定时间后跳转到指定URL
         /// </summary>
         /// <param name="url"></param>
         /// <param name="delay"></param>
@@ -78,6 +86,7 @@ namespace COM.CF.Web
         {
             AutoGo(url, delay, null);
         }
+
         /// <summary>
         /// 延迟后跳转到指定URL，URL可自定义
         /// </summary>
@@ -116,19 +125,19 @@ namespace COM.CF.Web
 
             string lower = url.ToLower();
             //自动关闭
-            if(lower=="autoclose")
+            if (lower == "autoclose")
             {
-                Response.Write(string.Format("<script>window.setTimeout('window.close()',{0});</script>",delay));
+                Response.Write(string.Format("<script>window.setTimeout('window.close()',{0});</script>", delay));
                 Response.Write("<center><input type=button value='关闭' onclick='window.close()'></center>");
                 Response.Write(string.Concat(Convert.ToString(delay / 1000), "秒后，自动关闭"));
                 return;
             }
             //刷新打开页面
-            if(lower=="refreshopener")
+            if (lower == "refreshopener")
             {
-                Response.Write(string.Format("<script>window.setTimeout('if (window.opener) window.opener.location.reload();window.close()',{0});</script>",delay));
+                Response.Write(string.Format("<script>window.setTimeout('if (window.opener) window.opener.location.reload();window.close()',{0});</script>", delay));
                 Response.Write("<center><input type=button value='关闭' onclick='if (window.opener) window.opener.location.reload();window.close()'></center>");
-                Response.Write(string.Concat(Convert.ToString(delay /1000), "秒后，自动关闭"));
+                Response.Write(string.Concat(Convert.ToString(delay / 1000), "秒后，自动关闭"));
             }
 
             if (!url.ToLower().StartsWith("http://") && !url.StartsWith("/"))
@@ -161,20 +170,16 @@ namespace COM.CF.Web
             }
 
 
-            Response.Write(string.Format("<script>window.setTimeout(\"location='{0}'\",{1});</script>", url, delay));
-            Response.Write(string.Concat("<center><a href=", url, ">立刻继续</a></center>"));
-            Response.Write(string.Concat(Convert.ToString(delay / 1000), " 秒后，自动继续"));
-            Response.Write("<center><input type=button value='返回' onclick='history.back()'></center>");
+            Response.Write(string.Format("<script>window.setTimeout('location=\"{0}\"','{1}');</script>", url, delay)
+                            + string.Format("<center><span id='gotime'>{0} </span>秒后，自动继续<br/>", delay / 0x3e8)
+                            + string.Format("<input type='button' value='立即继续' onclick='location.href=\"{0}\"' />", url)
+                            + "<input type='button' value='返回' onclick='history.back()'></center>"
+                            + string.Format("<script type='text/javascript'>setInterval('var ts=document.getElementById(\"gotime\");ts.innerText=parseInt(ts.innerText)-1;',1000)</script>", ""));
 
         }
         #endregion
 
-
-
-
         #region 页面控制
-        
-        #endregion
         public void Refresh(string win)
         {
             Response.Write(string.Concat("<script>", win, ".document.location.reload()</script>"));
@@ -184,7 +189,7 @@ namespace COM.CF.Web
         {
             HttpResponse response = Response;
             response.ContentType = "application/x-javascript";
-            _curpagetype = enPageType.JSPage; 
+            _curpagetype = enPageType.JSPage;
         }
 
         public void SetXMLPage()
@@ -205,32 +210,75 @@ namespace COM.CF.Web
             _curpagetype = enPageType.XMLPage;
         }
 
-        public void WirteJSError(enErrType errcode, string errstr)
+        #endregion
+
+
+        #region 输出错误
+
+        public void WirteXMLError(string msg)
+        {
+            WirteXMLError(enErrType.NormalError, msg);
+        }
+
+        public void WirteXMLError(enErrType eerrorType, string msg)
         {
             Response.Clear();
-            Response.Write(string.Concat("//error code=", Convert.ToString(errcode), " str=", errstr));
+            SetXMLPage();
+            Response.Write(CFConfig.GetXMLError(eerrorType, msg));
         }
 
-        public void WriteJSONError(string error, string otip = "")
+        public void WriteError(enErrType errType)
         {
-            Response.Write(string.Concat("{r:'", error, "'"));
-            if (otip != "")
-            {
-                Response.Write(string.Concat(",msg:'", otip, "'"));
-            }
-            Response.Write("}");
+            WriteError(errType, "");
         }
 
-        public void WriteJSONError(int errorcode, string otip = "")
+        public void WriteError(enErrType errType, string msg)
+        {
+            WriteErrorNoEnd(errType, msg);
+            Response.End();
+        }
+
+        public void WriteErrorMsg(string msg)
+        {
+            WriteErrorPage(enErrType.NormalError, msg);
+        }
+
+        public void WriteJSONError(string msg)
+        {
+            WriteJSONError(enErrType.NormalError, msg);
+        }
+
+        public void WriteJSONError(enErrType errortype,string msg)
+        {
+            if(errortype==enErrType.NotLogined)
+            {
+                msg = "没有登录";
+            }
+            WriteJSONError((int)errortype, msg);
+        }
+
+        public void WriteJSONError(int errorcode, string msg)
         {
             if (errorcode > 0)
             {
                 errorcode = -errorcode;
             }
-            WriteJSONError(errorcode.ToString(), otip);
+            WriteJSONError(errorcode.ToString(), msg);
         }
 
-        private void WirteJSError(string errstr, string otip = "", string ohtml = "", string oparam = "")
+        public void WriteJSONError(string errorcode, string otip = "")
+        {
+            Response.Write(
+                string.Format("{{\"r\":{0},\"msg\":\"{1}\"}}", errorcode, otip)
+            );
+        }
+        public void WirteJSError(enErrType errcode, string msg)
+        {
+            Response.Clear();
+            Response.Write(string.Concat("//error code=", Convert.ToString(errcode), " str=", msg));
+        }
+
+        public void WirteJSError(string errstr, string otip = "", string ohtml = "", string oparam = "")
         {
             Response.Write(string.Concat("var errorObj={error:'", errstr, "',errtype:'sys'"));
             if (otip != "")
@@ -248,79 +296,59 @@ namespace COM.CF.Web
             Response.Write("};");
         }
 
-
-
-        public void WirteXMLError(enXMLErrorCode errcode, string errstr)
+        public void WriteErrorNoEnd(enErrType errType, string msg)
         {
-            Response.Clear();
-            SetXMLPage();
-            Response.Write(CFConfig.GetXMLError(errcode, errstr));
+            WriteErrorPage(errType, msg);
         }
 
-        public void WirteXMLError(string errstr)
+
+        public void WriteErrorPage(enErrType errType, string msg = "", string ohtml = "", string oparam = "")
         {
-            WirteXMLError(enXMLErrorCode.CFError, errstr);
+            Response.ClearContent();
+            var errd = Enum.GetName(typeof(enErrType), errType);
+            switch (CurPageType)
+            {
+                case enPageType.SelfPage:
+                    WriteJSONError(errType, msg);
+                    break;
+                case enPageType.XMLPage:
+                    WirteXMLError(errType,msg);
+                    break;
+                case enPageType.JSPage:
+                    WirteJSError(errd, msg, ohtml, oparam);
+                    break;
+                default:
+                    Context.Server.Execute(string.Format("~/res/inc/errpage.aspx?error={0}&errtype={1}&otip={2}&ohtml={3}&oparam={4}{5}", errd, "sys", msg, ohtml, oparam,
+                        Request.FilePath.StartsWith("/admin/") ? "&isadmin=1" : ""));
+                    break;
+            }
         }
 
-        public void WirteXMLError(enXMLErrorCode errcode, string errstr, enErrType qqerrtype)
+        #endregion
+
+        #region 输出成功返回
+        public void WriteOK(string s)
         {
-            Response.Clear();
-            SetXMLPage();
-            Response.Write(CFConfig.GetXMLError(errcode, errstr, qqerrtype));
+            Response.Write(string.Concat("<center><font color=blue size=+2>", s, "</font></center>"));
         }
 
         public void WirteXMLOK(string s)
         {
             Response.Write(string.Concat("<OK>", s, "</OK>"));
-        }
+        }  
+        #endregion
 
-        public void WriteError(enErrType errType)
-        {
-            WriteError(errType, "");
-        }
+        #region 输出页面
 
-        public void WriteError(enErrType errType, string msg)
-        {
-            WriteErrorNoEnd(errType, msg);
-            Response.End();
-        }
-
-        public void WriteErrorMsg(string msg)
-        {
-            WriteErrorPage("5ilogerror", msg, "", "");
-        }
-
-        public void WriteErrorNoEnd(enErrType errType, string msg)
-        {
-            WriteErrorPage("5ilogerror", msg, "", string.Concat(",errcode:'", errType.ToString(), "',gobacktishi:1"));
-        }
-
-        public void WriteErrorPage(string errstr, string otip = "", string ohtml = "", string oparam = "")
-        {
-            Response.ClearContent();
-            switch (CurPageType)
-            {
-                case enPageType.SelfPage:
-                    WriteJSONError(errstr, otip);
-                    break;
-                case enPageType.XMLPage:
-                    WirteXMLError(errstr);
-                    break;
-                case enPageType.JSPage:
-                    WirteJSError(errstr, otip, ohtml, oparam);
-                    break;
-                default:
-                    //Response.Write("<script>");
-                    //WirteJSError(errstr, otip, ohtml, oparam);
-                    //Response.Write("</script>");
-                    Context.Server.Execute(string.Format("~/res/inc/errpage.aspx?error={0}&errtype={1}&otip={2}&ohtml={3}&oparam={4}",errstr,"sys",otip,ohtml,oparam));
-                    break;
-            }
-        }
 
         public void WriteHead()
         {
             WriteHead(enPageType.DefaultPage, "");
+        }
+
+        public void WriteHead(string title)
+        {
+            WriteHead(enPageType.DefaultPage, title);
         }
 
         public void WriteHead(enPageType pageType, string title)
@@ -340,23 +368,17 @@ namespace COM.CF.Web
             Response.Write(otherHead);
             Response.Write("</head><body>");
         }
- 
 
-
-        public void WriteOK(string s)
+        public void WriteTail()
         {
-            Response.Write(string.Concat("<center><font color=blue size=+2>", s, "</font></center>"));
+            Response.Write("</body></html>");
         }
 
         public void WritePageFoot()
         {
             Response.Write("</body></html>");
         }
-
-        public void WriteTail()
-        {
-            Response.Write("</body></html>");
-        }
+        #endregion     
 
 
     }

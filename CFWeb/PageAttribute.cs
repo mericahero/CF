@@ -61,6 +61,7 @@ namespace COM.CF.Web
         {
             m_pageType = enPageType.SelfPage;
         }
+
         /// <summary>
         /// 指定方法的执行页面
         /// </summary>

@@ -68,6 +68,7 @@ E:\pro\CCLibs\CCBWeb\bin\Debug\CFWeb.dll
 E:\pro\CCLibs\CCBWeb\bin\Debug\CFWeb.pdb
 E:\pro\CCLibs\CCBWeb\bin\Debug\CFFW.dll
 E:\pro\CCLibs\CCBWeb\bin\Debug\CFFW.pdb
+E:\git\CF\CCBWeb\obj\Debug\CC.Main.Web.csprojResolveAssemblyReference.cache
 E:\git\CF\CCBWeb\bin\Debug\CCBWeb.Main.Web.dll
 E:\git\CF\CCBWeb\bin\Debug\CCBWeb.Main.Web.pdb
 E:\git\CF\CCBWeb\bin\Debug\CC.Main.BL.dll
@@ -88,6 +89,5 @@ E:\git\CF\CCBWeb\bin\Debug\CFWeb.pdb
 E:\git\CF\CCBWeb\bin\Debug\GeniusTek.pdb
 E:\git\CF\CCBWeb\bin\Debug\WebPub.pdb
 E:\git\CF\CCBWeb\bin\Debug\CWFW.pdb
-E:\git\CF\CCBWeb\obj\Debug\CC.Main.Web.csprojResolveAssemblyReference.cache
 E:\git\CF\CCBWeb\obj\Debug\CCBWeb.Main.Web.dll
 E:\git\CF\CCBWeb\obj\Debug\CCBWeb.Main.Web.pdb

@@ -48,7 +48,7 @@ namespace CWS
             Img1Host = PubFunc.GetDefaultStr(s["Img1Host"], "http://www.xianhuo365.com");
             LoginHost = PubFunc.GetDefaultStr(s["LoginHost"], "http://www.xianhuo365.com");
             PayHost = PubFunc.GetDefaultStr(s["PayHost"], "http://www.xianhuo365.com");
-            AdminHost = PubFunc.GetDefaultStr(s["HtadminHost"], "http://www.xianhuo365.com");
+            AdminHost = PubFunc.GetDefaultStr(s["AdminHost"], "http://www.xianhuo365.com");
             ServiceHost = PubFunc.GetDefaultStr(s["ServiceHost"], "http://www.xianhuo365.com");        
         }
 

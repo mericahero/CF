@@ -48,7 +48,7 @@ namespace CFTL
         {
             get
             {
-                return _webForm=_webForm?? new CFWebForm(Context);
+                return _webForm=_webForm?? new CFWebForm(Context,enPageType.DefaultPage);
             }
         }
 
@@ -62,7 +62,7 @@ namespace CFTL
         }
 
         private Boolean _isdealer;
-        protected Boolean ISDealer
+        public Boolean ISDealer
         {
             get
             {
@@ -71,7 +71,7 @@ namespace CFTL
         }
 
         private Boolean _isAdmin;
-        protected Boolean ISAdmin
+        public Boolean ISAdmin
         {
             get
             {
@@ -80,7 +80,7 @@ namespace CFTL
         }
 
         private Boolean _isMember;
-        protected Boolean ISMember
+        public Boolean ISMember
         {
             get
             {
@@ -89,7 +89,7 @@ namespace CFTL
         }
 
         private Boolean _isVendor;
-        protected Boolean ISVendor
+        public Boolean ISVendor
         {
             get
             {
@@ -118,14 +118,14 @@ namespace CFTL
                 return;
             }
             HttpContext current = HttpContext.Current;
-            enErrType errType = ee.ErrType;
-            if (errType != enErrType.NotLogined)
+            
+            if (ee.ErrType == enErrType.NotLogined)
             {
-                WebForm.WriteErrorNoEnd(ee.ErrType, ee.Message);
+                WebForm.WriteLogin();
             }
             else
             {
-                WebForm.WriteLogin();
+                WebForm.WriteErrorNoEnd(ee.ErrType, ee.Message);
             }
         }
         #endregion
@@ -148,6 +148,7 @@ namespace CFTL
         /// <param name="title"></param>
         protected override void WriteHead(enPageType pageType, string title)
         {
+            if (pageType == enPageType.SelfPage) return;
             WebForm.WriteHead(title);
         }
         /// <summary>

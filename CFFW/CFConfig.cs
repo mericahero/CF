@@ -209,14 +209,14 @@ namespace COM.CF
             return str;
         }
 
-        public static string GetXMLError(enXMLErrorCode errcode, string errstr)
+        public static string GetXMLError(enErrType errType, string errstr)
         {
-            return ("<error errcode='" + Conversions.ToString((int)errcode) + "'>" + HttpUtility.HtmlEncode(errstr) + "</error>");
+            return ("<error errcode='" + (int)errType + "'>" + HttpUtility.HtmlEncode(errstr) + "</error>");
         }
 
-        public static string GetXMLError(enXMLErrorCode errcode, string errstr, enErrType qqerrtype)
+        public static string GetXMLError(enErrType errType, string errstr, enErrType qqerrtype)
         {
-            return ("<error errcode='" + Conversions.ToString((int)errcode) + "' errtype='" + Enum.GetName(typeof(enErrType), qqerrtype) + "'>" + HttpUtility.HtmlEncode(errstr) + "</error>");
+            return ("<error errcode='" + (int)errType + "' errtype='" + Enum.GetName(typeof(enErrType), qqerrtype) + "'>" + HttpUtility.HtmlEncode(errstr) + "</error>");
         }
 
 

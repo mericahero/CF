@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using COM.CF;
 using System.Web;
+using COM.CF.Web;
 
 namespace CFTL
 {
@@ -41,7 +42,7 @@ namespace CFTL
         {
             get
             {
-                return _webForm=_webForm??new CFWebForm(Context);
+                return _webForm=_webForm??new CFWebForm(Context,enPageType.DefaultPage);
             }
         }
 
@@ -56,7 +57,7 @@ namespace CFTL
         }
 
         private Boolean _isdealer;
-        protected Boolean ISDealer
+        public Boolean ISDealer
         {
             get
             {
@@ -65,7 +66,7 @@ namespace CFTL
         }
 
         private Boolean _isAdmin;
-        protected Boolean ISAdmin
+        public Boolean ISAdmin
         {
             get
             {
@@ -74,7 +75,7 @@ namespace CFTL
         }
 
         private Boolean _isMember;
-        protected Boolean ISMember
+        public Boolean ISMember
         {
             get
             {
@@ -83,7 +84,7 @@ namespace CFTL
         }
 
         private Boolean _isVendor;
-        protected Boolean ISVendor
+        public Boolean ISVendor
         {
             get
             {
