@@ -14,6 +14,7 @@ namespace COM.CF.Web
     /// 作者：Meric
     ///  
     /// 使用：该分页程序可以输出页面，可以按字段排序
+    /// </summary>
     public class FenPage
     {
         /// <summary>

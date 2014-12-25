@@ -8,18 +8,17 @@ using System.Web;
 namespace COM.CF
 {
     /// <summary>
-    /// 功能：封闭Sql操作
+    /// 功能：封装Sql操作类
     /// 时间：2013-10-2
     /// 作者：Meric
     /// </summary>
     public class DB
     {
         private readonly string _constr;
-
         /// <summary>
         /// 构造方法
         /// </summary>
-        /// <param name="constr"></param>
+        /// <param name="constr">连接字符串</param>
         public DB(string constr)
         {
             _constr = constr;
@@ -39,8 +38,9 @@ namespace COM.CF
         /// <summary>
         /// 执行sql语句，返回影响条数
         /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        /// <param name="sql">sql语句</param>
+        /// <param name="pars">传递给sql语句的参数</param>
+        /// <returns>返回受影响的条数</returns>
         public int ExecuteNonQuery(string sql,params SqlParameter [] pars)
         {
             SqlCommand sqlComman = new SqlCommand(sql, GetConnection());
@@ -59,8 +59,8 @@ namespace COM.CF
         /// <summary>
         /// 执行sql语句，返回查询结果
         /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        /// <param name="sql">sql语句</param>
+        /// <returns>返回查询反返回结果的第一行的第一列，忽略其它行和列</returns>
         public object ExecuteScalar(string sql)
         {
             SqlCommand sqlCommand = new SqlCommand(sql, GetConnection());
@@ -77,9 +77,9 @@ namespace COM.CF
         /// <summary>
         /// 执行sql语句，返回查询结果，该方法需要传入连接
         /// </summary>
-        /// <param name="sql"></param>
-        /// <param name="oConn"></param>
-        /// <returns></returns>
+        /// <param name="sql">sql语句</param>
+        /// <param name="oConn">已打开的数据库连接</param>
+        /// <returns>返回查询反返回结果的第一行的第一列，忽略其它行和列</returns>
         public static object ExeCuteScalar(string sql, SqlConnection oConn)
         {
             SqlCommand sqlCommand = new SqlCommand(sql, oConn);
@@ -88,13 +88,18 @@ namespace COM.CF
         /// <summary>
         /// 得到一个AutoAdapter的实例
         /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
+        /// <param name="sql">sql语句</param>
+        /// <returns>返回一个AutoAdapter的实例</returns>
         public AutoAdapter GetAutoAdapter(string sql)
         {
             return new AutoAdapter(sql, this);
         }
-
+        /// <summary>
+        /// 获得。。。。
+        /// </summary>
+        /// <param name="cm"></param>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static StringBuilder GetMoreSQLXML(SqlCommand cm, StringBuilder s)
         {
             try
@@ -118,16 +123,31 @@ namespace COM.CF
             return s;
         }
 
+        /// <summary>
+        /// 获得一个没有打开的数据库连接
+        /// </summary>
+        /// <returns>返回一个没有打开的数据库连接</returns>
         public SqlConnection GetNotOpenConnection()
         {
             return new SqlConnection(_constr);
         }
 
+        /// <summary>
+        /// 获得。。。。
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public String GetRawSQLXML(string sql)
         {
             return GetRawSQLXML(sql, new StringBuilder()).ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public StringBuilder GetRawSQLXML(string sql, StringBuilder s)
         {
             SqlCommand cm = new SqlCommand(sql, GetConnection());
@@ -148,7 +168,11 @@ namespace COM.CF
             }
             return s;
         }
-
+        /// <summary>
+        /// 获得。。。
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public String GetSingleSQLXML(string sql)
         {
             StringBuilder sb = new StringBuilder();
@@ -179,6 +203,11 @@ namespace COM.CF
         }
 
 
+        /// <summary>
+        /// 根据sql获得DataSet
+        /// </summary>
+        /// <param name="strsql">sql</param>
+        /// <returns>返回DataSet</returns>
         public DataSet GetSQLDataSet(string strsql)
         {
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strsql, GetNotOpenConnection());
@@ -204,7 +233,11 @@ namespace COM.CF
             return ds;
 
         }
-
+        /// <summary>
+        /// 根据sql获得DataRow集合
+        /// </summary>
+        /// <param name="strsql">sql</param>
+        /// <returns>返回DataRow集合</returns>
         public DataRowCollection GetSQLRows(string strsql)
         {
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strsql, GetNotOpenConnection());
@@ -212,7 +245,12 @@ namespace COM.CF
             sqlDataAdapter.Fill(dataTable);
             return dataTable.Rows;
         }
-
+        /// <summary>
+        /// 传入数据库连接，根据sql获得DataRow集合
+        /// </summary>
+        /// <param name="strsql">sql</param>
+        /// <param name="oConn">数据库连接 无须打开</param>
+        /// <returns>返回DataRow集合</returns>
         public static DataRowCollection GetSQLRows(string strsql, SqlConnection oConn)
         {
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strsql, oConn);
@@ -221,29 +259,28 @@ namespace COM.CF
             return dataTable.Rows;
         }
 
-
+        /// <summary>
+        /// 根据sql语句返回指定行数的数据
+        /// </summary>
+        /// <param name="strsql">sql语句</param>
+        /// <param name="n">需要的数据行数</param>
+        /// <returns>返回指定行数的DataRow</returns>
         public DataRowCollection GetSQLRows(string strsql, int n)
         {
-            string[] str = new string[5];
-            str[0] = "set rowcount ";
-            str[1] = n.ToString();
-            str[2] = " ";
-            str[3] = strsql;
-            str[4] = " set rowcount 0";
-
-            return GetSQLRows(string.Concat(str));
+            string str = string.Format("set rowcount{0} {1} set rowcount 0",n,strsql);            
+            return GetSQLRows(str);
         }
 
+        /// <summary>
+        /// 根据sql语句返回从指定行开始的需要的行数的数据
+        /// </summary>
+        /// <param name="strsql">sql语句</param>
+        /// <param name="start">开始的行数</param>
+        /// <param name="n">需要获取的行数</param>
+        /// <returns>返回指定行数的DataRow</returns>
         public DataRowCollection GetSQLRows(string strsql, int start, int n)
         {
-            string[] str = new string[5];
-            str[0] = "set rowcount ";
-            int num = start + n;
-            str[1] = num.ToString();
-            str[2] = " ";
-            str[3] = strsql;
-            str[4] = " set rowcount 0";
-            strsql = string.Concat(str);
+            strsql = string.Format("set rowcount {0} {1} set rowcount 0",start+n,strsql);
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(strsql,GetNotOpenConnection());
             DataSet dataSet = new DataSet();
             sqlDataAdapter.Fill(dataSet, start, n, "t");
@@ -251,6 +288,11 @@ namespace COM.CF
             return dataSet.Tables[0].Rows; 
         }
 
+        /// <summary>
+        /// 根据sql获得单条数据
+        /// </summary>
+        /// <param name="strsql">sql语句</param>
+        /// <returns>返回指定的数据</returns>
         public DataRow GetSQLSingleRow(string strsql)
         {
             DataRow item;
@@ -266,7 +308,12 @@ namespace COM.CF
             }
             return item;
         }
-
+        /// <summary>
+        /// 传入数据库连接 根据sql获得单条数据
+        /// </summary>
+        /// <param name="strsql">sql</param>
+        /// <param name="oConn">数据库连接</param>
+        /// <returns>条例sql检索的音箱数据</returns>
         public static DataRow GetSQLSingleRow(string strsql, SqlConnection oConn)
         {
             DataRow item;
@@ -283,6 +330,11 @@ namespace COM.CF
             return item;
         }
 
+        /// <summary>
+        /// 根据sql语句获得DataTable
+        /// </summary>
+        /// <param name="strsql">sql</param>
+        /// <returns>返回符合查询条件的DataTable</returns>
         public DataTable GetSQLTab(string strsql)
         {
             var sqlDataAdapter = new SqlDataAdapter(strsql, GetNotOpenConnection());
@@ -313,110 +365,6 @@ namespace COM.CF
             {
                 cm.Connection.Close();
             }
-        }
-
-
-        public string GetSQLXML(string sql)
-        {
-            return GetSQLXML(sql, new StringBuilder()).ToString();
-        }
-
-        public string GetSQLXML(string sql, string rowname)
-        {
-            return GetSQLXML(sql, new StringBuilder(), -1, rowname).ToString();
-        }
-
-        public string GetSQLXML(string sql, int n)
-        {
-            return GetSQLXML(sql, new StringBuilder(), n, "").ToString();
-        }
-
-        public StringBuilder GetSQLXML(string sql, StringBuilder s)
-        {
-            return GetSQLXML(sql, s, -1, "");
-        }
-
-        public StringBuilder GetSQLXML(string sql, StringBuilder s, int n, string rowname = "")
-        {
-            bool flag = String.Compare(rowname, "", false) != 0;
-            if (flag)
-            {
-                rowname = string.Concat("('", rowname, "')");
-            }
-            flag = n != -1;
-            if (!flag)
-            {
-                sql = string.Concat(sql, " for xml raw", rowname);
-            }
-            else
-            {
-                string[] str = new string[7];
-                str[0] = " set rowcount ";
-                str[1] = Convert.ToString(n);
-                str[2] = " ";
-                str[3] = sql;
-                str[4] = " for xml raw";
-                str[5] = rowname;
-                str[6] = " set rowcount 0";
-                sql = string.Concat(str);
-            }
-
-            return GetRawSQLXML(sql, s);
-        }
-
-        public string GetSQLXMLBig(string sql, string rowname)
-        {
-            return GetSQLXMLBig(sql, rowname, -1);
-        }
-
-        public string GetSQLXMLBig(string sql, string rowname, int n)
-        {
-            if (n!=-1)
-            {
-                string[] str = new string[5];
-                str[0] = " set rowcount ";
-                str[1] = Convert.ToString(n);
-                str[2] = " ";
-                str[3] = sql;
-                str[4] = " set rowcount 0";
-                sql = string.Concat(str);
-            }
-            StringBuilder stringBuilder = new StringBuilder();
-            SqlCommand sqlCommand = new SqlCommand(sql, GetConnection());
-            try
-            {
-                SqlDataReader sqlDataReader = sqlCommand.ExecuteReader(CommandBehavior.SingleResult);
-                while (true)
-                {
-                     
-                    if (!sqlDataReader.Read())
-                    {
-                        break;
-                    }
-                    stringBuilder.Append(string.Concat("<", rowname));
-                    int fieldCount = sqlDataReader.FieldCount - 1;
-                    int num = 0;
-                    while (true)
-                    {
-                        int num1 = fieldCount;
-                        if (num > num1)
-                        {
-                            break;
-                        }
-                        stringBuilder.Append(" ").Append(sqlDataReader.GetName(num)).Append("='");
-                        stringBuilder.Append(HttpUtility.HtmlEncode(sqlDataReader[num].ToString()));
-                        stringBuilder.Append("'");
-                        num++;
-                    }
-                    stringBuilder.Append(" />");
-                }
-                sqlDataReader.Close();
-            }
-            finally
-            {
-                sqlCommand.Connection.Close();
-            }
-            return stringBuilder.ToString();
         }
     }
 }

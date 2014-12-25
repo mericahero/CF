@@ -222,7 +222,11 @@ namespace CWS
             }
             return decimal.Zero;
         }
-
+        /// <summary>
+        /// 获取四会五入后的浮点数，保留两位小数
+        /// </summary>
+        /// <param name="dec">待处理浮点数</param>
+        /// <returns>返回处理后的浮点数字符串</returns>
         public static string GetMoneyStr(decimal dec)
         {
             return Math.Round(dec, 2).ToString();

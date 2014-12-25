@@ -15,10 +15,11 @@ namespace CFTL
     /// </summary>
     public class CFPage : UIPage
     {
+        
+        private LoginUsr _usrInfo;
         /// <summary>
         /// _usrInfo 同时实现了IUsr以及ILoginUsr接口
         /// </summary>
-        private LoginUsr _usrInfo;
         protected IUsr UsrInfo
         {
             get
@@ -38,6 +39,9 @@ namespace CFTL
         }
 
         private CFWebForm _webForm;
+        /// <summary>
+        /// 页面控制类
+        /// </summary>
         protected CFWebForm WebForm
         {
             get
@@ -48,6 +52,9 @@ namespace CFTL
 
 
         private Int32 _curuid;
+        /// <summary>
+        /// 当前用户UID，未登录为0
+        /// </summary>
         protected Int32 CurUID
         {
             get
@@ -57,6 +64,9 @@ namespace CFTL
         }
 
         private Boolean _isdealer;
+        /// <summary>
+        /// 是否是采购商——XH365定制
+        /// </summary>
         public Boolean ISDealer
         {
             get
@@ -66,6 +76,9 @@ namespace CFTL
         }
 
         private Boolean _isAdmin;
+        /// <summary>
+        /// 是否是管理员——XH365定制
+        /// </summary>
         public Boolean ISAdmin
         {
             get
@@ -75,6 +88,9 @@ namespace CFTL
         }
 
         private Boolean _isMember;
+        /// <summary>
+        /// 是否是注册用户——XH365定制
+        /// </summary>
         public Boolean ISMember
         {
             get
@@ -84,6 +100,9 @@ namespace CFTL
         }
 
         private Boolean _isVendor;
+        /// <summary>
+        /// 是否是供应商——XH365定制
+        /// </summary>
         public Boolean ISVendor
         {
             get
@@ -92,7 +111,11 @@ namespace CFTL
             }
         }
 
-
+        /// <summary>
+        /// 根据传入诉身份类型判断当前用户是符合身份
+        /// </summary>
+        /// <param name="type">身份类型代码</param>
+        /// <returns>返回是否符合身份</returns>
         protected Boolean CheckIDType(int type)
         {
             return _isAdmin = UsrLogin.Logined && (UsrInfo.IDType & type) != 0;

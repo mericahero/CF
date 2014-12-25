@@ -68,7 +68,9 @@ namespace COM.CF
         }
         #endregion
 
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         protected CtrlPage()
         {
         }
@@ -188,15 +190,33 @@ namespace COM.CF
                 }
             }
         }
-
+        /// <summary>
+        /// 输出页面的头部
+        /// </summary>
         protected virtual void WriteHead()
         {
             WriteHead(WebForm.CurPageType, "");
         }
-
+        /// <summary>
+        /// 抽象方法，接管异常处理
+        /// </summary>
+        /// <param name="e">异常信息</param>
         protected abstract void HandleException(CFException e);
+        /// <summary>
+        /// 抽象方法，输出错误信息，但不输出页面尾部
+        /// </summary>
+        /// <param name="errType">错误类型</param>
+        /// <param name="msg">错误信息</param>
         protected abstract void WriteErrorNoEnd(enErrType errType, string msg);
+        /// <summary>
+        /// 抽象方法，输出页面头部
+        /// </summary>
+        /// <param name="pageType">页面类型</param>
+        /// <param name="title">页面标题</param>
         protected abstract void WriteHead(enPageType pageType, string title);
+        /// <summary>
+        /// 抽象方法，输出页面尾部
+        /// </summary>
         protected abstract void WriteTail();        
         /// <summary>
         /// 当前页面的登录控制，继承类里必须实现

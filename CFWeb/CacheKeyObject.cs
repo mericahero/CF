@@ -7,13 +7,22 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 namespace COM.CF.Web
 {
+    /// <summary>
+    /// 功能：CFCache的Key对象
+    /// 时间：2013-10-2
+    /// 作者：meric
+    /// </summary>
     public class CacheKeyObject
     {
         private DateTime _createRQ = DateAndTime.Now;
         private ListDictionary _dict;
         private DateTime _lastaccess;
         private int _n;
-
+        /// <summary>
+        /// 判断是否包含Key
+        /// </summary>
+        /// <param name="key">需要检测的key</param>
+        /// <returns>返回是否包含该key</returns>
         public bool HaveKey(object key)
         {
             if (this._dict == null)
@@ -23,22 +32,26 @@ namespace COM.CF.Web
             return this._dict.Contains(RuntimeHelpers.GetObjectValue(key));
         }
 
+        /// <summary>
+        /// 重写Object的ToString()方法
+        /// </summary>
+        /// <returns>返回重写的ToString()</returns>
         public override string ToString()
         {
             IEnumerator enumerator=null;
-            string str = "KEY OBJECT access=" + Conversions.ToString(this._n) + " LM=" + Conversions.ToString(this._createRQ) + " LA=" + Conversions.ToString(this._lastaccess);
-            if (this._dict == null)
+            string str = string.Format("KEY OBJECT access={0} LM={1} LA={2}",_n,_createRQ,_lastaccess);
+            if (_dict == null)
             {
                 return str;
             }
-            str = str + "<div class=item>";
+            str +=  "<div class=item>";
             try
             {
                 enumerator = this._dict.Keys.GetEnumerator();
                 while (enumerator.MoveNext())
                 {
                     object objectValue = RuntimeHelpers.GetObjectValue(enumerator.Current);
-                    if (this._dict[RuntimeHelpers.GetObjectValue(objectValue)] == null)
+                    if (_dict[RuntimeHelpers.GetObjectValue(objectValue)] == null)
                     {
                         str = str + " " + objectValue.ToString() + "=Nothing";
                     }
@@ -57,26 +70,30 @@ namespace COM.CF.Web
             }
             return (str + "</div>");
         }
-
+        /// <summary>
+        /// 索引器，根据Key得到值
+        /// </summary>
+        /// <param name="key">要检索的key</param>
+        /// <returns>检索到的值</returns>
         public object this[object key]
         {
             get
             {
-                this._lastaccess = DateAndTime.Now;
-                this._n++;
-                if (this._dict == null)
+                _lastaccess = DateAndTime.Now;
+                _n++;
+                if (_dict == null)
                 {
                     return null;
                 }
-                return this._dict[RuntimeHelpers.GetObjectValue(key)];
+                return _dict[RuntimeHelpers.GetObjectValue(key)];
             }
             set
             {
-                if (this._dict == null)
+                if (_dict == null)
                 {
-                    this._dict = new ListDictionary();
+                    _dict = new ListDictionary();
                 }
-                this._dict[RuntimeHelpers.GetObjectValue(key)] = RuntimeHelpers.GetObjectValue(value);
+                _dict[RuntimeHelpers.GetObjectValue(key)] = RuntimeHelpers.GetObjectValue(value);
             }
         }
     }

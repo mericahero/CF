@@ -21,16 +21,24 @@ namespace CFTL
         /// <summary>
         /// 带参构造函数
         /// </summary>
-        /// <param name="context1"></param>
+        /// <param name="con">网站执行上下文</param>
         public CFWebForm(HttpContext con)
             : base(con){}
 
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="cont">网站执行上下文</param>
+        /// <param name="pt">页面类型</param>
         public CFWebForm(HttpContext cont, enPageType pt)
             : base(cont,pt){}
         #endregion
 
         
-
+        /// <summary>
+        /// 输入XML格式的错误提示信息
+        /// </summary>
+        /// <param name="errmsg"></param>
         public void WriteXMLError(string errmsg)
         {
             base.WirteXMLError(errmsg);
@@ -39,6 +47,9 @@ namespace CFTL
 
 
         #region 异常输出
+        /// <summary>
+        /// 输出未登录提示信息
+        /// </summary>
         public void WriteLogin()
         {
             WriteErrorPage(enErrType.NotLogined, "没有登录");

@@ -203,6 +203,13 @@
             <param name="dec"></param>
             <returns></returns>
         </member>
+        <member name="M:CWS.CWPub.GetMoneyStr(System.Decimal)">
+            <summary>
+            获取四会五入后的浮点数，保留两位小数
+            </summary>
+            <param name="dec">待处理浮点数</param>
+            <returns>返回处理后的浮点数字符串</returns>
+        </member>
         <member name="M:CWS.CWPub.GetSJ(System.String)">
             <summary>
             获得正确的手机号，+86的去掉+86

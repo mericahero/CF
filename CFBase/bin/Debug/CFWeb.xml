@@ -4,6 +4,61 @@
         <name>CFWeb</name>
     </assembly>
     <members>
+        <member name="T:COM.CF.Web.CacheKeyObject">
+            <summary>
+            功能：CFCache的Key对象
+            时间：2013-10-2
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.CacheKeyObject.HaveKey(System.Object)">
+            <summary>
+            判断是否包含Key
+            </summary>
+            <param name="key">需要检测的key</param>
+            <returns>返回是否包含该key</returns>
+        </member>
+        <member name="M:COM.CF.Web.CacheKeyObject.ToString">
+            <summary>
+            重写Object的ToString()方法
+            </summary>
+            <returns>返回重写的ToString()</returns>
+        </member>
+        <member name="P:COM.CF.Web.CacheKeyObject.Item(System.Object)">
+            <summary>
+            索引器，根据Key得到值
+            </summary>
+            <param name="key">要检索的key</param>
+            <returns>检索到的值</returns>
+        </member>
+        <member name="T:COM.CF.Web.CFCache">
+            <summary>
+            功能：CF框架的缓存
+            时间：2013-10-3
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.CFCache.DingShiRefreshExpireSeconds">
+            <summary>
+            定时清理时间间隔
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.CFCache.DingShiRefresh">
+            <summary>
+            定时刷新缓存
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.Web.CFCache.DingShiRefresh(System.String,System.DateTime,System.String[],System.String[])">
+            <summary>
+            定时刷新缓存
+            </summary>
+            <param name="selfQuery"></param>
+            <param name="expire"></param>
+            <param name="dependfiles"></param>
+            <param name="dependkeys"></param>
+            <returns></returns>
+        </member>
         <member name="T:COM.CF.Web.DefaultPage">
             <summary>
             功能：CF框架底层页面抽象类
@@ -41,6 +96,124 @@
         <member name="P:COM.CF.Web.DefaultPage.WebForm">
             <summary>
             页面控制对象
+            </summary>
+        </member>
+        <member name="T:COM.CF.Web.ErrorLog">
+            <summary>
+            功能：错误日志记录
+            时间：2013-10-2
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.ErrorLog.UnControlException(COM.CF.Web.CFPageControl,System.Exception)">
+            <summary>
+            不受控的异常记录
+            </summary>
+            <param name="webForm">页面控制对象</param>
+            <param name="e">异常</param>
+        </member>
+        <!-- 对于成员“M:COM.CF.Web.ErrorLog.UnControlException(COM.CF.Web.CFPageControl,System.Exception,System.Boolean)”忽略有格式错误的 XML 注释 -->
+        <member name="M:COM.CF.Web.ErrorLog.WriteLog(System.Exception)">
+            <summary>
+            将异常记录到日志中
+            </summary>
+            <param name="e">异常对象</param>
+        </member>
+        <member name="M:COM.CF.Web.ErrorLog.WrtieBusy(System.Exception)">
+            <summary>
+            系统繁忙记录
+            </summary>
+            <param name="e">异常</param>
+        </member>
+        <member name="T:COM.CF.Web.FenPage">
+            <summary>
+            功能：前台分页程序
+            时间：2013-10-2
+            作者：Meric
+             
+            使用：该分页程序可以输出页面，可以按字段排序
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.MaxPageNumber">
+            <summary>
+            每一屏显示的最大页码数
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage._nextString">
+            <summary>
+            querystring
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage._strsql">
+            <summary>
+            sql语句 测试用
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.CurPage">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.HaveNextPage">
+            <summary>
+            是否有下一页
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.link">
+            <summary>
+            首页链接
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.PageCount">
+            <summary>
+            每页显示数量
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.PageNumber">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.#ctor(System.Int32,System.Collections.Specialized.NameValueCollection,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="total"></param>
+            <param name="form"></param>
+            <param name="defaultCount"></param>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.GetFullPageList(System.String)">
+            <summary>
+            获取完整的当前页页码
+            </summary>
+            <param name="link">首页链接</param>
+            <returns>返回页码html</returns>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.GetFullPageList">
+            <summary>
+            获取完整的当前页页码
+            </summary>
+            <returns>返回页码html</returns>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.GetLastLink">
+            <summary>
+            获得末页页码
+            </summary>
+            <returns>返回末页页码html</returns>
+        </member>
+        <member name="P:COM.CF.Web.FenPage.NextPage">
+            <summary>
+            下一页页码
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenPage.NotOpenedConnection">
+            <summary>
+            分页数据库连接 无须打开
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenPage.Rows">
+            <summary>
+            页面数据
             </summary>
         </member>
         <member name="T:COM.CF.Web.FenYe">
@@ -209,194 +382,6 @@
             数据Rows
             </summary>
         </member>
-        <!-- 对于成员“T:COM.CF.Web.FenPage”忽略有格式错误的 XML 注释 -->
-        <member name="F:COM.CF.Web.FenPage.MaxPageNumber">
-            <summary>
-            每一屏显示的最大页码数
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.FenPage._nextString">
-            <summary>
-            querystring
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.FenPage._strsql">
-            <summary>
-            sql语句 测试用
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.FenPage.CurPage">
-            <summary>
-            当前页码
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.FenPage.HaveNextPage">
-            <summary>
-            是否有下一页
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.FenPage.link">
-            <summary>
-            首页链接
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.FenPage.PageCount">
-            <summary>
-            每页显示数量
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.FenPage.PageNumber">
-            <summary>
-            页数
-            </summary>
-        </member>
-        <member name="M:COM.CF.Web.FenPage.#ctor(System.Int32,System.Collections.Specialized.NameValueCollection,System.Int32)">
-            <summary>
-            构造函数
-            </summary>
-            <param name="total"></param>
-            <param name="form"></param>
-            <param name="defaultCount"></param>
-        </member>
-        <member name="M:COM.CF.Web.FenPage.GetFullPageList(System.String)">
-            <summary>
-            获取完整的当前页页码
-            </summary>
-            <param name="link">首页链接</param>
-            <returns>返回页码html</returns>
-        </member>
-        <member name="M:COM.CF.Web.FenPage.GetFullPageList">
-            <summary>
-            获取完整的当前页页码
-            </summary>
-            <returns>返回页码html</returns>
-        </member>
-        <member name="M:COM.CF.Web.FenPage.GetLastLink">
-            <summary>
-            获得末页页码
-            </summary>
-            <returns>返回末页页码html</returns>
-        </member>
-        <member name="P:COM.CF.Web.FenPage.NextPage">
-            <summary>
-            下一页页码
-            </summary>
-        </member>
-        <member name="P:COM.CF.Web.FenPage.NotOpenedConnection">
-            <summary>
-            分页数据库连接 无须打开
-            </summary>
-        </member>
-        <member name="P:COM.CF.Web.FenPage.Rows">
-            <summary>
-            页面数据
-            </summary>
-        </member>
-        <member name="T:COM.CF.Web.CFCache">
-            <summary>
-            功能：CF框架的缓存
-            时间：2013-10-3
-            作者：meric
-            </summary>
-        </member>
-        <member name="F:COM.CF.Web.CFCache.DingShiRefreshExpireSeconds">
-            <summary>
-            定时清理时间间隔
-            </summary>
-        </member>
-        <member name="M:COM.CF.Web.CFCache.DingShiRefresh">
-            <summary>
-            定时刷新缓存
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:COM.CF.Web.CFCache.DingShiRefresh(System.String,System.DateTime,System.String[],System.String[])">
-            <summary>
-            定时刷新缓存
-            </summary>
-            <param name="selfQuery"></param>
-            <param name="expire"></param>
-            <param name="dependfiles"></param>
-            <param name="dependkeys"></param>
-            <returns></returns>
-        </member>
-        <member name="T:COM.CF.Web.CFCookies">
-            <summary>
-            功能：CF框架Cookie处理
-            时间：2013-10-20
-            作者：meric
-            </summary>
-        </member>
-        <member name="M:COM.CF.Web.CFCookies.ClearCookie(System.String,System.String)">
-            <summary>
-            清除Cookie，可指定Cookie路径
-            </summary>
-            <param name="name"></param>
-            <param name="path"></param>
-        </member>
-        <member name="M:COM.CF.Web.CFCookies.GetCookie(System.String)">
-            <summary>
-            根据名称获得cookie值
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="M:COM.CF.Web.CFCookies.GetIntCookie(System.String)">
-            <summary>
-            获得整数表示的Cookie
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="M:COM.CF.Web.CFCookies.SetCookie(System.String,System.String)">
-            <summary>
-            设置cookie，有效期为3个月
-            </summary>
-            <param name="name"></param>
-            <param name="value"></param>
-        </member>
-        <member name="M:COM.CF.Web.CFCookies.SetCookie(System.String,System.String,System.DateTime,System.String)">
-            <summary>
-            设置键为name值为value的Cookie值，并设置有效期
-            </summary>
-            <param name="name">名称</param>
-            <param name="value">值</param>
-            <param name="expires">过期时间</param>
-        </member>
-        <member name="M:COM.CF.Web.CFCookies.SetCookieNoExpires(System.String,System.String)">
-            <summary>
-            设置Cookie，永不过期
-            </summary>
-            <param name="name"></param>
-            <param name="value"></param>
-        </member>
-        <member name="T:COM.CF.Web.ErrorLog">
-            <summary>
-            功能：错误日志记录
-            时间：2013-10-2
-            作者：meric
-            </summary>
-        </member>
-        <member name="M:COM.CF.Web.ErrorLog.UnControlException(COM.CF.Web.CFPageControl,System.Exception)">
-            <summary>
-            不受控的异常记录
-            </summary>
-            <param name="webForm">页面控制对象</param>
-            <param name="e">异常</param>
-        </member>
-        <!-- 对于成员“M:COM.CF.Web.ErrorLog.UnControlException(COM.CF.Web.CFPageControl,System.Exception,System.Boolean)”忽略有格式错误的 XML 注释 -->
-        <member name="M:COM.CF.Web.ErrorLog.WriteLog(System.Exception)">
-            <summary>
-            将异常记录到日志中
-            </summary>
-            <param name="e">异常对象</param>
-        </member>
-        <member name="M:COM.CF.Web.ErrorLog.WrtieBusy(System.Exception)">
-            <summary>
-            系统繁忙记录
-            </summary>
-            <param name="e">异常</param>
-        </member>
         <member name="T:COM.CF.Web.PageAttribute">
             <summary>
             功能：控制类中方法的自定义页面属性，指定该方法输出后所展示的页面
@@ -450,6 +435,63 @@
         <member name="P:COM.CF.Web.PageAttribute.Title">
             <summary>
             页面标题 
+            </summary>
+        </member>
+        <member name="T:COM.CF.Web.CFCookies">
+            <summary>
+            功能：CF框架Cookie处理
+            时间：2013-10-20
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.ClearCookie(System.String,System.String)">
+            <summary>
+            清除Cookie，可指定Cookie路径
+            </summary>
+            <param name="name"></param>
+            <param name="path"></param>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.GetCookie(System.String)">
+            <summary>
+            根据名称获得cookie值
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.GetIntCookie(System.String)">
+            <summary>
+            获得整数表示的Cookie
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.SetCookie(System.String,System.String)">
+            <summary>
+            设置cookie，有效期为3个月
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.SetCookie(System.String,System.String,System.DateTime,System.String)">
+            <summary>
+            设置键为name值为value的Cookie值，并设置有效期
+            </summary>
+            <param name="name">名称</param>
+            <param name="value">值</param>
+            <param name="expires">过期时间</param>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.SetCookieNoExpires(System.String,System.String)">
+            <summary>
+            设置Cookie，永不过期
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:COM.CF.Web.ResponseCatcher">
+            <summary>
+            功能：CF框架的基础缓存
+            时间：2014-10-1
+            作者：merci
             </summary>
         </member>
     </members>

@@ -4,16 +4,6 @@
         <name>CFPUB</name>
     </assembly>
     <members>
-        <member name="M:COM.CF.PubTypes.GetDate(System.Object,System.String)">
-            <summary>
-            从一个字符串中得日期字符串
-            
-                2014-7-23   完善  增加了时间格式，并带上默认值
-            </summary>
-            <param name="str"></param>
-            <param name="fmt"></param>
-            <returns></returns>
-        </member>
         <member name="T:COM.CF.PubFunc">
             <summary>
             功能：CF框架的公共方法
@@ -147,6 +137,16 @@
             判断 字符串是否为非法数字
             </summary>
             <param name="inputstr"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubTypes.GetDate(System.Object,System.String)">
+            <summary>
+            从一个字符串中得日期字符串
+            
+                2014-7-23   完善  增加了时间格式，并带上默认值
+            </summary>
+            <param name="str"></param>
+            <param name="fmt"></param>
             <returns></returns>
         </member>
     </members>

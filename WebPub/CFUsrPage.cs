@@ -12,6 +12,9 @@ namespace CFTL
     /// </summary>
     public class CFUsrPage : CFPage
     {
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public CFUsrPage()
         {
             base.Load += Page_Load;

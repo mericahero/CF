@@ -4,6 +4,33 @@
         <name>GeniusTek</name>
     </assembly>
     <members>
+        <member name="T:GeniusTek.enAnalyzeType">
+            <summary>
+            功能：解析程序集的方式
+            时间：2014-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespaceAndAssemblyName">
+            <summary>
+            默认命名空间+程序集
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.FullClassName">
+            <summary>
+            完整的类名（包括程序集、命名空间）
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespace">
+            <summary>
+            默认命名空间
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespaceAndAssemblyNameAppendWeb">
+            <summary>
+            默认命名空间+程序集+拼接上的".Web"字符串
+            </summary>
+        </member>
         <member name="T:GeniusTek.IGetTypeName">
             <summary>
             功能：获取处理请求的程序名
@@ -53,33 +80,6 @@
         <member name="P:GeniusTek.PageBase.Session">
             <summary>
             页面的Session
-            </summary>
-        </member>
-        <member name="T:GeniusTek.enAnalyzeType">
-            <summary>
-            功能：解析程序集的方式
-            时间：2014-10-22
-            作者：meric
-            </summary>
-        </member>
-        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespaceAndAssemblyName">
-            <summary>
-            默认命名空间+程序集
-            </summary>
-        </member>
-        <member name="F:GeniusTek.enAnalyzeType.FullClassName">
-            <summary>
-            完整的类名（包括程序集、命名空间）
-            </summary>
-        </member>
-        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespace">
-            <summary>
-            默认命名空间
-            </summary>
-        </member>
-        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespaceAndAssemblyNameAppendWeb">
-            <summary>
-            默认命名空间+程序集+拼接上的".Web"字符串
             </summary>
         </member>
         <member name="T:GeniusTek.ServerClass">

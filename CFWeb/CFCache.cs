@@ -26,7 +26,6 @@ namespace COM.CF.Web
         private const int DingShiRefreshExpireSeconds = 0xbb8;
 
 
-
         public static void CheckAuthCache()
         {
             CheckAuthCache(null);

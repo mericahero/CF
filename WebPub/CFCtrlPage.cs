@@ -40,10 +40,11 @@ namespace CFTL
                 return _login =_login?? new LoginUsr(Context);
             }
         }
+        
+        private CFWebForm _webForm;
         /// <summary>
         /// 页面控制
         /// </summary>
-        private CFWebForm _webForm;
         protected CFWebForm WebForm
         {
             get
@@ -53,6 +54,9 @@ namespace CFTL
         }
 
         private Int32 _curuid;
+        /// <summary>
+        /// 当前登录用户的UID，未登录为0
+        /// </summary>
         protected Int32 CurUID
         {
             get
@@ -62,6 +66,9 @@ namespace CFTL
         }
 
         private Boolean _isdealer;
+        /// <summary>
+        /// 是否是采购商用户——XH365定制
+        /// </summary>
         public Boolean ISDealer
         {
             get
@@ -71,6 +78,9 @@ namespace CFTL
         }
 
         private Boolean _isAdmin;
+        /// <summary>
+        /// 是否是管理员用户——XH365定制
+        /// </summary>
         public Boolean ISAdmin
         {
             get
@@ -80,6 +90,9 @@ namespace CFTL
         }
 
         private Boolean _isMember;
+        /// <summary>
+        /// 是否是注册用户——XH365定制
+        /// </summary>
         public Boolean ISMember
         {
             get
@@ -89,6 +102,9 @@ namespace CFTL
         }
 
         private Boolean _isVendor;
+        /// <summary>
+        /// 是否是供应商用户——XH365定制
+        /// </summary>
         public Boolean ISVendor
         {
             get
@@ -97,7 +113,11 @@ namespace CFTL
             }
         }
 
-
+        /// <summary>
+        /// 根据传入的用户身份验证用户是否符合身份
+        /// </summary>
+        /// <param name="type">身份代码</param>
+        /// <returns>返回是否符合</returns>
         protected Boolean CheckIDType(int type)
         {
             return _isAdmin = UsrLogin.Logined && (UsrInfo.IDType & type) != 0;

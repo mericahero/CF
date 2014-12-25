@@ -102,7 +102,10 @@ namespace COM.CF
             return PubFunc.DelQueryName(PubFunc.DelQueryName(Request.Url.Query, delkey), "next");
         }
 
-
+        /// <summary>
+        /// 获取URL的PathID
+        /// </summary>
+        /// <returns>返回请求的PathID</returns>
         protected int GetPathID()
         {
             string pathInfo = Request.PathInfo;
@@ -110,7 +113,10 @@ namespace COM.CF
             return pathInfo.IndexOf('.') < 0 ? 0 : PubFunc.GetInt(pathInfo.Substring(1,pathInfo.IndexOf('.')-1));
         }
 
-
+        /// <summary>
+        /// 获得Path字符串
+        /// </summary>
+        /// <returns>返回Path字符串</returns>
         protected string GetPathStr()
         {
             string pathInfo = Request.PathInfo;

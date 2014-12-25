@@ -4,29 +4,6 @@
         <name>WebPub</name>
     </assembly>
     <members>
-        <member name="T:CFTL.CFPage">
-            <summary>
-            功能：CF框架内页面的基类
-            时间：2013-10-22
-            作者：meric
-            </summary>
-        </member>
-        <member name="F:CFTL.CFPage._usrInfo">
-            <summary>
-            _usrInfo 同时实现了IUsr以及ILoginUsr接口
-            </summary>
-        </member>
-        <member name="M:CFTL.CFPage.HandleException(COM.CF.CFException)">
-            <summary>
-            接管页面抛出的异常
-            </summary>
-            <param name="ee"></param>
-        </member>
-        <member name="P:CFTL.CFPage.UsrLogin">
-            <summary>
-            usrlogin，实现了ILoginUsr接口，实现了功能：判断用户是否登录，强制用户在该页面上必须登录
-            </summary>
-        </member>
         <member name="T:CFTL.CFCtrlPage">
             <summary>
             功能：CF控制页面，用于前后台交互，前台请求将通过global里的httphandler转接到控制页面里
@@ -39,10 +16,12 @@
             登录的用户
             </summary>
         </member>
-        <member name="F:CFTL.CFCtrlPage._webForm">
+        <member name="M:CFTL.CFCtrlPage.CheckIDType(System.Int32)">
             <summary>
-            页面控制
+            根据传入的用户身份验证用户是否符合身份
             </summary>
+            <param name="type">身份代码</param>
+            <returns>返回是否符合</returns>
         </member>
         <member name="M:CFTL.CFCtrlPage.HandleException(COM.CF.CFException)">
             <summary>
@@ -93,11 +72,34 @@
             用户登录控制，可以获得用户是否登录，且能强制用户登录
             </summary>
         </member>
-        <member name="T:CFTL.CFUsrPage">
+        <member name="P:CFTL.CFCtrlPage.WebForm">
             <summary>
-            功能：CF框架中需要登录的页面
-            时间：2013-10-22
-            作者：meric
+            页面控制
+            </summary>
+        </member>
+        <member name="P:CFTL.CFCtrlPage.CurUID">
+            <summary>
+            当前登录用户的UID，未登录为0
+            </summary>
+        </member>
+        <member name="P:CFTL.CFCtrlPage.ISDealer">
+            <summary>
+            是否是采购商用户——XH365定制
+            </summary>
+        </member>
+        <member name="P:CFTL.CFCtrlPage.ISAdmin">
+            <summary>
+            是否是管理员用户——XH365定制
+            </summary>
+        </member>
+        <member name="P:CFTL.CFCtrlPage.ISMember">
+            <summary>
+            是否是注册用户——XH365定制
+            </summary>
+        </member>
+        <member name="P:CFTL.CFCtrlPage.ISVendor">
+            <summary>
+            是否是供应商用户——XH365定制
             </summary>
         </member>
         <member name="T:CFTL.CFGlobal">
@@ -105,6 +107,11 @@
             功能：CF框架的站点配置，包括系统的运行及错误的处理
             时间：2013-10-22
             作者：陈辰
+            </summary>
+        </member>
+        <member name="M:CFTL.CFGlobal.#ctor">
+            <summary>
+            构造函数 
             </summary>
         </member>
         <member name="M:CFTL.CFGlobal.Application_Start(System.Object,System.EventArgs)">
@@ -121,9 +128,112 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="T:CFTL.CFPage">
+            <summary>
+            功能：CF框架内页面的基类
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:CFTL.CFPage.CheckIDType(System.Int32)">
+            <summary>
+            根据传入诉身份类型判断当前用户是符合身份
+            </summary>
+            <param name="type">身份类型代码</param>
+            <returns>返回是否符合身份</returns>
+        </member>
+        <member name="M:CFTL.CFPage.HandleException(COM.CF.CFException)">
+            <summary>
+            接管页面抛出的异常
+            </summary>
+            <param name="ee"></param>
+        </member>
+        <member name="P:CFTL.CFPage.UsrInfo">
+            <summary>
+            _usrInfo 同时实现了IUsr以及ILoginUsr接口
+            </summary>
+        </member>
+        <member name="P:CFTL.CFPage.UsrLogin">
+            <summary>
+            usrlogin，实现了ILoginUsr接口，实现了功能：判断用户是否登录，强制用户在该页面上必须登录
+            </summary>
+        </member>
+        <member name="P:CFTL.CFPage.WebForm">
+            <summary>
+            页面控制类
+            </summary>
+        </member>
+        <member name="P:CFTL.CFPage.CurUID">
+            <summary>
+            当前用户UID，未登录为0
+            </summary>
+        </member>
+        <member name="P:CFTL.CFPage.ISDealer">
+            <summary>
+            是否是采购商——XH365定制
+            </summary>
+        </member>
+        <member name="P:CFTL.CFPage.ISAdmin">
+            <summary>
+            是否是管理员——XH365定制
+            </summary>
+        </member>
+        <member name="P:CFTL.CFPage.ISMember">
+            <summary>
+            是否是注册用户——XH365定制
+            </summary>
+        </member>
+        <member name="P:CFTL.CFPage.ISVendor">
+            <summary>
+            是否是供应商——XH365定制
+            </summary>
+        </member>
+        <member name="T:CFTL.CFUsrPage">
+            <summary>
+            功能：CF框架中需要登录的页面
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:CFTL.CFUsrPage.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:CFTL.CFWebForm">
+            <summary>
+            功能：CFPage的页面控制类，包括页面类型，请求与返回，跳转
+            时间：2013-10-5
+            作者：Meric
+            </summary>
+        </member>
+        <member name="M:CFTL.CFWebForm.#ctor(System.Web.HttpContext)">
+            <summary>
+            带参构造函数
+            </summary>
+            <param name="con">网站执行上下文</param>
+        </member>
+        <member name="M:CFTL.CFWebForm.#ctor(System.Web.HttpContext,COM.CF.Web.enPageType)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="cont">网站执行上下文</param>
+            <param name="pt">页面类型</param>
+        </member>
+        <member name="M:CFTL.CFWebForm.WriteXMLError(System.String)">
+            <summary>
+            输入XML格式的错误提示信息
+            </summary>
+            <param name="errmsg"></param>
+        </member>
+        <member name="M:CFTL.CFWebForm.WriteLogin">
+            <summary>
+            输出未登录提示信息
+            </summary>
+        </member>
         <member name="T:CFTL.LoginUsr">
             <summary>
-            功能：判断用户是否登录、返回登录用户的信息
+            功能：判断用户是否登录、返回登录用户的信息，同时实现ILoginUsr以及IUsr接口，全框架统一用户类
             时间：2013-10-22
             作者：meric
             </summary>
@@ -185,18 +295,31 @@
             当前的guid，先从URL中获取，URL中没有则从cookie中获得
             </summary>
         </member>
-        <member name="T:CFTL.CFWebForm">
+        <member name="T:CFTL.SysErrMsg">
             <summary>
-            功能：CFPage的页面控制类，包括页面类型，请求与返回，跳转
-            时间：2013-10-5
-            作者：Meric
+            功能：CF框架的系统错误信息类
+            时间：2014-10-1
+            作者：陈辰
             </summary>
         </member>
-        <member name="M:CFTL.CFWebForm.#ctor(System.Web.HttpContext)">
+        <member name="M:CFTL.SysErrMsg.GetErrMsg(System.Int32)">
             <summary>
-            带参构造函数
+            根据错误代码返回错误信息
             </summary>
-            <param name="context1"></param>
+            <param name="errId">错误代码</param>
+            <returns>返回错误代码对应的错误信息，找不到对应的错误信息则返回错误代码</returns>
+        </member>
+        <member name="M:CFTL.SysErrMsg.GetErrMsgXML(System.Int32)">
+            <summary>
+            根据错误代码返回错误信息，以XML形式返回
+            </summary>
+            <param name="errId">错误代码</param>
+            <returns>返回错误代码对应的错误信息，找不到对应的错误信息则返回错误代码</returns>
+        </member>
+        <member name="P:CFTL.SysErrMsg.ErrMsg">
+            <summary>
+            从数据库中加载错误代码和错误信息的对应关系
+            </summary>
         </member>
     </members>
 </doc>

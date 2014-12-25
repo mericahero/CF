@@ -21,7 +21,9 @@ namespace CFTL
     public class CFGlobal : HttpApplication
     {       
 
-        //构造函数 
+        /// <summary>
+        /// 构造函数 
+        /// </summary>
         public CFGlobal()
         {
             base.Error += new EventHandler(Global_Error);

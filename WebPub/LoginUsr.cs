@@ -15,18 +15,14 @@ using CWS;
 namespace CFTL
 {
     /// <summary>
-    /// 功能：判断用户是否登录、返回登录用户的信息
+    /// 功能：判断用户是否登录、返回登录用户的信息，同时实现ILoginUsr以及IUsr接口，全框架统一用户类
     /// 时间：2013-10-22
     /// 作者：meric
     /// </summary>
     public class LoginUsr : ILoginUsr, IUsr
     {
         
-        private HttpContext Context;
-
-
-        private bool m_checked = false;
-        
+        private HttpContext Context;        
         private bool m_logined = false;
         /// <summary>
         /// 用户是否已登录
@@ -35,7 +31,6 @@ namespace CFTL
         {
             get
             {
-
                 return m_logined = m_logined ? m_logined : CheckLogin();
             }
         }
@@ -144,7 +139,6 @@ namespace CFTL
         /// <returns></returns>
         private bool CheckLogin()
         {
-            m_checked = true;
             if (m_guid == Guid.Empty)
             {
                 m_logined = false;
@@ -166,7 +160,6 @@ namespace CFTL
                 {
                     return false;
                 }
-
                 m_account = cp["@account"].Value.ToString();
                 m_name = cp["@name"].Value.ToString();
                 m_uid = PubFunc.GetInt(cp["@uid"].Value.ToString());
