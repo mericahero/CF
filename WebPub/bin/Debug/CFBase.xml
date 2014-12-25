@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CFBase</name>
+    </assembly>
+    <members>
+        <member name="T:COM.CF.DB">
+            <summary>
+            功能：封闭Sql操作
+            时间：2013-10-2
+            作者：Meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.DB.#ctor(System.String)">
+            <summary>
+            构造方法
+            </summary>
+            <param name="constr"></param>
+        </member>
+        <member name="M:COM.CF.DB.GetConnection">
+            <summary>
+            获得打开的连接
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.DB.ExecuteNonQuery(System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            执行sql语句，返回影响条数
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.DB.ExecuteScalar(System.String)">
+            <summary>
+            执行sql语句，返回查询结果
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.DB.ExeCuteScalar(System.String,System.Data.SqlClient.SqlConnection)">
+            <summary>
+            执行sql语句，返回查询结果，该方法需要传入连接
+            </summary>
+            <param name="sql"></param>
+            <param name="oConn"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.DB.GetAutoAdapter(System.String)">
+            <summary>
+            得到一个AutoAdapter的实例
+            </summary>
+            <param name="sql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.DB.GetSQLDataSet(System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            通过存储过程返回DataSet
+            </summary>
+            <param name="procedureName">存储过程名</param>
+            <param name="sqlparams">参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.DB.GetSQLTab(System.String,System.Data.SqlClient.SqlParameter[])">
+            <summary>
+            通过存储过程获得DataTable
+            </summary>
+            <param name="procedureName">存储过程名</param>
+            <param name="param">存储过程参数</param>
+            <returns></returns>
+        </member>
+        <member name="T:COM.CF.AutoAdapter">
+            <summary>
+            功能：封装CF的Adapter
+            时间：2014-10-3
+            作者：meric
+            </summary>
+        </member>
+        <member name="T:COM.CF.CtrlPage">
+            <summary>
+            功能：后台控制页面，该页面会处理前台的HTTP请求，该类为一个抽象类，实现部分方法，另一部分方法到实例类里去实现 
+            时间：2013-10-25
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.CtrlPage.EventMain">
+            <summary>
+            处理方法
+            </summary>
+        </member>
+        <member name="P:COM.CF.CtrlPage.RequestForm">
+            <summary>
+            请求参数，包括POST和GET，但不能混合 
+            </summary>
+        </member>
+        <member name="P:COM.CF.CtrlPage.WebForm">
+            <summary>
+            页面控制类
+            </summary>
+        </member>
+        <member name="P:COM.CF.CtrlPage.UsrLogin">
+            <summary>
+            当前页面的登录控制，继承类里必须实现
+            </summary>
+        </member>
+        <member name="T:COM.CF.ILoginUsr">
+            <summary>
+            功能：登录用户接口
+            时间：2013-10-1
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.ILoginUsr.MustLogin">
+            <summary>
+            控制页面必须登录
+            </summary>
+        </member>
+        <member name="P:COM.CF.ILoginUsr.Logined">
+            <summary>
+            判断是否登录
+            </summary>
+        </member>
+        <member name="T:COM.CF.UIPage">
+            <summary>
+            功能：抽象类UIPage，定义页面的基本属性和方法，所有CF框架类的基类CFPage继承此抽象类
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.UIPage.#ctor">
+            <summary>
+            构造参数
+            </summary>
+        </member>
+        <member name="M:COM.CF.UIPage.DelQueryName(System.String)">
+            <summary>
+            从QueryString中删除指定的键
+            </summary>
+            <param name="delkey">需要删除的键</param>
+            <returns>返回删除键后的QueryString</returns>
+        </member>
+        <member name="M:COM.CF.UIPage.DelQueryNameAndNext(System.String)">
+            <summary>
+            从QueryString中删除指定的键
+            </summary>
+            <param name="delkey">需要删除的键</param>
+            <returns>返回删除键后的QueryString</returns>
+        </member>
+        <member name="M:COM.CF.UIPage.HandleException(COM.CF.CFException)">
+            <summary>
+            抽象方法，具体类里实现，处理页面异常
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:COM.CF.UIPage.Page_Error(System.Object,System.EventArgs)">
+            <summary>
+            页面错误接管
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:COM.CF.UIPage.RequestForm">
+            <summary>
+            RequestForm 请求参数封装
+            </summary>
+        </member>
+        <member name="P:COM.CF.UIPage.UsrLogin">
+            <summary>
+            登录用户 
+            </summary>
+        </member>
+        <member name="P:COM.CF.UIPage.ViewBag">
+            <summary>
+            ViewBag和ViewData为用户在使用页面时可自定义自增加的属性
+            </summary>
+        </member>
+        <member name="P:COM.CF.UIPage.ViewData">
+            <summary>
+            ViewBag和ViewData为用户在使用页面时可自定义自增加的属性
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -20,3 +20,4 @@ E:\git\CF\GeniusTek\bin\Debug\GeniusTek.dll
 E:\git\CF\GeniusTek\bin\Debug\GeniusTek.pdb
 E:\git\CF\GeniusTek\obj\Debug\GeniusTek.dll
 E:\git\CF\GeniusTek\obj\Debug\GeniusTek.pdb
+E:\git\CF\GeniusTek\bin\Debug\GeniusTek.XML

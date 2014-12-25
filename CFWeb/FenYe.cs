@@ -87,13 +87,16 @@ namespace COM.CF.Web
         /// 是否反向显示在页面中
         /// </summary>
         public readonly bool IsFanXiang;
+        /// <summary>
+        /// 当前页是否是首页
+        /// </summary>
         public readonly bool IsFirst;
 
 
 
         #region 构造函数
         /// <summary>
-        /// 只传入sql语句
+        /// 构造函数 只传入sql语句
         /// </summary>
         /// <param name="strsql"></param>
         public FenYe(string strsql)
@@ -105,7 +108,14 @@ namespace COM.CF.Web
             IsFanXiang = false;
             IsFirst = false;
         }
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="RequestForm">请求表单</param>
+        /// <param name="idname">主键</param>
+        /// <param name="strSQL">SQL</param>
+        /// <param name="defaultCount">每一页的数量</param>
+        /// <param name="nextQueryString">页面的请求参数</param>
         public FenYe(NameValueCollection RequestForm, string idname, string strSQL, int defaultCount, string nextQueryString)
             : this(RequestForm, idname, strSQL, defaultCount, nextQueryString, "")
         {
@@ -119,7 +129,15 @@ namespace COM.CF.Web
                 _keyName = idname;
             }
         }
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="RequestForm">请求参数</param>
+        /// <param name="idname">主键</param>
+        /// <param name="strSQL">sql</param>
+        /// <param name="defaultCount">每页显示数量</param>
+        /// <param name="nextQueryString">页面请求参数</param>
+        /// <param name="keyname">键名</param>
         public FenYe(NameValueCollection RequestForm, string idname, string strSQL, int defaultCount, string nextQueryString, string keyname)
         {
             _defaultDescDirect = true;
@@ -189,7 +207,9 @@ namespace COM.CF.Web
                 return _topIDValue; 
             }
         }
-
+        /// <summary>
+        /// 首页的链接
+        /// </summary>
         public string FirstLink
         {
             get
@@ -219,7 +239,9 @@ namespace COM.CF.Web
                 return _firstLink;
             }
         }
-
+        /// <summary>
+        /// 下一页的链接
+        /// </summary>
         public string NextLink
         {
             get
@@ -246,7 +268,9 @@ namespace COM.CF.Web
                 return _nextLink;
             }
         }
-
+        /// <summary>
+        /// 分页的数据库连接
+        /// </summary>
         public SqlConnection NotOpenConnection
         {
             get
@@ -262,7 +286,9 @@ namespace COM.CF.Web
                 _notOpenConnection = value;
             }
         }
-
+        /// <summary>
+        /// 上一页链接
+        /// </summary>
         public string PreLink
         {
             get
@@ -306,7 +332,9 @@ namespace COM.CF.Web
                 return _preLink;
             }
         }
-
+        /// <summary>
+        /// 数据Rows
+        /// </summary>
         public DataRowCollection Rows
         {
             get

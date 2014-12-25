@@ -18,7 +18,9 @@ namespace COM.CF
     public abstract class UIPage : Page
     {
         private NameValueCollection m_Form;
-
+        /// <summary>
+        /// RequestForm 请求参数封装
+        /// </summary>
         protected NameValueCollection RequestForm
         {
             get
@@ -37,9 +39,13 @@ namespace COM.CF
                 return m_Form;
             }
         }
-
+        /// <summary>
+        /// 登录用户 
+        /// </summary>
         protected ILoginUsr UsrLogin { get; set; }
-
+        /// <summary>
+        /// 构造参数
+        /// </summary>
         protected UIPage()
         {
             this.Error += new EventHandler(Page_Error);
@@ -63,6 +69,9 @@ namespace COM.CF
         }
 
         private IDictionary<object, object> _viewData;
+        /// <summary>
+        /// ViewBag和ViewData为用户在使用页面时可自定义自增加的属性
+        /// </summary>
         public IDictionary<object, object> ViewData
         {
             get
@@ -74,12 +83,20 @@ namespace COM.CF
                 _viewData = value;
             }
         }
-
+        /// <summary>
+        /// 从QueryString中删除指定的键
+        /// </summary>
+        /// <param name="delkey">需要删除的键</param>
+        /// <returns>返回删除键后的QueryString</returns>
         public string DelQueryName(string delkey)
         {
             return PubFunc.DelQueryName(Request.Url.Query, delkey); ;
         }
-
+        /// <summary>
+        /// 从QueryString中删除指定的键
+        /// </summary>
+        /// <param name="delkey">需要删除的键</param>
+        /// <returns>返回删除键后的QueryString</returns>
         public string DelQueryNameAndNext(string delkey)
         {
             return PubFunc.DelQueryName(PubFunc.DelQueryName(Request.Url.Query, delkey), "next");
@@ -101,9 +118,17 @@ namespace COM.CF
 
             return pathInfo.LastIndexOf('.') < 0 ? pathInfo.Substring(1) : pathInfo.Substring(1, pathInfo.LastIndexOf('.') - 1);
         }
-
+        /// <summary>
+        /// 抽象方法，具体类里实现，处理页面异常
+        /// </summary>
+        /// <param name="e"></param>
         protected abstract void HandleException(CFException e);
 
+        /// <summary>
+        /// 页面错误接管
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Page_Error(object sender, EventArgs e)
         {
             Exception error = HttpContext.Current.Error;

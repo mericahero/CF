@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GeniusTek</name>
+    </assembly>
+    <members>
+        <member name="T:GeniusTek.IGetTypeName">
+            <summary>
+            功能：获取处理请求的程序名
+            时间：2014-10-21
+            作者：Meric
+            </summary>
+        </member>
+        <member name="M:GeniusTek.IGetTypeName.GetTypeName(System.Web.HttpRequest)">
+            <summary>
+            获取处理请求的程序名
+            </summary>
+            <param name="request">请求的request对象</param>
+            <returns></returns>
+        </member>
+        <member name="T:GeniusTek.PageBase">
+            <summary>
+            功能：页面基类
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:GeniusTek.PageBase.#ctor">
+            <summary>
+            构造函数，对页面内context、request、response、session对象进行初始化
+            </summary>
+        </member>
+        <member name="M:GeniusTek.PageBase.EventMain">
+            <summary>
+            抽象函数，在具体类里面实现。页面的主函数
+            </summary>
+        </member>
+        <member name="P:GeniusTek.PageBase.Context">
+            <summary>
+            页面上下文
+            </summary>
+        </member>
+        <member name="P:GeniusTek.PageBase.Request">
+            <summary>
+            页面的HttpRequest对象
+            </summary>
+        </member>
+        <member name="P:GeniusTek.PageBase.Response">
+            <summary>
+            页面的HttpResponse对象
+            </summary>
+        </member>
+        <member name="P:GeniusTek.PageBase.Session">
+            <summary>
+            页面的Session
+            </summary>
+        </member>
+        <member name="T:GeniusTek.enAnalyzeType">
+            <summary>
+            功能：解析程序集的方式
+            时间：2014-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespaceAndAssemblyName">
+            <summary>
+            默认命名空间+程序集
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.FullClassName">
+            <summary>
+            完整的类名（包括程序集、命名空间）
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespace">
+            <summary>
+            默认命名空间
+            </summary>
+        </member>
+        <member name="F:GeniusTek.enAnalyzeType.DefaultNamespaceAndAssemblyNameAppendWeb">
+            <summary>
+            默认命名空间+程序集+拼接上的".Web"字符串
+            </summary>
+        </member>
+        <member name="T:GeniusTek.ServerClass">
+            <summary>
+            功能：对进入站点的请求进行URL转发，分发到交互层的方法中进行处理
+            时间：2013-10-22
+            作者：Meric
+            </summary>
+        </member>
+        <member name="M:GeniusTek.ServerClass.ProcessRequest(System.Web.HttpContext)">
+            <summary>
+            处理程序
+            </summary>
+            <param name="context">执行上下文</param>
+        </member>
+        <member name="M:GeniusTek.ServerClass.#cctor">
+            <summary>
+            静态构造函数
+            </summary>
+        </member>
+        <member name="M:GeniusTek.ServerClass.GetTypeName(System.Web.HttpRequest)">
+            <summary>
+            根据传入的HttpRequest对象获得类 方法名称
+            </summary>
+            <param name="request">当前请求的Request对象</param>
+            <returns>返回接管请求的程序名称</returns>
+        </member>
+        <member name="P:GeniusTek.ServerClass.IsReusable">
+            <summary>
+            IsResulable
+            </summary>
+        </member>
+    </members>
+</doc>

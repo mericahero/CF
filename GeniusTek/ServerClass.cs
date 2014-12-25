@@ -8,6 +8,11 @@ using System.Diagnostics;
 
 namespace GeniusTek
 {
+    /// <summary>
+    /// 功能：对进入站点的请求进行URL转发，分发到交互层的方法中进行处理
+    /// 时间：2013-10-22
+    /// 作者：Meric
+    /// </summary>
     public class ServerClass:IHttpHandler,IRequiresSessionState
     {
         private static string DefaultAssemblyName;
@@ -18,12 +23,15 @@ namespace GeniusTek
 
         private static IGetTypeName oGetTypeName;
 
-        public static IGetTypeName GetTypeNameObject
+        private static IGetTypeName GetTypeNameObject
         {
             get{return oGetTypeName;}
             set { oGetTypeName = value; }
         }
-        //处理程序
+        /// <summary>
+        /// 处理程序
+        /// </summary>
+        /// <param name="context">执行上下文</param>
         public void ProcessRequest(HttpContext context)
         {
             Type type = Type.GetType(GetTypeName(context.Request));
@@ -57,8 +65,8 @@ namespace GeniusTek
         /// <summary>
         /// 根据传入的HttpRequest对象获得类 方法名称
         /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
+        /// <param name="request">当前请求的Request对象</param>
+        /// <returns>返回接管请求的程序名称</returns>
         private string GetTypeName(HttpRequest request)
         {
             string defaultAssemblyName;

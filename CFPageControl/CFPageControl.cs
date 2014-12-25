@@ -38,6 +38,10 @@ namespace COM.CF.Web
             {
                 return _curpagetype;
             }
+            set
+            {
+                _curpagetype = value;
+            }
         }
         #endregion
 
@@ -138,6 +142,7 @@ namespace COM.CF.Web
                 Response.Write(string.Format("<script>window.setTimeout('if (window.opener) window.opener.location.reload();window.close()',{0});</script>", delay));
                 Response.Write("<center><input type=button value='关闭' onclick='if (window.opener) window.opener.location.reload();window.close()'></center>");
                 Response.Write(string.Concat(Convert.ToString(delay / 1000), "秒后，自动关闭"));
+                return;
             }
 
             if (!url.ToLower().StartsWith("http://") && !url.StartsWith("/"))

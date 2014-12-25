@@ -77,10 +77,16 @@ namespace COM.CF
         }
 
         #region HTTP请求
+        /// <summary>
+        /// 获得Http请求的字符串
+        /// </summary>
         public static bool FowardHTTP(string newhost)
         {
             return FowardHTTP(newhost, null);
         }
+        /// <summary>
+        /// 获得Http请求的字符串
+        /// </summary>
         public static bool FowardHTTP(string newhost, string newpath)
         {
             bool flag;
@@ -167,7 +173,9 @@ namespace COM.CF
         }
 
 
-
+        /// <summary>
+        /// 获得Http请求的字符串
+        /// </summary>
         public static string SendHTTP(string url)
         {
             return SendHTTP(url, "", true);
@@ -176,7 +184,9 @@ namespace COM.CF
 
 
 
-
+        /// <summary>
+        /// 获得Http请求的字符串
+        /// </summary>
         public static string SendHTTP(string url, ref HttpWebResponse rep)
         {
             try
@@ -220,12 +230,20 @@ namespace COM.CF
                 return "";
             }
         }
-
+        /// <summary>
+        /// 获得Http请求的字符串
+        /// </summary>
         public static string SendHTTP(string url, string agent)
         {
             return SendHTTP(url, agent, true);
         }
-
+        /// <summary>
+        /// 获得Http请求的字符串
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="agent"></param>
+        /// <param name="gzip"></param>
+        /// <returns></returns>
         public static string SendHTTP(string url, string agent, bool gzip)
         {
             try

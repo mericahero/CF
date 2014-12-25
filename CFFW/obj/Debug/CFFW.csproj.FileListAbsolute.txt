@@ -16,3 +16,6 @@ E:\git\CF\CFFW\bin\Debug\GeniusTek.pdb
 E:\git\CF\CFFW\obj\Debug\CFFW.csprojResolveAssemblyReference.cache
 E:\git\CF\CFFW\obj\Debug\CFFW.dll
 E:\git\CF\CFFW\obj\Debug\CFFW.pdb
+E:\git\CF\CFFW\bin\Debug\CFFW.XML
+E:\git\CF\CFFW\bin\Debug\CFPUB.xml
+E:\git\CF\CFFW\bin\Debug\GeniusTek.xml

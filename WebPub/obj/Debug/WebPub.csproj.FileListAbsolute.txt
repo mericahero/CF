@@ -74,3 +74,11 @@ E:\git\CF\WebPub\bin\Debug\CWFW.pdb
 E:\git\CF\WebPub\bin\Debug\GeniusTek.pdb
 E:\git\CF\WebPub\obj\Debug\WebPub.dll
 E:\git\CF\WebPub\obj\Debug\WebPub.pdb
+E:\git\CF\WebPub\bin\Debug\WebPub.XML
+E:\git\CF\WebPub\bin\Debug\CFBase.xml
+E:\git\CF\WebPub\bin\Debug\CFFW.xml
+E:\git\CF\WebPub\bin\Debug\CFPageControl.xml
+E:\git\CF\WebPub\bin\Debug\CFPUB.xml
+E:\git\CF\WebPub\bin\Debug\CFWeb.xml
+E:\git\CF\WebPub\bin\Debug\CWFW.xml
+E:\git\CF\WebPub\bin\Debug\GeniusTek.xml

@@ -103,7 +103,10 @@ namespace COM.CF
                 {
                     UsrLogin.MustLogin();
                 }
-
+                if(customAttribute.PageType!=enPageType.SelfPage)
+                {
+                    WebForm.CurPageType=customAttribute.PageType;
+                }
                 switch (customAttribute.PageType)
                 {
                     case enPageType.SelfPage:

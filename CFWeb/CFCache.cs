@@ -13,7 +13,11 @@ using System.Data;
 
 namespace COM.CF.Web
 {
-
+    /// <summary>
+    /// 功能：CF框架的缓存
+    /// 时间：2013-10-3
+    /// 作者：meric
+    /// </summary>
     public class CFCache
     {
         /// <summary>
@@ -22,9 +26,6 @@ namespace COM.CF.Web
         private const int DingShiRefreshExpireSeconds = 0xbb8;
 
 
-        private CFCache()
-        {
-        }
 
         public static void CheckAuthCache()
         {
@@ -140,17 +141,17 @@ namespace COM.CF.Web
             }
         }
 
-
+        /// <summary>
+        /// 定时刷新缓存
+        /// </summary>
+        /// <returns></returns>
         public static int DingShiRefresh()
         {
-
             return DingShiRefresh(DateTime.Now.AddSeconds(3000.0));
-
         }
 
         public static int DingShiRefresh(DateTime expire)
         {
-
             return DingShiRefresh(null, expire, null, null);
 
         }
@@ -166,7 +167,14 @@ namespace COM.CF.Web
         {
             return DingShiRefresh(null, expire, dependfiles, dependkeys);
         }
-
+        /// <summary>
+        /// 定时刷新缓存
+        /// </summary>
+        /// <param name="selfQuery"></param>
+        /// <param name="expire"></param>
+        /// <param name="dependfiles"></param>
+        /// <param name="dependkeys"></param>
+        /// <returns></returns>
         public static int DingShiRefresh(string selfQuery, DateTime expire, string[] dependfiles, string[] dependkeys)
         {
             int num=0;

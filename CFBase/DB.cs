@@ -85,7 +85,11 @@ namespace COM.CF
             SqlCommand sqlCommand = new SqlCommand(sql, oConn);
             return sqlCommand.ExecuteScalar();
         }
-
+        /// <summary>
+        /// 得到一个AutoAdapter的实例
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public AutoAdapter GetAutoAdapter(string sql)
         {
             return new AutoAdapter(sql, this);

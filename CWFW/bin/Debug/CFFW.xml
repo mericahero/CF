@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CFFW</name>
+    </assembly>
+    <members>
+        <member name="T:COM.CF.enCacheLogJiBie">
+            <summary>
+            缓存日志级别
+                不记录
+                使用时记录
+                都记录
+            </summary>
+        </member>
+        <member name="T:COM.CF.enCacheSave">
+            <summary>
+            缓存方式
+                内存缓存
+                文件缓存
+            </summary>
+        </member>
+        <member name="T:COM.CF.enErrorLogJiBie">
+            <summary>
+            日志记录级别
+            </summary>
+        </member>
+        <member name="T:COM.CF.enErrType">
+            <summary>
+            错误类型
+            </summary>
+        </member>
+        <member name="T:COM.CF.enXMLErrorCode">
+            <summary>
+            xml错误码
+            </summary>
+        </member>
+        <member name="T:COM.CF.ErrorLog">
+            <summary>
+            功能:错误日志类
+            时间:2013-10-22
+            作者:meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.ErrorLog.WriteLog(System.Exception)">
+            <summary>
+            输出错误日志
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="T:COM.CF.CFException">
+            <summary>
+            功能:CF框架异常
+            时间:2013-10-21
+            作者:meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.CFConfig.InitConfig">
+            <summary>
+            初始化配置
+            </summary>
+        </member>
+        <member name="T:COM.CF.FWFunc">
+            <summary>
+            功能：网络，爬虫，页面相关公共类
+            时间：2013-10-20
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.FWFunc.GetIP">
+            <summary>
+            获得访问ip
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.FWFunc.GetIisVersion">
+            <summary>
+            获得IIS版本
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.FWFunc.GetMIME(System.String)">
+            <summary>
+            根据后缀名获得mime类型
+            </summary>
+            <param name="ext"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

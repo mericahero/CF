@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CFPageControl</name>
+    </assembly>
+    <members>
+        <member name="T:COM.CF.Web.enPageType">
+            <summary>
+            功能：页面类型枚举
+            时间：2013-10-21
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.enPageType.SelfPage">
+            <summary>
+            自定义页面，可任意输出
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.enPageType.DefaultPage">
+            <summary>
+            默认页面，包含正常的html代码
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.enPageType.XMLPage">
+            <summary>
+            XML页面，输出此页面时，需要按xml规范输出
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.enPageType.JSPage">
+            <summary>
+            JS页面，此页面的返回头部为application/x-javascript
+            </summary>
+        </member>
+        <member name="T:COM.CF.Web.CFPageControl">
+            <summary>
+            功能：页面的控制类，控制页面的跳转及错误输出等
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.CFPageControl._curpagetype">
+            <summary>
+            当前的页面类型
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.CFPageControl.Context">
+            <summary>
+            当前执行上下文
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.CFPageControl.Request">
+            <summary>
+            当前请求Request
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.CFPageControl.Response">
+            <summary>
+            当前上下文的返回Response
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.CFPageControl.#ctor(System.Web.HttpContext)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="context1">请求上下文</param>
+        </member>
+        <member name="M:COM.CF.Web.CFPageControl.AutoGo">
+            <summary>
+            跳转
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.CFPageControl.AutoGo(System.String)">
+            <summary>
+            跳转到指定 URL
+            </summary>
+            <param name="url"></param>
+        </member>
+        <member name="M:COM.CF.Web.CFPageControl.AutoGo(System.String,System.Int32)">
+            <summary>
+            延时一定时间后跳转到指定URL
+            </summary>
+            <param name="url"></param>
+            <param name="delay"></param>
+        </member>
+        <member name="M:COM.CF.Web.CFPageControl.AutoGo(System.String,System.Int32,System.String)">
+            <summary>
+            延迟后跳转到指定URL，URL可自定义
+            </summary>
+            <param name="url">指定跳转URL</param>
+            <param name="delay">延时时间</param>
+            <param name="newidStr">自定义NEWID</param>
+        </member>
+        <member name="M:COM.CF.Web.CFPageControl.WriteHead(COM.CF.Web.enPageType,System.String,System.String)">
+            <summary>
+            输出页面头部
+            </summary>
+            <param name="pageType"></param>
+            <param name="title"></param>
+            <param name="otherHead"></param>
+        </member>
+    </members>
+</doc>

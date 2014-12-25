@@ -1,0 +1,456 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CFWeb</name>
+    </assembly>
+    <members>
+        <member name="T:COM.CF.Web.DefaultPage">
+            <summary>
+            功能：CF框架底层页面抽象类
+            时间：2013-10-2
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.DefaultPage.EventMain">
+            <summary>
+            入口点函数
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.DefaultPage.Page_Load(System.Object,System.EventArgs)">
+            <summary>
+            页面加载函数
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:COM.CF.Web.DefaultPage.WriteLogin">
+            <summary>
+            输出登录链接
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.DefaultPage.RequestForm">
+            <summary>
+            RequestForm 根据请求类型（post/get）封装了不同的请求参数，当请求为post时，封装Request.Form对象，get时封装Request.QueryString对象
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.DefaultPage.Title">
+            <summary>
+            页面标题
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.DefaultPage.WebForm">
+            <summary>
+            页面控制对象
+            </summary>
+        </member>
+        <member name="T:COM.CF.Web.FenYe">
+            <summary>
+            功能：前台分页程序
+            时间：2013-10-2
+            作者：Meric
+            
+            修正：2013-12-1 Meric 加上获取本页面的顶端值，以修正第一页仍有上一页的链接的问题
+            
+            使用：该分页程序不能输出页码，只能输出上一页，下一页的页面链接，在构造本类时，需要传递SQL查询参数，不带order by，程序会根据传入的IDName以及页面的p o参数来自动差别数据的正序还是倒序
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._defaultDescDirect">
+            <summary>
+            是否默认倒序
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._firstLink">
+            <summary>
+            第一页的链接，不带参数
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._form">
+            <summary>
+            传递过来的页面参数
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._IDName">
+            <summary>
+            主键字段名 可以加前缀
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._keyName">
+            <summary>
+            去掉前缀的主键字段
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._topIDValue">
+            <summary>
+            当前搜索条件下的顶端值，多一次查询以修正第一页还有上一页的问题
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._nextID">
+            <summary>
+            下一页的第一条记录ID值
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._nextLink">
+            <summary>
+            下一页的页面链接 
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._nextQueryString">
+            <summary>
+            页面请求参数
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._notOpenConnection">
+            <summary>
+            未打开的数据库查询连接
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._preLink">
+            <summary>
+            上一页链接
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._rows">
+            <summary>
+            当前页面的DataRows
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe._strSQL">
+            <summary>
+            可以查看请求的Sql语句
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe.Count">
+            <summary>
+            页面的记录条数
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe.IsDesc">
+            <summary>
+            是否倒序
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe.IsFanXiang">
+            <summary>
+            是否反向显示在页面中
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenYe.IsFirst">
+            <summary>
+            当前页是否是首页
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.FenYe.#ctor(System.String)">
+            <summary>
+            构造函数 只传入sql语句
+            </summary>
+            <param name="strsql"></param>
+        </member>
+        <member name="M:COM.CF.Web.FenYe.#ctor(System.Collections.Specialized.NameValueCollection,System.String,System.String,System.Int32,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="RequestForm">请求表单</param>
+            <param name="idname">主键</param>
+            <param name="strSQL">SQL</param>
+            <param name="defaultCount">每一页的数量</param>
+            <param name="nextQueryString">页面的请求参数</param>
+        </member>
+        <member name="M:COM.CF.Web.FenYe.#ctor(System.Collections.Specialized.NameValueCollection,System.String,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="RequestForm">请求参数</param>
+            <param name="idname">主键</param>
+            <param name="strSQL">sql</param>
+            <param name="defaultCount">每页显示数量</param>
+            <param name="nextQueryString">页面请求参数</param>
+            <param name="keyname">键名</param>
+        </member>
+        <member name="M:COM.CF.Web.FenYe.GetRow(System.Int32)">
+            <summary>
+            按索引取出记录
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="P:COM.CF.Web.FenYe.DefaultDescDirect">
+            <summary>
+            是否默认反向
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenYe.TopIDValue">
+            <summary>
+            获取当前查询条件下的顶端ID值
+            增加 修正 首页有上一页问题
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenYe.FirstLink">
+            <summary>
+            首页的链接
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenYe.NextLink">
+            <summary>
+            下一页的链接
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenYe.NotOpenConnection">
+            <summary>
+            分页的数据库连接
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenYe.PreLink">
+            <summary>
+            上一页链接
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenYe.Rows">
+            <summary>
+            数据Rows
+            </summary>
+        </member>
+        <!-- 对于成员“T:COM.CF.Web.FenPage”忽略有格式错误的 XML 注释 -->
+        <member name="F:COM.CF.Web.FenPage.MaxPageNumber">
+            <summary>
+            每一屏显示的最大页码数
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage._nextString">
+            <summary>
+            querystring
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage._strsql">
+            <summary>
+            sql语句 测试用
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.CurPage">
+            <summary>
+            当前页码
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.HaveNextPage">
+            <summary>
+            是否有下一页
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.link">
+            <summary>
+            首页链接
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.PageCount">
+            <summary>
+            每页显示数量
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.FenPage.PageNumber">
+            <summary>
+            页数
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.#ctor(System.Int32,System.Collections.Specialized.NameValueCollection,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="total"></param>
+            <param name="form"></param>
+            <param name="defaultCount"></param>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.GetFullPageList(System.String)">
+            <summary>
+            获取完整的当前页页码
+            </summary>
+            <param name="link">首页链接</param>
+            <returns>返回页码html</returns>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.GetFullPageList">
+            <summary>
+            获取完整的当前页页码
+            </summary>
+            <returns>返回页码html</returns>
+        </member>
+        <member name="M:COM.CF.Web.FenPage.GetLastLink">
+            <summary>
+            获得末页页码
+            </summary>
+            <returns>返回末页页码html</returns>
+        </member>
+        <member name="P:COM.CF.Web.FenPage.NextPage">
+            <summary>
+            下一页页码
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenPage.NotOpenedConnection">
+            <summary>
+            分页数据库连接 无须打开
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.FenPage.Rows">
+            <summary>
+            页面数据
+            </summary>
+        </member>
+        <member name="T:COM.CF.Web.CFCache">
+            <summary>
+            功能：CF框架的缓存
+            时间：2013-10-3
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:COM.CF.Web.CFCache.DingShiRefreshExpireSeconds">
+            <summary>
+            定时清理时间间隔
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.CFCache.DingShiRefresh">
+            <summary>
+            定时刷新缓存
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.Web.CFCache.DingShiRefresh(System.String,System.DateTime,System.String[],System.String[])">
+            <summary>
+            定时刷新缓存
+            </summary>
+            <param name="selfQuery"></param>
+            <param name="expire"></param>
+            <param name="dependfiles"></param>
+            <param name="dependkeys"></param>
+            <returns></returns>
+        </member>
+        <member name="T:COM.CF.Web.CFCookies">
+            <summary>
+            功能：CF框架Cookie处理
+            时间：2013-10-20
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.ClearCookie(System.String,System.String)">
+            <summary>
+            清除Cookie，可指定Cookie路径
+            </summary>
+            <param name="name"></param>
+            <param name="path"></param>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.GetCookie(System.String)">
+            <summary>
+            根据名称获得cookie值
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.GetIntCookie(System.String)">
+            <summary>
+            获得整数表示的Cookie
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.SetCookie(System.String,System.String)">
+            <summary>
+            设置cookie，有效期为3个月
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.SetCookie(System.String,System.String,System.DateTime,System.String)">
+            <summary>
+            设置键为name值为value的Cookie值，并设置有效期
+            </summary>
+            <param name="name">名称</param>
+            <param name="value">值</param>
+            <param name="expires">过期时间</param>
+        </member>
+        <member name="M:COM.CF.Web.CFCookies.SetCookieNoExpires(System.String,System.String)">
+            <summary>
+            设置Cookie，永不过期
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:COM.CF.Web.ErrorLog">
+            <summary>
+            功能：错误日志记录
+            时间：2013-10-2
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.ErrorLog.UnControlException(COM.CF.Web.CFPageControl,System.Exception)">
+            <summary>
+            不受控的异常记录
+            </summary>
+            <param name="webForm">页面控制对象</param>
+            <param name="e">异常</param>
+        </member>
+        <!-- 对于成员“M:COM.CF.Web.ErrorLog.UnControlException(COM.CF.Web.CFPageControl,System.Exception,System.Boolean)”忽略有格式错误的 XML 注释 -->
+        <member name="M:COM.CF.Web.ErrorLog.WriteLog(System.Exception)">
+            <summary>
+            将异常记录到日志中
+            </summary>
+            <param name="e">异常对象</param>
+        </member>
+        <member name="M:COM.CF.Web.ErrorLog.WrtieBusy(System.Exception)">
+            <summary>
+            系统繁忙记录
+            </summary>
+            <param name="e">异常</param>
+        </member>
+        <member name="T:COM.CF.Web.PageAttribute">
+            <summary>
+            功能：控制类中方法的自定义页面属性，指定该方法输出后所展示的页面
+            时间：2013-10-21
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.PageAttribute.#ctor">
+            <summary>
+            无参构造方法，设置页面默认为自定义页面
+            </summary>
+        </member>
+        <member name="M:COM.CF.Web.PageAttribute.#ctor(COM.CF.Web.enPageType)">
+            <summary>
+            指定方法的执行页面
+            </summary>
+            <param name="pageType"></param>
+        </member>
+        <member name="M:COM.CF.Web.PageAttribute.#ctor(COM.CF.Web.enPageType,System.Boolean)">
+            <summary>
+            指定方法的执行页面，并且标识是否必须登录
+            </summary>
+            <param name="pageType"></param>
+            <param name="mustLogin"></param>
+        </member>
+        <member name="M:COM.CF.Web.PageAttribute.#ctor(COM.CF.Web.enPageType,System.String)">
+            <summary>
+            指定方法的执行页面，并指定页面的标题
+            </summary>
+            <param name="pageType"></param>
+            <param name="title"></param>
+        </member>
+        <member name="M:COM.CF.Web.PageAttribute.#ctor(COM.CF.Web.enPageType,System.Boolean,System.String)">
+            <summary>
+            指定方法的执行页面，并指定是否需要登录及页面标题 
+            </summary>
+            <param name="pageType"></param>
+            <param name="mustLogin"></param>
+            <param name="title"></param>
+        </member>
+        <member name="P:COM.CF.Web.PageAttribute.MustLogin">
+            <summary>
+            调用此方法是否需要登录的用户
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.PageAttribute.PageType">
+            <summary>
+            页面类型
+            </summary>
+        </member>
+        <member name="P:COM.CF.Web.PageAttribute.Title">
+            <summary>
+            页面标题 
+            </summary>
+        </member>
+    </members>
+</doc>

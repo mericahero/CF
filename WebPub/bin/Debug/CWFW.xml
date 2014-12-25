@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CWFW</name>
+    </assembly>
+    <members>
+        <member name="T:CWS.AuthCode">
+            <summary>
+            功能：验证码处理逻辑
+            时间：2013-10-21
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:CWS.AuthCode.Check(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            验证码检验
+            </summary>
+            <param name="form">包含手机号和验证码的表单</param>
+            <returns>返回是否成功</returns>
+        </member>
+        <member name="M:CWS.AuthCode.CreateAuthCode(System.Int64)">
+            <summary>
+            生成4位验证码
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CWS.AuthCode.CreateAuthCode(System.Int32,System.Int64)">
+            <summary>
+            生成4位难码
+            </summary>
+            <param name="Length"></param>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CWS.AuthCode.UpdateOrCreate(System.Int64,System.String)">
+            <summary>
+            更新验证码，没有则生成，并同步到数据库
+            </summary>
+            <param name="key">验证码key</param>
+            <param name="code">验证码</param>
+        </member>
+        <member name="T:CWS.CWConfig">
+            <summary>
+            功能：Common Web Site 的一系列属性设置
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.WWWHost">
+            <summary>
+            网站的www 服务器
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.Img0Host">
+            <summary>
+            网站的img0 服务器，存放商品主附图
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.Img80Host">
+            <summary>
+            网站的img80 服务器，存放UBB编辑器及其它富文本的图片
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.Img1Host">
+            <summary>
+            网站的img1 服务器，预留图片服务器
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.JSHost">
+            <summary>
+            网站的js 服务器 存放js、css等静态文件
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.LoginHost">
+            <summary>
+            网站的login 服务器 处理登录逻辑
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.AdminHost">
+            <summary>
+            网站admin 服务器 后台管理
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.ServiceHost">
+            <summary>
+            网站的service服务器 提供统计等功能
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.PayHost">
+            <summary>
+            网站的支付服务器
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.AdminRoot">
+            <summary>
+            网站的后台管理目录
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.SessionDB">
+            <summary>
+            Session数据库
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.XHDB">
+            <summary>
+            网站数据库
+            </summary>
+        </member>
+        <member name="F:CWS.CWConfig.UserDB">
+            <summary>
+            用户数据库
+            </summary>
+        </member>
+        <member name="M:CWS.CWConfig.SetConfig(System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            设置配置变量
+            </summary>
+            <param name="s">键值对，一般是webconfig里的AppSettings</param>
+        </member>
+        <member name="P:CWS.CWConfig.Appset">
+            <summary>
+            网站的AppSetting
+            </summary>
+        </member>
+        <member name="T:CWS.CWPub">
+            <summary>
+            功能：CF框架内的网站所能使用的一些方法及公共属性
+            时间：2014-10-21
+            作者：Meric
+            </summary>
+        </member>
+        <member name="F:CWS.CWPub.Rand">
+            <summary>
+            全局的随机数对象
+            </summary>
+        </member>
+        <member name="M:CWS.CWPub.CheckSJ(System.String)">
+            <summary>
+            判断是否是合法手机号
+            </summary>
+            <param name="sj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CWS.CWPub.CheckSJS(System.String[])">
+             <summary>
+            批量检测手机号是否合法
+             </summary>
+             <param name="sj">手机号数组</param>
+             <returns>返回每个手机的检测结果，检测成功返回1否则返回0，如3个手机号，第1个和第3个检测成功，第2个失败，则返回101</returns>
+        </member>
+        <member name="M:CWS.CWPub.GetArrayDistinct(System.String[])">
+            <summary>
+            过滤数组中的重复项
+            </summary>
+            <param name="v"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CWS.CWPub.GetCookieGUID">
+            <summary>
+            生成前台唯一的标识Cookie的GUID
+            </summary>
+            <returns>返回生成的Guid</returns>
+        </member>
+        <member name="M:CWS.CWPub.GetIPFromInt32(System.Int32)">
+            <summary>
+            从一个整数中获得到IP地址
+            </summary>
+            <param name="ip">整数形式的IP地址</param>
+            <returns>返回IP地址</returns>
+        </member>
+        <member name="M:CWS.CWPub.GetIPAsInt32(System.String)">
+            <summary>
+            将IP地址转换成一个整数
+            </summary>
+            <param name="ip">IP地址</param>
+            <returns>返回转换后的整数</returns>
+        </member>
+        <member name="M:CWS.CWPub.GenerateBigInt">
+            <summary>
+            生成64位随机整数
+            </summary>
+            <returns>返回生成的64整数</returns>
+        </member>
+        <member name="M:CWS.CWPub.Convert10To32(System.Int64)">
+            <summary>
+            10进制转化为32进制并反转
+            </summary>
+            <param name="n">10进制数</param>
+            <returns>转换为32进制并反转</returns>
+        </member>
+        <member name="M:CWS.CWPub.Convert32To10(System.String)">
+            <summary>
+            32进制转化为10进制
+            </summary>
+            <param name="s">32进制的数</param>
+            <returns>返回10进制数</returns>
+        </member>
+        <member name="M:CWS.CWPub.GetMoney(System.String)">
+            <summary>
+            字符串转为浮点数
+            </summary>
+            <param name="dec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CWS.CWPub.GetSJ(System.String)">
+            <summary>
+            获得正确的手机号，+86的去掉+86
+            </summary>
+            <param name="sj">手机号</param>
+            <returns>返回正确的手机号</returns>
+        </member>
+        <member name="M:CWS.CWPub.IsDate(System.Object)">
+            <summary>
+            判断一个对象是否是一个日期
+            </summary>
+            <param name="obj">待判断的对象</param>
+            <returns>返回是否是日期</returns>
+        </member>
+        <member name="M:CWS.CWPub.isExtName(System.String)">
+            <summary>
+            是否是正确的图片后缀
+            </summary>
+            <param name="extName">后缀名</param>
+            <returns>返回是否正确</returns>
+        </member>
+        <member name="M:CWS.CWPub.Md5Hash(System.String)">
+            <summary>
+            md5加密并计算Hash
+            </summary>
+            <param name="s">待计算的字符串</param>
+            <returns>返回md5加密并计算hash后的值</returns>
+        </member>
+        <member name="M:CWS.CWPub.ToDate(System.Object)">
+            <summary>
+            转换为日期
+            </summary>
+            <param name="obj">待转换对象</param>
+            <returns>转换后的日期值</returns>
+        </member>
+    </members>
+</doc>

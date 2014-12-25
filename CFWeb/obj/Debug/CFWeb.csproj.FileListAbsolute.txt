@@ -24,3 +24,8 @@ E:\git\CF\CFWeb\bin\Debug\GeniusTek.pdb
 E:\git\CF\CFWeb\obj\Debug\CFWeb.csprojResolveAssemblyReference.cache
 E:\git\CF\CFWeb\obj\Debug\CFWeb.dll
 E:\git\CF\CFWeb\obj\Debug\CFWeb.pdb
+E:\git\CF\CFWeb\bin\Debug\CFWeb.XML
+E:\git\CF\CFWeb\bin\Debug\CFFW.xml
+E:\git\CF\CFWeb\bin\Debug\CFPageControl.xml
+E:\git\CF\CFWeb\bin\Debug\CFPUB.xml
+E:\git\CF\CFWeb\bin\Debug\GeniusTek.xml

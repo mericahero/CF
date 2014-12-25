@@ -67,8 +67,9 @@ namespace CFTL
             {
                 if (LikeOperator.LikeString(ee.Message, "文件*不存在。", CompareMethod.Binary) || LikeOperator.LikeString(ee.Message, "The file*does not exist.", CompareMethod.Binary))
                 {
-                    this.Server.ClearError();                    
-                    Response.Redirect("/res/inc/404.aspx",false);
+                    this.Server.ClearError();
+                    //Response.Write(ee.Message + "<br />\n" + ee.StackTrace);
+                    Server.Transfer("/res/inc/404.aspx");
                     return;
                 }
             }

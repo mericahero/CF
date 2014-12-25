@@ -28,6 +28,9 @@ namespace CFTL
         private bool m_checked = false;
         
         private bool m_logined = false;
+        /// <summary>
+        /// 用户是否已登录
+        /// </summary>
         public bool Logined
         {
             get
@@ -38,6 +41,9 @@ namespace CFTL
         }
 
         private string m_account;
+        /// <summary>
+        /// 用户账户
+        /// </summary>
         public string Account
         {
             get
@@ -48,6 +54,9 @@ namespace CFTL
         }
 
         private string m_name;
+        /// <summary>
+        /// 用户昵称
+        /// </summary>
         public string Name
         {
             get
@@ -58,6 +67,9 @@ namespace CFTL
         }
 
         private int m_uid;
+        /// <summary>
+        /// 用户 UID
+        /// </summary>
         public int UID
         {
             get
@@ -68,6 +80,9 @@ namespace CFTL
         }
 
         private int m_bz;
+        /// <summary>
+        /// 用户标志位
+        /// </summary>
         public int BZ
         {
             get
@@ -78,6 +93,9 @@ namespace CFTL
         }
 
         private int m_idtype;
+        /// <summary>
+        /// 用户的身份，具体参照网站设计
+        /// </summary>
         public int IDType
         {
             get

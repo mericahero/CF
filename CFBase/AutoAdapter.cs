@@ -9,6 +9,11 @@ using System.Collections;
 
 namespace COM.CF
 {
+    /// <summary>
+    /// 功能：封装CF的Adapter
+    /// 时间：2014-10-3
+    /// 作者：meric
+    /// </summary>
     public class AutoAdapter
     {
         private SqlDataAdapter ad;
@@ -25,7 +30,7 @@ namespace COM.CF
             get { return dt.Rows; }
         }
 
-        internal AutoAdapter(string sql, DB oDB)
+        public AutoAdapter(string sql, DB oDB)
         {
             ad = new SqlDataAdapter(sql, oDB.GetNotOpenConnection());
             dt = new DataTable();

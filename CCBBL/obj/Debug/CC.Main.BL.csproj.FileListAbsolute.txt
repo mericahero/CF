@@ -66,3 +66,9 @@ E:\git\CF\CCBBL\bin\Debug\CFWeb.pdb
 E:\git\CF\CCBBL\obj\Debug\CC.Main.BL.csprojResolveAssemblyReference.cache
 E:\git\CF\CCBBL\obj\Debug\CC.Main.BL.dll
 E:\git\CF\CCBBL\obj\Debug\CC.Main.BL.pdb
+E:\git\CF\CCBBL\bin\Debug\CFBase.xml
+E:\git\CF\CCBBL\bin\Debug\CFFW.xml
+E:\git\CF\CCBBL\bin\Debug\CFPUB.xml
+E:\git\CF\CCBBL\bin\Debug\GeniusTek.xml
+E:\git\CF\CCBBL\bin\Debug\CFPageControl.xml
+E:\git\CF\CCBBL\bin\Debug\CFWeb.xml

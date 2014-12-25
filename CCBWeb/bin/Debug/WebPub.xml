@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebPub</name>
+    </assembly>
+    <members>
+        <member name="T:CFTL.CFPage">
+            <summary>
+            功能：CF框架内页面的基类
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:CFTL.CFPage._usrInfo">
+            <summary>
+            _usrInfo 同时实现了IUsr以及ILoginUsr接口
+            </summary>
+        </member>
+        <member name="M:CFTL.CFPage.HandleException(COM.CF.CFException)">
+            <summary>
+            接管页面抛出的异常
+            </summary>
+            <param name="ee"></param>
+        </member>
+        <member name="P:CFTL.CFPage.UsrLogin">
+            <summary>
+            usrlogin，实现了ILoginUsr接口，实现了功能：判断用户是否登录，强制用户在该页面上必须登录
+            </summary>
+        </member>
+        <member name="T:CFTL.CFCtrlPage">
+            <summary>
+            功能：CF控制页面，用于前后台交互，前台请求将通过global里的httphandler转接到控制页面里
+            时间：2013-10-26
+            作者：meric
+            </summary>
+        </member>
+        <member name="F:CFTL.CFCtrlPage._login">
+            <summary>
+            登录的用户
+            </summary>
+        </member>
+        <member name="F:CFTL.CFCtrlPage._webForm">
+            <summary>
+            页面控制
+            </summary>
+        </member>
+        <member name="M:CFTL.CFCtrlPage.HandleException(COM.CF.CFException)">
+            <summary>
+            处理异常信息
+            </summary>
+            <param name="ee"></param>
+        </member>
+        <member name="M:CFTL.CFCtrlPage.WriteErrorNoEnd(COM.CF.enErrType,System.String)">
+            <summary>
+            输出错误信息
+            </summary>
+            <param name="errType"></param>
+            <param name="msg"></param>
+        </member>
+        <member name="M:CFTL.CFCtrlPage.WriteHead(COM.CF.Web.enPageType,System.String)">
+            <summary>
+            根据不同的页面类型输出不同的头部信息
+            </summary>
+            <param name="pageType"></param>
+            <param name="title"></param>
+        </member>
+        <member name="M:CFTL.CFCtrlPage.WriteTail">
+            <summary>
+            输出页面尾部信息
+            </summary>
+        </member>
+        <member name="M:CFTL.CFCtrlPage.WriteErrorMessage(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Int32)">
+            <summary>
+            输出页面的错误信息，传递一个dictionary以及错误码
+            </summary>
+            <param name="dic">一系列错误代码及错误说明的键值对</param>
+            <param name="r">程序输出的错误码</param>
+        </member>
+        <member name="M:CFTL.CFCtrlPage.WriteErrorMessageXML(System.Collections.Generic.IDictionary{System.Int32,System.String},System.Int32)">
+            <summary>
+            输出页面的错误信息，传递一个dictionary以及错误码，以XML形式展现
+            </summary>
+            <param name="dic">一系列错误代码及错误说明的键值对</param>
+            <param name="r">程序输出的错误码</param>
+        </member>
+        <member name="P:CFTL.CFCtrlPage.UsrInfo">
+            <summary>
+            用户信息，当且仅当用户登录成功时能调用，否则抛出未登录异常
+            </summary>
+        </member>
+        <member name="P:CFTL.CFCtrlPage.UsrLogin">
+            <summary>
+            用户登录控制，可以获得用户是否登录，且能强制用户登录
+            </summary>
+        </member>
+        <member name="T:CFTL.CFUsrPage">
+            <summary>
+            功能：CF框架中需要登录的页面
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="T:CFTL.CFGlobal">
+            <summary>
+            功能：CF框架的站点配置，包括系统的运行及错误的处理
+            时间：2013-10-22
+            作者：陈辰
+            </summary>
+        </member>
+        <member name="M:CFTL.CFGlobal.Application_Start(System.Object,System.EventArgs)">
+            <summary>
+            程序初始化 
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CFTL.CFGlobal.Global_Error(System.Object,System.EventArgs)">
+            <summary>
+            接管错误处理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:CFTL.LoginUsr">
+            <summary>
+            功能：判断用户是否登录、返回登录用户的信息
+            时间：2013-10-22
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:CFTL.LoginUsr.#ctor(System.Web.HttpContext)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:CFTL.LoginUsr.CheckLogin">
+            <summary>
+            判断用户是否登录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CFTL.LoginUsr.MustLogin">
+            <summary>
+            强制页面必须登录
+            </summary>
+        </member>
+        <member name="M:CFTL.LoginUsr.NotLoginError">
+            <summary>
+            如果没有登录，则返回未登录异常
+            </summary>
+        </member>
+        <member name="P:CFTL.LoginUsr.Logined">
+            <summary>
+            用户是否已登录
+            </summary>
+        </member>
+        <member name="P:CFTL.LoginUsr.Account">
+            <summary>
+            用户账户
+            </summary>
+        </member>
+        <member name="P:CFTL.LoginUsr.Name">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:CFTL.LoginUsr.UID">
+            <summary>
+            用户 UID
+            </summary>
+        </member>
+        <member name="P:CFTL.LoginUsr.BZ">
+            <summary>
+            用户标志位
+            </summary>
+        </member>
+        <member name="P:CFTL.LoginUsr.IDType">
+            <summary>
+            用户的身份，具体参照网站设计
+            </summary>
+        </member>
+        <member name="P:CFTL.LoginUsr.m_guid">
+            <summary>
+            当前的guid，先从URL中获取，URL中没有则从cookie中获得
+            </summary>
+        </member>
+        <member name="T:CFTL.CFWebForm">
+            <summary>
+            功能：CFPage的页面控制类，包括页面类型，请求与返回，跳转
+            时间：2013-10-5
+            作者：Meric
+            </summary>
+        </member>
+        <member name="M:CFTL.CFWebForm.#ctor(System.Web.HttpContext)">
+            <summary>
+            带参构造函数
+            </summary>
+            <param name="context1"></param>
+        </member>
+    </members>
+</doc>

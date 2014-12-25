@@ -49,3 +49,10 @@ E:\git\CF\CWFW\bin\Debug\CFWeb.pdb
 E:\git\CF\CWFW\obj\Debug\CWFW.csprojResolveAssemblyReference.cache
 E:\git\CF\CWFW\obj\Debug\CWFW.dll
 E:\git\CF\CWFW\obj\Debug\CWFW.pdb
+E:\git\CF\CWFW\bin\Debug\CWFW.XML
+E:\git\CF\CWFW\bin\Debug\CFBase.xml
+E:\git\CF\CWFW\bin\Debug\CFFW.xml
+E:\git\CF\CWFW\bin\Debug\CFPUB.xml
+E:\git\CF\CWFW\bin\Debug\GeniusTek.xml
+E:\git\CF\CWFW\bin\Debug\CFPageControl.xml
+E:\git\CF\CWFW\bin\Debug\CFWeb.xml

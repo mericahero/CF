@@ -9,9 +9,14 @@ using System.Data;
 
 namespace CWS
 {
+    /// <summary>
+    /// 功能：验证码处理逻辑
+    /// 时间：2013-10-21
+    /// 作者：meric
+    /// </summary>
     public class AuthCode
     {
-        // Fields
+        //验证码的随机字典
         private static string[] ary = new string[] { 
         "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", 
         "i", "j", "k", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", 
@@ -19,7 +24,11 @@ namespace CWS
         "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
      };
 
-        // Methods
+        /// <summary>
+        /// 验证码检验
+        /// </summary>
+        /// <param name="form">包含手机号和验证码的表单</param>
+        /// <returns>返回是否成功</returns>
         public static bool Check(NameValueCollection form)
         {
             string c = CFConfig.GetStr(form, "code", 4);
@@ -45,12 +54,21 @@ namespace CWS
             }
             return false;
         }
-
+        /// <summary>
+        /// 生成4位验证码
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static string CreateAuthCode(long key)
         {
             return CreateAuthCode(4, key);
         }
-
+        /// <summary>
+        /// 生成4位难码
+        /// </summary>
+        /// <param name="Length"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static string CreateAuthCode(int Length, long key)
         {
             if (Length <= 0)
@@ -67,7 +85,11 @@ namespace CWS
             UpdateOrCreate(key, c);
             return c;
         }
-
+        /// <summary>
+        /// 更新验证码，没有则生成，并同步到数据库
+        /// </summary>
+        /// <param name="key">验证码key</param>
+        /// <param name="code">验证码</param>
         private static void UpdateOrCreate(long key, string code)
         {
             SqlCommand cm = new SqlCommand("p_authcode_updateorcreate", CWConfig.SessionDB.GetConnection());

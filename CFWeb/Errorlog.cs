@@ -9,18 +9,28 @@ using System.IO;
 
 namespace COM.CF.Web
 {
+    /// <summary>
+    /// 功能：错误日志记录
+    /// 时间：2013-10-2
+    /// 作者：meric
+    /// </summary>
     public class ErrorLog
     {
-        [DebuggerNonUserCode]
-        public ErrorLog()
-        {
-        }
-
+        /// <summary>
+        /// 不受控的异常记录
+        /// </summary>
+        /// <param name="webForm">页面控制对象</param>
+        /// <param name="e">异常</param>
         public static void UnControlException(CFPageControl webForm, Exception e)
         {
             ErrorLog.UnControlException(webForm, e, false);
         }
-
+        /// <summary>
+        /// 不受控的异常记录
+        /// </summary>
+        /// <param name="webForm">页面控制对象</param>
+        /// <param name="e"异常对象></param>
+        /// <param name="isXMLPage">是否是XML页面</param>
         public static void UnControlException(CFPageControl webForm, Exception e, bool isXMLPage)
         {
             if (e == null)
@@ -72,7 +82,10 @@ namespace COM.CF.Web
                 webForm.WirteXMLError(enErrType.SystemBusy, "系统错误！我们会尽快解决该问题的");
             }
         }
-
+        /// <summary>
+        /// 将异常记录到日志中
+        /// </summary>
+        /// <param name="e">异常对象</param>
         public static void WriteLog(Exception e)
         {
             if (e.GetType().ToString()!= "System.Web.HttpRequestValidationException")
@@ -111,7 +124,10 @@ namespace COM.CF.Web
                 }
             }
         }
-
+        /// <summary>
+        /// 系统繁忙记录
+        /// </summary>
+        /// <param name="e">异常</param>
         public static void WrtieBusy(Exception e)
         {
             HttpRequest request = HttpContext.Current.Request;

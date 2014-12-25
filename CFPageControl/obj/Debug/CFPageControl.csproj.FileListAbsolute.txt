@@ -20,3 +20,7 @@ E:\git\CF\CFPageControl\bin\Debug\GeniusTek.pdb
 E:\git\CF\CFPageControl\obj\Debug\CFPageControl.csprojResolveAssemblyReference.cache
 E:\git\CF\CFPageControl\obj\Debug\CFPageControl.dll
 E:\git\CF\CFPageControl\obj\Debug\CFPageControl.pdb
+E:\git\CF\CFPageControl\bin\Debug\CFPageControl.XML
+E:\git\CF\CFPageControl\bin\Debug\CFFW.xml
+E:\git\CF\CFPageControl\bin\Debug\CFPUB.xml
+E:\git\CF\CFPageControl\bin\Debug\GeniusTek.xml

@@ -91,3 +91,11 @@ E:\git\CF\CCBWeb\bin\Debug\WebPub.pdb
 E:\git\CF\CCBWeb\bin\Debug\CWFW.pdb
 E:\git\CF\CCBWeb\obj\Debug\CCBWeb.Main.Web.dll
 E:\git\CF\CCBWeb\obj\Debug\CCBWeb.Main.Web.pdb
+E:\git\CF\CCBWeb\bin\Debug\CFBase.xml
+E:\git\CF\CCBWeb\bin\Debug\CFFW.xml
+E:\git\CF\CCBWeb\bin\Debug\CFPageControl.xml
+E:\git\CF\CCBWeb\bin\Debug\CFPUB.xml
+E:\git\CF\CCBWeb\bin\Debug\CFWeb.xml
+E:\git\CF\CCBWeb\bin\Debug\GeniusTek.xml
+E:\git\CF\CCBWeb\bin\Debug\WebPub.xml
+E:\git\CF\CCBWeb\bin\Debug\CWFW.xml

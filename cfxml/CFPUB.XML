@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CFPUB</name>
+    </assembly>
+    <members>
+        <member name="M:COM.CF.PubTypes.GetDate(System.Object,System.String)">
+            <summary>
+            从一个字符串中得日期字符串
+            
+                2014-7-23   完善  增加了时间格式，并带上默认值
+            </summary>
+            <param name="str"></param>
+            <param name="fmt"></param>
+            <returns></returns>
+        </member>
+        <member name="T:COM.CF.PubFunc">
+            <summary>
+            功能：CF框架的公共方法
+            时间：2013-10-21
+            作者：meric
+            </summary>
+        </member>
+        <member name="M:COM.CF.PubFunc.DelQueryName(System.String,System.String)">
+            <summary>
+            删除QueryString中的指定键
+            </summary>
+            <param name="query"></param>
+            <param name="delkey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.DupStr(System.String,System.Int32)">
+            <summary>
+            重复给定的字符串
+            </summary>
+            <param name="s">给定字符串</param>
+            <param name="n">重复次数</param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.FowardHTTP(System.String)">
+            <summary>
+            获得Http请求的字符串
+            </summary>
+        </member>
+        <member name="M:COM.CF.PubFunc.FowardHTTP(System.String,System.String)">
+            <summary>
+            获得Http请求的字符串
+            </summary>
+        </member>
+        <member name="M:COM.CF.PubFunc.SendHTTP(System.String)">
+            <summary>
+            获得Http请求的字符串
+            </summary>
+        </member>
+        <member name="M:COM.CF.PubFunc.SendHTTP(System.String,System.Net.HttpWebResponse@)">
+            <summary>
+            获得Http请求的字符串
+            </summary>
+        </member>
+        <member name="M:COM.CF.PubFunc.SendHTTP(System.String,System.String)">
+            <summary>
+            获得Http请求的字符串
+            </summary>
+        </member>
+        <member name="M:COM.CF.PubFunc.SendHTTP(System.String,System.String,System.Boolean)">
+            <summary>
+            获得Http请求的字符串
+            </summary>
+            <param name="url"></param>
+            <param name="agent"></param>
+            <param name="gzip"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.PostHTTP(System.String,System.Collections.Specialized.NameValueCollection,System.Text.Encoding,System.Boolean)">
+            <summary>
+            获得http返回字符串，提交方式为post
+            </summary>
+            <param name="url"></param>
+            <param name="form"></param>
+            <param name="sendEncoding"></param>
+            <param name="isgunzip"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.PostHTTP(System.String,System.String,System.Text.Encoding,System.Boolean)">
+            <summary>
+            获得http返回字符串，提交方式为post
+            </summary>
+            <param name="url"></param>
+            <param name="form"></param>
+            <param name="sendEncoding"></param>
+            <param name="isgunzip"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.GetDefaultInt(System.String,System.Int32)">
+            <summary>
+            获得默认整型
+            </summary>
+            <param name="inputStr"></param>
+            <param name="defaultInt">默认数</param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.GetInt(System.Object)">
+            <summary>
+            从对象中获得整数
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.GetBigInt(System.Object)">
+            <summary>
+            从对象中获得长整数
+            </summary>
+            <param name="o"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.GetPercent(System.Double)">
+            <summary>
+            获得小数转化为百分比的字符串
+            </summary>
+            <param name="n"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.GetQeuryString(System.String)">
+            <summary>
+            获得QueryString
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.GetRandChar(System.Int32)">
+            <summary>
+            获得指定位数的随机字符串
+            </summary>
+            <param name="l"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.isNaN(System.String,System.Int32@)">
+            <summary>
+            判断输入字符串是否为非法数字，如果合法，输出数字
+            </summary>
+            <param name="inputstr"></param>
+            <param name="outInt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:COM.CF.PubFunc.isNaN(System.String)">
+            <summary>
+            判断 字符串是否为非法数字
+            </summary>
+            <param name="inputstr"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

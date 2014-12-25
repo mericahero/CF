@@ -8,32 +8,57 @@ using System.Collections.Specialized;
 
 namespace COM.CF.Web
 {
+    /// <summary>
+    /// 功能：前台分页程序
+    /// 时间：2013-10-2
+    /// 作者：Meric
+    ///  
+    /// 使用：该分页程序可以输出页面，可以按字段排序
     public class FenPage
     {
+        /// <summary>
+        /// querystring
+        /// </summary>
         private string _nextString;
 
         private readonly int _pagecount;        
-
+        /// <summary>
+        /// sql语句 测试用
+        /// </summary>
         public string _strsql;
 
         private readonly int _total;
-
+        /// <summary>
+        /// 当前页码
+        /// </summary>
         public readonly int CurPage;
-
+        /// <summary>
+        /// 是否有下一页
+        /// </summary>
         public readonly bool HaveNextPage;
-
+        /// <summary>
+        /// 首页链接
+        /// </summary>
         public string link;
 
         public readonly int maxI;
-
+        /// <summary>
+        /// 每一屏显示的最大页码数
+        /// </summary>
         private const int MaxPageNumber = 10;
 
         public readonly int minI;
-
+        /// <summary>
+        /// 每页显示数量
+        /// </summary>
         public readonly int PageCount;
-
+        /// <summary>
+        /// 页数
+        /// </summary>
         public readonly int PageNumber;
-
+        /// <summary>
+        /// 下一页页码
+        /// </summary>
         public int NextPage
         {
             get
@@ -41,14 +66,19 @@ namespace COM.CF.Web
                 return HaveNextPage ? CurPage+1 : -1;
             }
         }
-
+        /// <summary>
+        /// 分页数据库连接 无须打开
+        /// </summary>
         public SqlConnection NotOpenedConnection
         {
             get;
             set;
         }
-
+        
         private DataRowCollection _rows;
+        /// <summary>
+        /// 页面数据
+        /// </summary>
         public DataRowCollection Rows
         {
             get
@@ -77,7 +107,12 @@ namespace COM.CF.Web
         {
             
         }
-
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="total"></param>
+        /// <param name="form"></param>
+        /// <param name="defaultCount"></param>
         public FenPage(int total,NameValueCollection form,int defaultCount)
         {
             _nextString="";
@@ -120,7 +155,11 @@ namespace COM.CF.Web
             HaveNextPage = CurPage < PageNumber - 1;
         }
 
-
+        /// <summary>
+        /// 获取完整的当前页页码
+        /// </summary>
+        /// <param name="link">首页链接</param>
+        /// <returns>返回页码html</returns>
         public string GetFullPageList(string link)
         {
             string str;
@@ -142,12 +181,18 @@ namespace COM.CF.Web
             }
             return str;
         }
-
+        /// <summary>
+        /// 获取完整的当前页页码
+        /// </summary>
+        /// <returns>返回页码html</returns>
         public string GetFullPageList()
         {
             return GetFullPageList(link);
         }
-
+        /// <summary>
+        /// 获得末页页码
+        /// </summary>
+        /// <returns>返回末页页码html</returns>
         public string GetLastLink()
         {
             return string.Concat(link, _nextString, "&page=", Convert.ToString(PageNumber - 1));
